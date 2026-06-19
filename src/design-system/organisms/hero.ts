@@ -10,17 +10,22 @@ import { renderButton } from '../atoms/button';
 import type { SectionTheme } from '../molecules/layout';
 import { strings } from '../../core/i18n';
 import { avatars } from '../../assets/r2';
+import { renderBottomMarquee } from '../behaviors/bottom-marquee';
 
 export { initHeroMessages } from '../behaviors/hero-messages';
+export { initBottomMarquee } from '../behaviors/bottom-marquee';
 
 export interface HeroProps {
   tag: string;
   titleBefore: string;
   titleWords: string[];
+  titleAfter: string;
   subtitle: string;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
   messages: string[];
+  // Respuestas del asistente atom (burbujas verdes "out").
+  replies: string[];
   // Avatares para las píldoras de mensaje (se ciclan junto a messages).
   avatars: string[];
   theme?: SectionTheme;
@@ -35,10 +40,12 @@ export function heroFromStrings(
     tag: s.tag,
     titleBefore: s.titleBefore,
     titleWords: s.titleWords,
+    titleAfter: s.titleAfter,
     subtitle: s.subtitle,
     primaryCta: { label: s.ctaPrimary, href: opts.primaryHref ?? '#aa-waitlist' },
     secondaryCta: { label: s.ctaSecondary, href: opts.secondaryHref ?? '#aa-demo' },
     messages: s.messages,
+    replies: s.replies,
     avatars,
   };
 }
@@ -55,11 +62,20 @@ export function renderHero(root: Element, props: HeroProps): void {
   field.setAttribute('data-aa-hero-field', '');
   field.setAttribute('aria-hidden', 'true');
   // Nodos fuente ocultos: texto + avatar. El motor los lee (behavior desacoplado de i18n).
+  // Usuario (burbujas claras): llevan avatar.
   props.messages.forEach((text, i) => {
     const src = document.createElement('span');
     src.className = 'aa-hero__msg-source';
     src.textContent = text;
     src.setAttribute('data-avatar', props.avatars[i % props.avatars.length]);
+    field.appendChild(src);
+  });
+  // atom (burbujas verdes): respuestas de asistencia, sin avatar, marcadas data-kind="out".
+  props.replies.forEach((text) => {
+    const src = document.createElement('span');
+    src.className = 'aa-hero__msg-source';
+    src.textContent = text;
+    src.setAttribute('data-kind', 'out');
     field.appendChild(src);
   });
 
@@ -80,6 +96,7 @@ export function renderHero(root: Element, props: HeroProps): void {
       tag: 'h1',
       before: props.titleBefore,
       words: props.titleWords,
+      after: props.titleAfter,
       className: 'aa-hero__title aa-text-balance',
     }),
   );
@@ -107,5 +124,6 @@ export function renderHero(root: Element, props: HeroProps): void {
   content.appendChild(ctaRow);
 
   hero.append(field, content);
+  renderBottomMarquee(hero); // tira de imágenes al bottom (réplica MWG 047, auto-movement)
   root.appendChild(hero);
 }

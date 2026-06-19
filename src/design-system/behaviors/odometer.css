@@ -1,0 +1,20 @@
+/* Odómetro de números (OSMO adaptado). Solo los part-styles; el tamaño/peso/fuente del
+   número los pone su propia clase (ej. .aa-feat__stat). Scoped a .aa-landing. */
+.aa-landing [data-odometer-element] {
+  display: inline-flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+.aa-landing [data-odometer-part='mask'],
+.aa-landing [data-odometer-part='static'] {
+  display: inline-block;
+  overflow: clip;
+  padding: 0.05em;
+  margin: -0.05em;
+}
+.aa-landing [data-odometer-part='roller'] {
+  display: block;
+  white-space: pre;
+  text-align: center;
+  will-change: transform;
+}

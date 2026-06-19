@@ -11,8 +11,12 @@
   min-height: calc(100vh - var(--aa-marquee-height) - var(--aa-navbar-height));
   min-height: calc(100svh - var(--aa-marquee-height) - var(--aa-navbar-height));
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center; /* contenido centrado vertical: mata el void entre copy y marquee */
+  justify-content: center; /* centrado horizontal */
+  padding-block-start: var(--aa-padding-xl); /* aire bajo el navbar fijo */
+  /* reserva la franja del marquee (≈ MEDIA_HEIGHTS máx) para que el centrado no monte el copy
+     sobre las imágenes; así el contenido centra en el espacio LIBRE, sobre la tira. */
+  padding-block-end: 15vw;
   /* sin background: la sección light es transparente y deja ver el .aa-bg-fixed */
 }
 
@@ -45,27 +49,20 @@
   --hero-measure: clamp(24rem, 40vw, 44rem);
 }
 
-/* Chip/tag — píldora con borde sutil y el acento de marca. */
+/* Chip/tag — píldora monospace con borde sutil; el gradiente de marca acentúa una palabra.
+   inline-block (no flex): sin el dot, el texto + el span del highlight fluyen inline sin huecos. */
 .aa-landing .aa-hero__chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
+  display: inline-block;
   padding: 0.5em 0.95em;
   border: 1px solid color-mix(in srgb, var(--aa-fg) 16%, transparent);
   border-radius: var(--aa-radius-pill);
+  font-family: var(--aa-font-mono);
   font-size: var(--aa-text-xs);
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--aa-fg-muted);
   background: color-mix(in srgb, var(--aa-bg) 60%, transparent);
   backdrop-filter: blur(6px);
-}
-.aa-landing .aa-hero__chip::before {
-  content: '';
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 50%;
-  background: var(--aa-color-electric);
 }
 
 /* Mega-text: leading tight + tracking negativo + ancho acotado para que wrapee editorial. */
@@ -92,35 +89,56 @@
   justify-content: center;
   gap: var(--aa-gap-s);
   margin-top: var(--aa-gap-m); /* subtítulo → CTAs */
+  /* El botón es font-size:inherit; sin esto heredaría el --aa-size-font fluido del root
+     (gigante en desktop). Lo fijamos a un token; el padding em del botón escala con él. */
+  font-size: var(--aa-text-s);
 }
 
-/* Píldora del mensaje: avatar + texto, estilo "entrante" de WhatsApp sobre el fondo claro.
-   El motor controla transform/opacity vía GSAP; aquí el look y el layout. */
+/* Burbuja de mensaje estilo WhatsApp (réplica del componente aa-chat): entrante = blanca con
+   esquina inferior-izquierda recortada; saliente (atom) = verde con esquina inferior-derecha.
+   El motor controla transform/opacity/profundidad vía GSAP; aquí el look y el layout. */
 .aa-landing .aa-hero__msg {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
   display: inline-flex;
-  align-items: center;
-  gap: 0.55em;
+  align-items: flex-end;
+  gap: 0.5em;
   pointer-events: none;
   white-space: nowrap;
-  padding: 0.4em 0.85em 0.4em 0.45em;
-  border-radius: var(--aa-radius-pill);
-  background: rgb(255 255 255 / 0.3); /* fill translúcido: 30% (−70%) para no competir con el copy */
+  padding: 0.42em 0.68em;
+  border-radius: 1.1em;
+  background: #fff; /* entrante WhatsApp */
   color: var(--aa-neutral-950);
   font-size: var(--aa-text-xs);
-  line-height: 1.2;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.14);
+  line-height: 1.25;
+  box-shadow: 0 8px 22px rgb(0 0 0 / 0.12);
   will-change: transform, opacity;
 }
+/* Entrante (cliente): blanca, "cola" en la esquina inferior-izquierda. */
+.aa-landing .aa-hero__msg--in {
+  border-bottom-left-radius: 0.3em;
+}
+/* Saliente (atom assistant): verde WhatsApp, "cola" en la esquina inferior-derecha, sin avatar. */
+.aa-landing .aa-hero__msg--out {
+  background: #d9fdd3;
+  border-bottom-right-radius: 0.3em;
+}
 .aa-landing .aa-hero__msg-avatar {
-  width: 1.9em;
-  height: 1.9em;
+  width: 1.7em;
+  height: 1.7em;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  align-self: flex-end;
+}
+/* Hora: pequeña y tenue, abajo a la derecha como en WhatsApp. */
+.aa-landing .aa-hero__msg-time {
+  align-self: flex-end;
+  margin-left: 0.1em;
+  font-size: 0.72em;
+  color: var(--aa-neutral-500);
 }
 
 @media (max-width: 768px) {

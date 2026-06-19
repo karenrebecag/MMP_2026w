@@ -1,0 +1,89 @@
+/* "Cómo funciona": grid 2-col como la strip what-atom-does (eyebrow angosto + divisoria vertical
+   + contenido ancho). A la derecha, el marquee vertical de features. Scoped a .aa-landing. */
+
+.aa-landing .aa-hiw {
+  border-top: 1px solid var(--aa-border);
+}
+/* El atributo vence al background:transparent que section-theme fuerza en strips light. */
+.aa-landing .aa-hiw[data-aa-section-theme='light'] {
+  background: var(--aa-bg);
+}
+
+/* Full width: el marquee mega ocupa el ancho disponible (como el ejemplo). */
+.aa-landing .aa-hiw .aa-container {
+  max-width: none;
+  /* Mismo inset que el TEXTO de features: gutter del container + padding interno de la card
+     (--feat-pad-x), para que el borde izquierdo del contenido alinee con la sección de arriba. */
+  padding-inline: calc(clamp(1rem, 3vw, 3rem) + clamp(1.5rem, 3vw, 3.25rem));
+}
+.aa-landing .aa-hiw__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 3fr); /* eyebrow/lead + marquee mega */
+  gap: var(--aa-gap-xl);
+  align-items: stretch;
+}
+
+/* Columna izquierda: cluster (eyebrow → lead → body → cta) centrado vertical, ritmo del hero. */
+.aa-landing .aa-hiw__aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.aa-landing .aa-hiw__label {
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg-muted);
+}
+.aa-landing .aa-hiw__lead {
+  margin: var(--aa-gap-s) 0 0; /* eyebrow → lead (como chip → título en el hero) */
+  line-height: 1;
+}
+/* El gradiente (background-clip:text) lo reaplica a las words que genera SplitText. */
+.aa-landing .aa-hiw__lead .aa-text-gradient,
+.aa-landing .aa-hiw__lead .aa-text-gradient * {
+  background-image: var(--aa-gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.aa-landing .aa-hiw__body {
+  margin: var(--aa-gap-xs) 0 0; /* lead → body (tight, como título → subtítulo en el hero) */
+  max-width: 34ch;
+  color: var(--aa-fg-muted);
+}
+.aa-landing .aa-hiw__cta {
+  margin: var(--aa-gap-m) 0 0; /* body → cta (como subtítulo → cta en el hero) */
+  font-size: var(--aa-text-s); /* mismo tamaño que la fila de CTAs del hero (el botón hereda) */
+}
+
+/* Columna derecha: marquee con divisoria vertical y alto fijo (el viewport recorta el loop). */
+.aa-landing .aa-hiw__marquee {
+  border-left: 1px solid var(--aa-border);
+  padding-left: var(--aa-gap-xl);
+  height: clamp(22rem, 46vh, 36rem);
+}
+/* Filas del marquee: texto delgado, escala congruente con "Tu IA que" (xxl) de la columna izq. */
+.aa-landing .aa-hiw .aa-vmarquee__row {
+  display: flex;
+  align-items: center;
+  padding: clamp(0.45rem, 1vw, 0.9rem) 0;
+  border-bottom: 1px solid var(--aa-border);
+  font-size: clamp(1.9rem, 4.2vw, 3.6rem);
+  font-weight: var(--aa-weight-semibold); /* congruente con el headline xxl (extrabold), un paso más liviano */
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .aa-landing .aa-hiw__grid {
+    grid-template-columns: 1fr;
+    gap: var(--aa-gap-l);
+  }
+  .aa-landing .aa-hiw__marquee {
+    border-left: 0;
+    padding-left: 0;
+    height: clamp(18rem, 50vh, 26rem);
+  }
+}

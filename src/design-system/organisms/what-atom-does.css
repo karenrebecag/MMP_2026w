@@ -1,0 +1,72 @@
+/* Strip "qué hace atom": grid editorial de 2 columnas (eyebrow angosto + headline ancho) con
+   divisoria vertical entre ambas y borde superior, como la referencia. Scoped a .aa-landing. */
+
+.aa-landing .aa-whatdo {
+  border-top: 1px solid var(--aa-border);
+}
+/* section-theme.css fuerza background:transparent en strips light (misma especificidad, gana
+   por orden). El atributo sube la especificidad para imponer el light sólido sobre la textura. */
+.aa-landing .aa-whatdo[data-aa-section-theme='light'] {
+  background: var(--aa-bg);
+}
+/* Contenido más ancho que el container global (1280) — acerca al full-bleed de la referencia. */
+.aa-landing .aa-whatdo .aa-container {
+  max-width: min(100rem, 94vw);
+}
+
+.aa-landing .aa-whatdo__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3.4fr); /* col angosta (label) + ancha (headline) */
+  gap: var(--aa-gap-xl);
+  align-items: start;
+}
+
+/* El gradiente de marca lo pinta background-clip:text; cuando SplitText parte el highlight en
+   words, esas words son nodos nuevos sin el fondo → se aplica también a sus descendientes. */
+.aa-landing .aa-whatdo__title .aa-text-gradient,
+.aa-landing .aa-whatdo__title .aa-text-gradient * {
+  background-image: var(--aa-gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.aa-landing .aa-whatdo__aside {
+  padding-top: 0.45em; /* baja el label a la altura óptica de la primera línea del headline */
+}
+.aa-landing .aa-whatdo__label {
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg-muted);
+}
+
+/* Divisoria vertical: borde izquierdo de la columna del headline. */
+.aa-landing .aa-whatdo__main {
+  border-left: 1px solid var(--aa-border);
+  padding-left: var(--aa-gap-xl);
+}
+.aa-landing .aa-whatdo__title {
+  margin: 0;
+  line-height: 1.02;
+}
+.aa-landing .aa-whatdo__lead {
+  margin: var(--aa-gap-l) 0 0;
+  max-width: 48ch;
+  color: var(--aa-fg-muted);
+}
+
+/* Mobile: una sola columna, sin divisoria. */
+@media (max-width: 767px) {
+  .aa-landing .aa-whatdo__grid {
+    grid-template-columns: 1fr;
+    gap: var(--aa-gap-m);
+  }
+  .aa-landing .aa-whatdo__main {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .aa-landing .aa-whatdo__aside {
+    padding-top: 0;
+  }
+}

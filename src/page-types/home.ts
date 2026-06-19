@@ -10,11 +10,21 @@ import { initChats } from '../design-system/behaviors/chat';
 import { initMomentumHover } from '../design-system/behaviors/momentum-hover';
 import { initCursor } from '../design-system/behaviors/cursor';
 import { initRotatingText } from '../design-system/behaviors/rotating-text';
+import { initOdometer } from '../design-system/behaviors/odometer';
 import { renderBackground } from '../design-system/behaviors/background';
 import { renderMarquee, initMarquee } from '../design-system/behaviors/marquee';
 import { initMetaTheme } from '../design-system/behaviors/meta-theme';
-import { renderNavbar, initNavbar } from '../design-system/organisms/navbar';
-import { renderHero, initHeroMessages, heroFromStrings } from '../design-system/organisms/hero';
+import { renderNavbar, initNavbar, initMegaNav } from '../design-system/organisms/navbar';
+import {
+  renderHero,
+  initHeroMessages,
+  initBottomMarquee,
+  heroFromStrings,
+} from '../design-system/organisms/hero';
+import { renderWhatAtomDoes } from '../design-system/organisms/what-atom-does';
+import { renderFeatures } from '../design-system/organisms/features';
+import { renderHowItWorks, initVerticalMarquee } from '../design-system/organisms/how-it-works';
+import { renderLogos } from '../design-system/organisms/logos';
 import { renderContentSections } from '../design-system/organisms/content-sections';
 import { renderFooter } from '../design-system/organisms/footer';
 import { renderWaitlist } from '../widgets/contact-form/presets/waitlist';
@@ -45,6 +55,10 @@ export function render(mount: HTMLElement, ctx: PageContext): void {
   renderMarquee(root); // barra fija superior (botón de registro permanente)
   renderNavbar(root); // navbar blanca de marca bajo el marquee
   renderHero(root, heroFromStrings()); // hero "messages": mensajes que brotan
+  renderWhatAtomDoes(root); // strip "qué hace atom" bajo el hero
+  renderFeatures(root); // tarjetas de features (réplica anatomía fourmula)
+  renderHowItWorks(root); // "Cómo funciona": grid + marquee vertical de features
+  renderLogos(root); // "Trusted by": marquee horizontal de logos
   renderContentSections(root);
   renderWaitlist(root);
   renderFooter(root);
@@ -56,14 +70,18 @@ export function render(mount: HTMLElement, ctx: PageContext): void {
   mount.replaceChildren(root);
   initAnchorScroll(root);
   initHeroMessages(root); // motor de spawn (ambient + cursor) — tras montar en el DOM
+  initBottomMarquee(root); // loop + grow/squash de la tira inferior del hero
+  initVerticalMarquee(root); // marquee vertical de "Cómo funciona"
   initAccordion(root);
   initSliders(root);
   initChats(root);
   initMomentumHover(root);
   initCursor(root);
   initRotatingText(root);
+  initOdometer(root); // stats que ruedan al entrar en viewport
   initMarquee(root);
   initNavbar(root);
+  initMegaNav(root);
   initMetaTheme(root);
   initMotion(root);
 }

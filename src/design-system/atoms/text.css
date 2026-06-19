@@ -84,9 +84,10 @@
 /* Gradiente de marca aplicado como text mask. Combinable con cualquier .aa-h-*/.aa-p-*.
    background-clip:text + text-fill-color:transparent pinta el glifo con el gradiente. */
 .aa-landing .aa-text-gradient {
+  display: inline-block; /* clip:text fiable en fragmentos inline */
   background-image: var(--aa-gradient-brand);
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
 }

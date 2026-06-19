@@ -11,8 +11,8 @@
 .aa-landing .aa-rotating__highlight,
 .aa-landing .aa-rotating__highlight .aa-rotating__word {
   background-image: var(--aa-gradient-brand);
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
 }

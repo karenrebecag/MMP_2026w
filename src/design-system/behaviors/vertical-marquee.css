@@ -1,0 +1,20 @@
+/* Viewport del marquee vertical: recorta el track y desvanece los bordes con una máscara para
+   que las filas entren/salgan suaves. La opacidad por fila la maneja el motor (vertical-marquee.ts). */
+.aa-landing .aa-vmarquee {
+  position: relative;
+  overflow: hidden;
+  /* Fade gradual arriba/abajo (refuerza el desvanecimiento por opacidad del motor). */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 22%,
+    #000 78%,
+    transparent
+  );
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+}
+.aa-landing .aa-vmarquee__track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}

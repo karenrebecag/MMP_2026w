@@ -8,11 +8,40 @@ export interface Strings {
     titleBefore: string;
     // Última palabra rotatoria del heading ("…nuestra IA [vende|convierte|…]").
     titleWords: string[];
+    // Texto estático tras la palabra rotatoria ("…[vende] desde WhatsApp").
+    titleAfter: string;
     subtitle: string;
     ctaPrimary: string;
     ctaSecondary: string;
     // Mensajes de WhatsApp que brotan en el campo del hero (decorativos, glanceables).
+    // messages = burbujas claras (usuario); replies = burbujas verdes (atom, el asistente IA).
     messages: string[];
+    replies: string[];
+  };
+  // Strip "qué hace atom" bajo el hero (label + headline 2 líneas + lead corto).
+  whatAtom: {
+    label: string;
+    titleL1: string;
+    titleL2: string;
+    lead: string;
+  };
+  // Sección de features (3 tarjetas: stat + tag + título + body).
+  features: {
+    responde: { stat: string; tag: string; title: string; body: string };
+    califica: { stat: string; tag: string; title: string; body: string };
+    cierra: { stat: string; tag: string; title: string; body: string };
+  };
+  // Sección "Cómo funciona": eyebrow + lead ("La IA que") + cta + marquee vertical de features.
+  howItWorks: {
+    eyebrow: string;
+    lead: string;
+    body: string;
+    cta: string;
+    features: string[];
+  };
+  // Sección de logos "Trusted by".
+  logos: {
+    eyebrow: string;
   };
   heroClassic: {
     title: string;

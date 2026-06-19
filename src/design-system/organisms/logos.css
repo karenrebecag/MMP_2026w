@@ -1,0 +1,77 @@
+/* "Trusted by": eyebrow fijo a la izquierda + marquee horizontal de tarjetas con logos.
+   Scroll CSS puro (track 2× + translateX -50%). Scoped a .aa-landing. */
+
+.aa-landing .aa-logos[data-aa-section-theme='light'] {
+  background: var(--aa-bg);
+}
+.aa-landing .aa-logos .aa-container {
+  max-width: none;
+  padding-inline: clamp(1rem, 3vw, 3rem);
+}
+
+.aa-landing .aa-logos__row {
+  display: flex;
+  align-items: center;
+  gap: var(--aa-gap-xl);
+}
+.aa-landing .aa-logos__label {
+  flex: none;
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg-muted);
+}
+
+/* Viewport del marquee: recorta + desvanece los bordes laterales. */
+.aa-landing .aa-logos__marquee {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+.aa-landing .aa-logos__track {
+  display: flex;
+  width: max-content;
+  animation: aa-logos-scroll 38s linear infinite;
+}
+/* Margin (no gap) para que las dos mitades sean idénticas y el -50% no deje costura. */
+.aa-landing .aa-logos__card {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(10rem, 15vw, 13rem);
+  aspect-ratio: 5 / 4;
+  margin-right: var(--aa-gap-m);
+  background: var(--aa-bg-subtle);
+  border-radius: var(--aa-radius-l);
+}
+.aa-landing .aa-logos__logo {
+  max-width: 56%;
+  max-height: 42%;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.5; /* logos atenuados, monocromo (look "trusted by") */
+}
+
+@keyframes aa-logos-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 767px) {
+  .aa-landing .aa-logos__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--aa-gap-m);
+  }
+  .aa-landing .aa-logos__marquee {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aa-landing .aa-logos__track {
+    animation: none;
+  }
+}

@@ -1,0 +1,264 @@
+/* Features — réplica del bloque `.ai` de fourmula: tarjetas redondeadas sobre panel, tag arriba,
+   headline+body abajo, cluster visual al centro (flex, no absoluto, para responsive robusto) y
+   botón circular abajo-derecha. Scoped a .aa-landing. Slots de imagen R2 (placeholder gris). */
+
+/* El atributo vence al background:transparent que section-theme fuerza en strips light. */
+.aa-landing .aa-feat[data-aa-section-theme='light'] {
+  background: var(--aa-bg);
+}
+.aa-landing .aa-feat .aa-container {
+  max-width: none; /* sin cap: cards anchas */
+  /* Gutter del viewport (como la referencia): las cards quedan insertadas. El sangrado de las
+     imágenes es contra el borde de la CARD, no del viewport. */
+  padding-inline: clamp(1rem, 3vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-m);
+}
+
+/* ─── Tarjeta ──────────────────────────────────────────────────────────────── */
+.aa-landing .aa-feat__card {
+  --feat-pad-x: clamp(1.5rem, 3vw, 3.25rem); /* padding lateral del TEXTO (no de la card) */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--aa-gap-l);
+  /* Solo padding vertical: la media/grid sangra a los bordes; el texto lleva su propio inline. */
+  padding-block: clamp(1.5rem, 3vw, 3.25rem);
+  padding-inline: 0;
+  border-radius: var(--aa-radius-xl);
+  background: var(--aa-bg-subtle);
+  overflow: hidden;
+}
+.aa-landing .aa-feat__top {
+  min-height: clamp(34rem, 52vw, 52rem);
+}
+/* Card 1 full-width; las cards 2 y 3 en row debajo. Solo se apilan en columna cuando no caben
+   (flex-wrap): con basis de 28rem, por debajo de ~56rem cada una salta a su propia fila a ancho
+   completo. Arriba de eso, comparten la fila al 50/50 (flex-grow). */
+.aa-landing .aa-feat__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--aa-gap-m);
+}
+.aa-landing .aa-feat__left,
+.aa-landing .aa-feat__right {
+  flex: 1 1 28rem;
+  min-height: clamp(34rem, 50vw, 50rem);
+}
+
+/* ─── Tag (dot + label) ────────────────────────────────────────────────────── */
+.aa-landing .aa-feat__tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: var(--feat-pad-x);
+}
+.aa-landing .aa-feat__dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--aa-color-electric); /* verde WhatsApp: el pulso de "en vivo" */
+}
+.aa-landing .aa-feat__label {
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg-muted);
+}
+
+/* ─── Stat + headline + body (abajo de la tarjeta) ────────────────────────── */
+/* Ritmo no-uniforme espejo del hero (chip→título gap-s, título→subtítulo gap-xs): el headline
+   abraza al stat (gap-xs) y el body se separa un paso más (gap-s). No usa gap uniforme. */
+.aa-landing .aa-feat__title-block {
+  display: flex;
+  flex-direction: column;
+  padding-inline: var(--feat-pad-x);
+  max-width: calc(40rem + 2 * var(--feat-pad-x));
+}
+/* Número grande en gradiente de marca (como la referencia del equipo de copy). */
+.aa-landing .aa-feat__stat {
+  align-self: flex-start;
+  font-size: clamp(2.6rem, 4.5vw, 4rem);
+  font-weight: var(--aa-weight-bold);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0 0 var(--aa-gap-xs); /* stat → headline (tight, como título→subtítulo del hero) */
+}
+.aa-landing .aa-feat__title {
+  margin: 0 0 var(--aa-gap-s); /* headline → body */
+}
+.aa-landing .aa-feat__body {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--aa-fg-muted);
+}
+/* Top card (full-width): el bloque de texto se ensancha para no quedar angosto a la izquierda. */
+.aa-landing .aa-feat__top .aa-feat__title-block {
+  max-width: calc(58rem + 2 * var(--feat-pad-x));
+}
+.aa-landing .aa-feat__top .aa-feat__body {
+  max-width: 62ch;
+}
+
+/* ─── Cluster visual (centro, ocupa el espacio libre) ─────────────────────── */
+.aa-landing .aa-feat__media {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aa-landing .aa-feat__shot {
+  border-radius: var(--aa-radius-l);
+  background: var(--aa-neutral-200); /* placeholder hasta que cargue el asset R2 */
+  overflow: hidden;
+}
+.aa-landing .aa-feat__asset {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Top: "antes → después". El antes (sketch) va inset a la izquierda; el después (screen ancho)
+   crece y SANGRA al borde derecho de la card (como el dashboard de la referencia). */
+.aa-landing .aa-feat__media--duo {
+  justify-content: flex-start;
+  gap: clamp(1rem, 3vw, 3.5rem);
+  padding-left: var(--feat-pad-x); /* el antes queda alineado con el texto */
+}
+.aa-landing .aa-feat__media--duo .aa-feat__shot {
+  height: clamp(15rem, 30vw, 27rem);
+}
+.aa-landing .aa-feat__media--duo .is-before {
+  aspect-ratio: 175 / 265; /* el ancho sale del alto */
+  flex: none;
+}
+.aa-landing .aa-feat__media--duo .is-after {
+  flex: 1;
+  border-radius: var(--aa-radius-l) 0 0 var(--aa-radius-l); /* redondeado solo a la izquierda: sangra a la derecha */
+}
+.aa-landing .aa-feat__arrow {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--aa-fg-muted);
+}
+.aa-landing .aa-feat__arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Bottom: patrón grid-small de fourmula — paneles laterales que sangran por el borde de la card
+   (redondeados solo en su esquina interna) flanqueando una columna-collage central (1 grande +
+   2 abajo). Los laterales son más bajos que la columna y van centrados verticalmente. */
+.aa-landing .aa-feat__media--grid {
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+  align-self: stretch;
+}
+.aa-landing .aa-feat__grid-side {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: clamp(13rem, 24vw, 22rem);
+  background: var(--aa-neutral-200);
+  overflow: hidden;
+}
+.aa-landing .aa-feat__grid-side.is-left {
+  justify-content: flex-end;
+  border-radius: 0 var(--aa-radius-l) var(--aa-radius-l) 0; /* solo esquinas internas */
+}
+.aa-landing .aa-feat__grid-side.is-right {
+  justify-content: flex-start;
+  border-radius: var(--aa-radius-l) 0 0 var(--aa-radius-l);
+}
+/* Bleed: la imagen sobra y se ancla al borde interno (muestra ese lado, el resto lo corta la card). */
+.aa-landing .aa-feat__grid-side .aa-feat__asset {
+  width: 110%;
+}
+.aa-landing .aa-feat__grid-side.is-left .aa-feat__asset {
+  object-position: 100% 50%;
+}
+.aa-landing .aa-feat__grid-side.is-right .aa-feat__asset {
+  object-position: 0% 50%;
+}
+
+.aa-landing .aa-feat__grid-col {
+  flex: none;
+  width: clamp(14rem, 28vw, 27rem);
+  height: clamp(20rem, 36vw, 34rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+.aa-landing .aa-feat__grid-cell {
+  border-radius: var(--aa-radius-l);
+  background: var(--aa-neutral-200);
+  overflow: hidden;
+}
+.aa-landing .aa-feat__grid-cell.is-lead {
+  flex: 1; /* la grande de arriba toma el alto sobrante */
+}
+.aa-landing .aa-feat__grid-row {
+  flex: none;
+  height: 38%;
+  display: flex;
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+.aa-landing .aa-feat__grid-row .aa-feat__grid-cell {
+  flex: 1;
+}
+
+/* ─── Botón circular ──────────────────────────────────────────────────────── */
+.aa-landing .aa-feat__btn {
+  position: absolute;
+  right: clamp(1rem, 2vw, 2rem);
+  bottom: clamp(1rem, 2vw, 2rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--aa-fg);
+  color: var(--aa-bg);
+  transition:
+    transform 0.2s var(--aa-ease),
+    background-color 0.2s var(--aa-ease);
+}
+.aa-landing .aa-feat__btn:hover {
+  background: var(--aa-color-electric);
+  transform: scale(0.92);
+}
+.aa-landing .aa-feat__btn-icon {
+  display: flex;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.aa-landing .aa-feat__btn-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .aa-landing .aa-feat__top,
+  .aa-landing .aa-feat__left,
+  .aa-landing .aa-feat__right {
+    min-height: auto;
+  }
+  /* Top: el dúo se apila, sin inset ni sangrado; la flecha rota a vertical. */
+  .aa-landing .aa-feat__media--duo {
+    flex-direction: column;
+    padding-left: 0;
+  }
+  .aa-landing .aa-feat__media--duo .aa-feat__arrow {
+    transform: rotate(90deg);
+  }
+  .aa-landing .aa-feat__media--duo .is-after {
+    width: 100%;
+    border-radius: var(--aa-radius-l);
+  }
+}

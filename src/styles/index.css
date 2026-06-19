@@ -20,6 +20,11 @@
 @import '../design-system/molecules/layout.css';
 @import '../design-system/atoms/button.css';
 @import '../design-system/organisms/hero.css';
+@import '../design-system/organisms/what-atom-does.css';
+@import '../design-system/organisms/features.css';
+@import '../design-system/organisms/how-it-works.css';
+@import '../design-system/organisms/logos.css';
+@import '../design-system/behaviors/vertical-marquee.css';
 @import '../design-system/templates/hero-classic.css';
 @import '../design-system/organisms/content-sections.css';
 @import '../design-system/behaviors/accordion.css';
@@ -35,6 +40,8 @@
 @import '../widgets/contact-form/contact-form.css';
 @import '../design-system/organisms/footer.css';
 @import '../design-system/behaviors/marquee.css';
+@import '../design-system/behaviors/bottom-marquee.css';
+@import '../design-system/behaviors/odometer.css';
 @import '../design-system/organisms/navbar.css';
 @import './section-theme.css';
 @import '../design-system/behaviors/cursor.css';

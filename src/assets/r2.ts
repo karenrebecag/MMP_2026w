@@ -10,6 +10,30 @@ export const manifestoShots = {
   bottom: `${R2}/bubbles-bottom.webp`,
 };
 
+// Slots de la sección de features (organisms/features). Pendientes de subir a R2.
+// califica/cierra siguen el patrón grid-small de fourmula: [izq, centro-grande, abajo-1, abajo-2, der].
+export const featureShots = {
+  respondeBefore: `${R2}/feat-responde-a.webp`,
+  respondeAfter: `${R2}/feat-responde-b.webp`,
+  califica: [
+    `${R2}/feat-califica-1.webp`,
+    `${R2}/feat-califica-2.webp`,
+    `${R2}/feat-califica-3.webp`,
+    `${R2}/feat-califica-4.webp`,
+    `${R2}/feat-califica-5.webp`,
+  ],
+  cierra: [
+    `${R2}/feat-cierra-1.webp`,
+    `${R2}/feat-cierra-2.webp`,
+    `${R2}/feat-cierra-3.webp`,
+    `${R2}/feat-cierra-4.webp`,
+    `${R2}/feat-cierra-5.webp`,
+  ],
+};
+
+// Logos "Trusted by" (organisms/logos). Pendientes de subir a R2 (SVG monocromo ideal).
+export const trustedLogos = Array.from({ length: 7 }, (_, i) => `${R2}/logo-${String(i + 1).padStart(2, '0')}.svg`);
+
 export const avatars = [
   `${R2}/avatar-01.jpg`,
   `${R2}/avatar-02.jpg`,

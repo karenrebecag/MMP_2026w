@@ -1,0 +1,39 @@
+/* Bottom marquee del hero (réplica MWG 047). Misma maquetación: tira de imágenes alineadas
+   al bottom, cada media a 20vw. El loop y el grow/squash (scaleX) los maneja
+   behaviors/bottom-marquee.ts. Decorativo, scoped a .aa-landing. */
+.aa-landing .aa-bmarquee {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1; /* sobre el .aa-bg-fixed, bajo el content del hero (z-2) */
+  overflow: hidden;
+  pointer-events: none;
+}
+.aa-landing .aa-bmarquee__track {
+  display: flex;
+  width: max-content;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Ancho UNIFORME (columnas parejas, como el reference) — la altura es la que varía por media,
+   vía --bm-h que fija el JS (MEDIA_HEIGHTS, onda suave). object-fit: cover recorta a esa altura;
+   align-items: flex-end del track deja el escalonado en el borde SUPERIOR. Firma del efecto. */
+.aa-landing .aa-bmarquee__media {
+  width: 11vw;
+  flex: 0 0 auto;
+  list-style: none;
+}
+.aa-landing .aa-bmarquee__media img {
+  display: block;
+  width: 100%;
+  height: var(--bm-h, 13vw); /* altura por media; el cover recorta el sobrante */
+  border-top-left-radius: var(--aa-radius-m); /* 8px, solo esquinas superiores */
+  border-top-right-radius: var(--aa-radius-m);
+  transform: scaleX(0); /* estado inicial: el driver lo lleva a 1 al entrar */
+  transform-origin: 0% 50%;
+  object-fit: cover;
+  will-change: transform;
+}

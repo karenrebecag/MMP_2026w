@@ -1,62 +1,431 @@
-/* atom-academy · navbar blanca fija bajo el marquee. Full-bleed, logos a los
-   extremos. Se oculta deslizándose tras el marquee al bajar (ver navbar.ts). */
+/* Mega-nav full-width bajo el marquee (OSMO Directional Hover adaptado a tokens ATOM).
+   Barra blanca full-bleed; dropdown morphing full-width; slide-over en mobile (≤991px).
+   Se oculta deslizándose tras el marquee al bajar (ver navbar.ts). Scoped a .aa-landing. */
 
 .aa-landing .aa-navbar {
+  --aa-nav-radius: var(--aa-radius-s); /* hover de links inline (sutil) */
+  --aa-nav-radius-box: var(--aa-radius-m); /* contenedores: eco del radio de botón (8px) */
   position: fixed;
   top: var(--aa-marquee-height);
   left: 0;
   right: 0;
   z-index: 99; /* bajo el marquee (100): se tuck detrás al ocultarse */
-  height: var(--aa-navbar-height);
-  display: flex;
-  align-items: center;
-  background: #ffffff;
-  border-bottom: 1px solid var(--aa-border);
   transition: transform var(--aa-duration-s) var(--aa-ease);
   will-change: transform;
 }
-
-/* Oculto: sube su propia altura → su borde inferior queda al ras del marquee,
-   que lo cubre (z-index mayor + fondo opaco). */
 .aa-landing .aa-navbar--hidden {
   transform: translateY(-100%);
 }
 
-.aa-landing .aa-navbar__inner {
+/* ── Barra ──────────────────────────────────────────────────────────────────── */
+.aa-landing .aa-nav__bar {
+  position: relative;
+  z-index: 3;
+  background: #ffffff;
+  border-bottom: 1px solid var(--aa-border);
+}
+.aa-landing .aa-nav__inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
 }
-
-/* Grupo de marca: logos + divider en fila, pegados a la izquierda. */
-.aa-landing .aa-navbar__brand {
+.aa-landing .aa-nav__start {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: clamp(0.75rem, 2vw, 1.25rem);
+  width: 100%;
+  height: var(--aa-navbar-height);
 }
 
-.aa-landing .aa-navbar__divider {
+/* ── Marca ──────────────────────────────────────────────────────────────────── */
+.aa-landing .aa-nav__brand {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.6rem, 1.6vw, 1rem);
+  margin-right: clamp(1rem, 3vw, 2.5rem);
+  text-decoration: none;
+}
+.aa-landing .aa-nav__divider {
   width: 1px;
   height: 1.5rem;
   background: var(--aa-border);
   flex: none;
 }
-
-.aa-landing .aa-navbar__logo {
+.aa-landing .aa-nav__logo {
   display: block;
   width: auto;
   object-fit: contain;
 }
-.aa-landing .aa-navbar__logo--atom {
-  height: clamp(1.5rem, 2.8vw, 1.95rem);
+.aa-landing .aa-nav__logo--atom {
+  height: clamp(1.4rem, 2.6vw, 1.8rem);
 }
-.aa-landing .aa-navbar__logo--meta {
-  height: clamp(2.25rem, 4.2vw, 2.9rem);
+.aa-landing .aa-nav__logo--meta {
+  height: clamp(2.1rem, 3.8vw, 2.6rem);
 }
 
-/* CTA del navbar un punto más chico que el tamaño base del botón. */
-.aa-landing .aa-navbar__inner > .aa-button {
-  transform: scale(0.8);
-  transform-origin: right center;
+/* ── Grupo nav (links + acciones) ─────────────────────────────────────────────── */
+.aa-landing .aa-nav__group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.75em;
+}
+.aa-landing .aa-nav__list {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.aa-landing .aa-nav__list.is--actions {
+  margin-left: auto;
+  gap: 0.5em;
+}
+.aa-landing .aa-nav__action {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+/* El botón es font-size:inherit; sin esto hereda el --aa-size-font fluido del root (gigante).
+   1rem base → el sm queda con texto ~14px, a la escala de los nav links. */
+.aa-landing .aa-nav__action .aa-button {
+  font-size: 1rem;
+}
+
+/* ── Links de la barra ────────────────────────────────────────────────────────── */
+.aa-landing .aa-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
+  padding: 0.4em 0.6em;
+  border: none;
+  border-radius: var(--aa-nav-radius);
+  background: transparent;
+  color: var(--aa-fg);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--aa-duration-xs) var(--aa-ease);
+}
+.aa-landing .aa-nav__link:hover {
+  background: var(--aa-bg-subtle);
+}
+.aa-landing .aa-nav__link-label {
+  font-family: var(--aa-font-display); /* Grift, como los headings del sitio */
+  font-size: 1rem;
+  font-weight: var(--aa-weight-medium);
+  line-height: 1.2;
+}
+.aa-landing .aa-nav__link-icon {
+  width: 1.1em;
+  display: flex;
+  flex: none;
+  transition: transform var(--aa-duration-xs) var(--aa-ease);
+}
+/* Chevron del toggle abierto gira (desktop). */
+.aa-landing [data-menu-open='true'] .aa-nav__link[aria-expanded='true'] .aa-nav__link-icon.is--dropdown {
+  transform: rotate(180deg);
+}
+
+/* ── Selector de idioma ───────────────────────────────────────────────────────── */
+.aa-landing .aa-nav__lang {
+  position: relative;
+}
+.aa-landing .aa-nav__lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
+  padding: 0.7em 0.85em; /* iguala la altura del CTA sm para armonía */
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-nav-radius-box);
+  background: transparent;
+  color: var(--aa-fg);
+  cursor: pointer;
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xs);
+  letter-spacing: 0.04em;
+}
+.aa-landing .aa-nav__lang.is--open .aa-nav__lang-toggle .aa-nav__link-icon {
+  transform: rotate(180deg);
+}
+.aa-landing .aa-nav__lang-menu {
+  position: absolute;
+  top: calc(100% + 0.4em);
+  right: 0;
+  min-width: 4em;
+  margin: 0;
+  padding: 0.25em;
+  list-style: none;
+  background: #ffffff;
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-nav-radius-box);
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.25em);
+  transition:
+    opacity var(--aa-duration-xs) var(--aa-ease),
+    transform var(--aa-duration-xs) var(--aa-ease),
+    visibility var(--aa-duration-xs);
+}
+.aa-landing .aa-nav__lang.is--open .aa-nav__lang-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.aa-landing .aa-nav__lang-opt {
+  width: 100%;
+  padding: 0.4em 0.6em;
+  border: none;
+  border-radius: calc(var(--aa-nav-radius) - 1px);
+  background: transparent;
+  color: var(--aa-fg-muted);
+  cursor: pointer;
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xs);
+  text-align: left;
+}
+.aa-landing .aa-nav__lang-opt:hover {
+  background: var(--aa-bg-subtle);
+  color: var(--aa-fg);
+}
+.aa-landing .aa-nav__lang-opt.is--active {
+  color: var(--aa-fg);
+  font-weight: var(--aa-weight-bold);
+}
+
+/* ── Burger (mobile) + back ───────────────────────────────────────────────────── */
+.aa-landing .aa-nav__end {
+  display: none;
+  margin-left: auto;
+}
+.aa-landing .aa-nav__burger {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2em;
+  width: 2.5em;
+  height: 2.5em;
+  padding: 0;
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-nav-radius-box);
+  background: var(--aa-bg-subtle);
+  cursor: pointer;
+}
+.aa-landing .aa-nav__burger-line {
+  width: 1.25em;
+  height: 2px;
+  background: var(--aa-fg);
+  border-radius: 2px;
+  flex: none;
+}
+.aa-landing .aa-nav__back {
+  position: absolute;
+  left: -0.4em;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+}
+.aa-landing .aa-nav__link.is--back {
+  border: none;
+}
+
+/* ── Backdrop ─────────────────────────────────────────────────────────────────── */
+.aa-landing .aa-nav__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: rgb(0 0 0 / 0.25);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ── Dropdown wrapper (paneles mega) ──────────────────────────────────────────── */
+.aa-landing .aa-nav__dd-wrap {
+  position: absolute;
+  top: var(--aa-navbar-height);
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+  width: 100%;
+}
+.aa-landing .aa-nav__dd-container {
+  position: relative;
+  overflow: hidden;
+}
+.aa-landing .aa-nav__dd-bg {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border-bottom: 1px solid var(--aa-border);
+  border-bottom-left-radius: var(--aa-nav-radius-box);
+  border-bottom-right-radius: var(--aa-nav-radius-box);
+  will-change: transform;
+}
+.aa-landing .aa-nav__panel {
+  position: absolute;
+  inset: 0 0 auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+}
+.aa-landing .aa-nav__panel-inner {
+  display: flex;
+  width: 100%;
+}
+.aa-landing .aa-nav__col {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: var(--aa-gap-s);
+  padding: var(--aa-padding-m) var(--aa-gap-m);
+  border-right: 1px solid var(--aa-border);
+}
+.aa-landing .aa-nav__col:last-of-type {
+  border-right: none;
+}
+.aa-landing .aa-nav__col.is--colored {
+  background: var(--aa-bg-subtle);
+}
+.aa-landing .aa-nav__col-label {
+  padding-left: var(--aa-gap-xs); /* alinea con el padding del panel-link */
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xxs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em; /* mismo tracking que el eyebrow del sitio */
+  color: var(--aa-fg-muted);
+  line-height: 1;
+}
+.aa-landing .aa-nav__col-list {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.aa-landing .aa-nav__panel-link {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: 0.1em;
+  padding: var(--aa-gap-xxs) var(--aa-gap-xs);
+  border-radius: var(--aa-nav-radius);
+  color: var(--aa-fg);
+  text-decoration: none;
+  transition: background-color var(--aa-duration-xs) var(--aa-ease);
+}
+.aa-landing .aa-nav__panel-link:hover {
+  background: color-mix(in srgb, var(--aa-fg) 5%, transparent);
+}
+/* Jerarquía: título Grift 1rem > label (kicker, mono) > desc (mono pequeño, muted). */
+.aa-landing .aa-nav__panel-link-text {
+  font-family: var(--aa-font-display);
+  font-size: 1rem;
+  font-weight: var(--aa-weight-medium);
+  line-height: var(--aa-leading-snug);
+}
+.aa-landing .aa-nav__panel-link-desc {
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xxs);
+  color: var(--aa-fg-muted);
+  line-height: var(--aa-leading-snug);
+}
+
+/* ── Mobile (≤991px): slide-over ──────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .aa-landing .aa-nav__end {
+    display: flex;
+  }
+  .aa-landing .aa-nav__group {
+    position: fixed;
+    top: calc(var(--aa-marquee-height) + var(--aa-navbar-height));
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-flow: column;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 1.5em;
+    background: #ffffff;
+    overflow: auto;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .aa-landing .aa-nav__list {
+    flex-flow: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0;
+  }
+  .aa-landing .aa-nav__list.is--actions {
+    flex-flow: row;
+    margin-left: 0;
+    margin-top: 1.5em;
+    gap: 1em;
+  }
+  .aa-landing .aa-nav__action {
+    flex: 1;
+  }
+  .aa-landing .aa-nav__link {
+    width: 100%;
+    padding: 0.85em 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--aa-border);
+  }
+  .aa-landing .aa-nav__link:hover {
+    background: transparent;
+  }
+  .aa-landing .aa-nav__link.is--dropdown {
+    justify-content: space-between;
+  }
+  .aa-landing .aa-nav__link.is--back {
+    border-bottom: none;
+    padding: 0;
+  }
+  .aa-landing .aa-nav__link-label {
+    font-size: var(--aa-text-s);
+  }
+  .aa-landing .aa-nav__link-icon.is--dropdown {
+    transform: rotate(-90deg);
+  }
+  .aa-landing .aa-nav__backdrop {
+    display: none;
+  }
+  .aa-landing .aa-nav__dd-wrap {
+    position: fixed;
+    z-index: 4;
+    top: calc(var(--aa-marquee-height) + var(--aa-navbar-height));
+    bottom: 0;
+  }
+  .aa-landing .aa-nav__dd-container {
+    height: 100%;
+    overflow: auto;
+  }
+  .aa-landing .aa-nav__dd-bg {
+    display: none;
+  }
+  .aa-landing .aa-nav__panel {
+    inset: 0;
+    background: #ffffff;
+    overflow: auto;
+  }
+  .aa-landing .aa-nav__panel-inner {
+    flex-flow: column;
+  }
+  .aa-landing .aa-nav__col {
+    border-right: none;
+    border-bottom: 1px solid var(--aa-border);
+    padding: 1.5em 0;
+  }
+  .aa-landing .aa-nav__col-label {
+    width: 100%;
+    padding-left: 0;
+  }
 }

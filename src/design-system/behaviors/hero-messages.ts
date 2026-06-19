@@ -8,7 +8,7 @@
 import { gsap } from '../../core/motion/gsap-env';
 
 const AMBIENT_MS = 1400; // cadencia del auto-spawn ambiente
-const RESET_DIST_DIV = 4; // umbral de distancia del cursor = innerWidth / 4 (menor densidad)
+const RESET_DIST_DIV = 2.5; // umbral de distancia del cursor = innerWidth / 2.5 (menor densidad)
 const MAX_LIVE = 14; // tope de píldoras vivas simultáneas (performance)
 const EXCLUDE_PAD = 1.12; // 12% de margen alrededor del content box (zona protegida)
 
@@ -16,7 +16,7 @@ const EXCLUDE_PAD = 1.12; // 12% de margen alrededor del content box (zona prote
 const DEPTH_ALPHA_MIN = 0.3; // opacidad de las burbujas más cercanas al centro
 const DEPTH_ALPHA_EASE = 0.5; // <1: suben a opacidad plena antes (más cerca del centro)
 const DEPTH_SCALE_MIN = 0.9; // tamaño de las más cercanas al centro
-const DEPTH_BLUR_MAX = 1.5; // px de blur en el centro (0 hacia los bordes)
+const DEPTH_BLUR_MAX = 0.15; // px de blur en el centro (0 hacia los bordes)
 
 const FINE_POINTER = '(hover: hover) and (pointer: fine)';
 const REDUCED = '(prefers-reduced-motion: reduce)';
@@ -26,20 +26,35 @@ interface MsgItem {
   avatar: string;
 }
 
+// Hora del dispositivo (HH:MM) para el timestamp estilo WhatsApp de cada burbuja.
+function clockHHMM(): string {
+  const d = new Date();
+  return `${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
 export function initHeroMessages(scope: Element): void {
   const field = scope.querySelector<HTMLElement>('[data-aa-hero-field]');
   if (!field) return;
   const content = scope.querySelector<HTMLElement>('.aa-hero__content');
 
-  // Fuente: nodos ocultos que renderiza hero.ts (texto + avatar). El motor solo los lee.
-  const items: MsgItem[] = Array.from(field.querySelectorAll<HTMLElement>('.aa-hero__msg-source'))
+  // Fuente: nodos ocultos que renderiza hero.ts. Dos pools por emisor: usuario (claras, con
+  // avatar) y atom (verdes, data-kind="out", sin avatar). El motor solo los lee.
+  const sources = Array.from(field.querySelectorAll<HTMLElement>('.aa-hero__msg-source'));
+  const userItems: MsgItem[] = sources
+    .filter((n) => n.getAttribute('data-kind') !== 'out')
     .map((n) => ({ text: n.textContent ?? '', avatar: n.getAttribute('data-avatar') ?? '' }))
     .filter((it) => it.text);
-  if (!items.length) return;
+  const atomItems: MsgItem[] = sources
+    .filter((n) => n.getAttribute('data-kind') === 'out')
+    .map((n) => ({ text: n.textContent ?? '', avatar: '' }))
+    .filter((it) => it.text);
+  if (!userItems.length) return;
 
   if (window.matchMedia(REDUCED).matches) return; // accesibilidad: sin motion, hero estático
 
-  let idx = 0;
+  let inIdx = 0;
+  let outIdx = 0;
+  let nextKind: 'in' | 'out' = 'in'; // alterna usuario → atom → usuario …
   let live = 0;
 
   // Caja de exclusión (headline) en coordenadas del field, con padding.
@@ -72,24 +87,39 @@ export function initHeroMessages(scope: Element): void {
   function spawn(x: number, y: number, vx: number, vy: number): void {
     if (live >= MAX_LIVE) return;
     const p = avoid(x, y);
-    const item = items[idx];
-    idx = (idx + 1) % items.length;
+    // Alterna emisor: usuario (in) ↔ atom (out). Si no hay pool atom, todo queda en usuario.
+    const kind: 'in' | 'out' = nextKind === 'out' && atomItems.length ? 'out' : 'in';
+    nextKind = kind === 'in' ? 'out' : 'in';
+    const item =
+      kind === 'in' ? userItems[inIdx % userItems.length] : atomItems[outIdx % atomItems.length];
+    if (kind === 'in') inIdx++;
+    else outIdx++;
 
     const el = document.createElement('div');
-    el.className = 'aa-hero__msg';
+    el.className = `aa-hero__msg aa-hero__msg--${kind}`;
 
-    const avatar = document.createElement('img');
-    avatar.className = 'aa-hero__msg-avatar';
-    avatar.src = item.avatar;
-    avatar.alt = '';
-    avatar.loading = 'lazy';
-    avatar.setAttribute('aria-hidden', 'true');
+    // Avatar solo en entrantes — en WhatsApp tus propios mensajes (out) no llevan avatar.
+    let avatar: HTMLImageElement | null = null;
+    if (kind === 'in') {
+      avatar = document.createElement('img');
+      avatar.className = 'aa-hero__msg-avatar';
+      avatar.src = item.avatar;
+      avatar.alt = '';
+      avatar.loading = 'lazy';
+      avatar.setAttribute('aria-hidden', 'true');
+    }
 
     const text = document.createElement('span');
     text.className = 'aa-hero__msg-text';
     text.textContent = item.text;
 
-    el.append(avatar, text);
+    const time = document.createElement('span');
+    time.className = 'aa-hero__msg-time';
+    time.textContent = clockHHMM();
+    time.setAttribute('aria-hidden', 'true');
+
+    if (avatar) el.append(avatar, text, time);
+    else el.append(text, time);
     field!.appendChild(el);
     live++;
 
@@ -119,7 +149,7 @@ export function initHeroMessages(scope: Element): void {
       autoAlpha: 0,
       filter: blurPx < 0.15 ? 'none' : `blur(${blurPx.toFixed(2)}px)`,
     });
-    gsap.set(avatar, { scale: 0 });
+    if (avatar) gsap.set(avatar, { scale: 0 });
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -130,8 +160,8 @@ export function initHeroMessages(scope: Element): void {
     });
     // Burbuja entra con un scale-up sutil hasta su opacidad/tamaño de profundidad.
     tl.to(el, { scale: restScale, autoAlpha: restAlpha, ease: 'back.out(1.5)', duration: 0.55 }, 0);
-    // Avatar popea un beat después (sensación de notificación).
-    tl.to(avatar, { scale: 1, ease: 'back.out(3)', duration: 0.5 }, 0.08);
+    // Avatar popea un beat después (sensación de notificación) — solo en entrantes.
+    if (avatar) tl.to(avatar, { scale: 1, ease: 'back.out(3)', duration: 0.5 }, 0.08);
     // Deriva en la dirección de la velocidad (cursor) o aleatoria suave (ambient).
     tl.to(el, { x: '+=' + vx * 3, y: '+=' + vy * 3, ease: 'power3.out', duration: 1.7 }, 0);
     // Salida.
