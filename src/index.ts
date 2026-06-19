@@ -5,15 +5,15 @@
 //        data-aa-lang="es|en|pt"></div>
 //
 //   <script data-cfasync="false"
-//     src="https://cdn.jsdelivr.net/gh/karenrebecag/Academy_LP@latest/loader.js"></script>
+//     src="https://cdn.jsdelivr.net/gh/karenrebecag/MMP_2026w@latest/loader.js"></script>
 //
 // El entry es mínimo: resuelve config del mount, siembra el idioma y delega el render en
 // el composer de la página (chunk cargado on-demand vía import() según data-page).
 const _v =
   document
-    .querySelector<HTMLScriptElement>('script[src*="Academy_LP@"]')
-    ?.src.match(/Academy_LP@([^/]+)/)?.[1] ?? 'dev';
-console.log(`[academy-lp] v${_v} loaded`);
+    .querySelector<HTMLScriptElement>('script[src*="MMP_2026w@"]')
+    ?.src.match(/MMP_2026w@([^/]+)/)?.[1] ?? 'dev';
+console.log(`[mmp-2026w] v${_v} loaded`);
 
 import { type Theme, type Lang } from './core/types';
 import { setLang } from './core/i18n';

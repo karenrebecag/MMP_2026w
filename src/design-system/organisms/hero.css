@@ -1,248 +1,134 @@
-/* atom-academy · hero. Card inset con video de fondo en loop + contenido a la izquierda. */
+/* Hero "messages" — first-pass. Estructura/spacing inspirados en el snippet (100vh, mega-text,
+   leading tight, tracking negativo, gaps fluidos), con tokens de ATOM. Sección LIGHT y SIN fondo
+   propio → deja ver el .aa-bg-fixed. Lo estructural (campo absoluto, z-layering, .aa-hero__msg)
+   es lo que el motor necesita; el visual está para afinar. Scoped a .aa-landing. */
 
-/* Inset: padding del section que separa el card del borde del viewport.
-   El hero ocupa 100svh; el card crece para llenar (menos inset y footnote). */
 .aa-landing .aa-hero {
   position: relative;
-  z-index: 2;
-  box-sizing: border-box;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  padding: clamp(0.75rem, 2vw, 2rem);
-  padding-top: clamp(1.5rem, 3vw, 3rem); /* aire superior */
-}
-
-/* Card redondeado que contiene video, overlay y contenido */
-.aa-landing .aa-hero__card {
-  --aa-hero-radius: clamp(20px, 2.5vw, 36px);
-  position: relative;
-  isolation: isolate;
   overflow: hidden;
-  border-radius: var(--aa-hero-radius);
-  flex: 1;
-  min-height: 0;
+  /* .aa-landing ya empuja el contenido con padding-top (marquee + navbar fijos); el hero
+     resta ese offset para llenar exactamente el alto VISIBLE y centrar su contenido ahí. */
+  min-height: calc(100vh - var(--aa-marquee-height) - var(--aa-navbar-height));
+  min-height: calc(100svh - var(--aa-marquee-height) - var(--aa-navbar-height));
   display: flex;
   align-items: center;
-  background: var(--aa-neutral-900); /* fallback antes de cargar el video */
+  justify-content: center;
+  /* sin background: la sección light es transparente y deja ver el .aa-bg-fixed */
 }
 
-/* Video de fondo cover — radio propio (Safari no recorta video con overflow:hidden) */
-.aa-landing .aa-hero__video {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--aa-hero-radius);
-}
-
-/* Overlay para legibilidad del texto (más oscuro a la izquierda) */
-.aa-landing .aa-hero__overlay {
+/* Campo de spawn: detrás del contenido, no intercepta el puntero (el mousemove lo oye .aa-hero). */
+.aa-landing .aa-hero__field {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  border-radius: var(--aa-hero-radius);
-  background:
-    linear-gradient(
-      90deg,
-      rgba(10, 10, 10, 0.62) 0%,
-      rgba(10, 10, 10, 0.28) 46%,
-      rgba(10, 10, 10, 0) 74%
-    ),
-    linear-gradient(0deg, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0) 45%);
 }
 
-/* Contenido alineado a la izquierda */
+/* Nodos fuente (texto + data-avatar) — solo data para el motor. */
+.aa-landing .aa-hero__msg-source {
+  display: none;
+}
+
+/* Contenido encima del campo: el headline siempre gana legibilidad. Ritmo vertical por
+   margin-top tokenizado (no un gap uniforme), así cada par tiene su propio espaciado. */
 .aa-landing .aa-hero__content {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--aa-gap-l);
-  max-width: 60%;
-  padding: clamp(2rem, 5vw, 5rem);
-  color: #fff;
-}
-
-.aa-landing .aa-hero__title {
-  color: #fff;
-  line-height: 1.15;
-}
-
-.aa-landing .aa-hero__subtitle {
-  max-width: 26em;
-  font-size: var(--aa-text-m);
-  line-height: 1.3;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.aa-landing .aa-hero__button-row {
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--aa-gap-s);
-  margin-top: var(--aa-gap-xs);
+  text-align: center;
+  max-width: min(90%, 60rem);
+  padding-inline: var(--aa-padding-m);
+  /* Ancho del SUBTÍTULO ≈ el del título (16ch en xxl), pero en rem para no depender del
+     font-size del subtítulo. El título conserva su 16ch; esto solo aproxima ese ancho. Afinable. */
+  --hero-measure: clamp(24rem, 40vw, 44rem);
 }
 
-/* ─── Conversación de chat (tema WhatsApp) ───────────────────────────────────── */
-/* Ventana de alto fijo: las burbujas se apilan desde abajo y el overflow superior
-   se recorta con un mask que las desvanece (conversación que "sube"). */
-.aa-landing .aa-hero__chats {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  right: clamp(2rem, 5vw, 5rem);
-  transform: translateY(-50%);
-  width: min(21rem, 30vw);
-  height: min(64%, 30rem);
-  overflow: hidden;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 100%);
-}
-.aa-landing .aa-hero__chats-track {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: var(--aa-gap-s);
-}
-
-.aa-landing .aa-hero__bubble {
-  max-width: 90%;
-  padding: 0.7em 0.9em;
-  border-radius: 1.15em;
-  background: #fff;
-  color: var(--aa-neutral-950);
-  box-shadow: 0 4px 12px rgba(10, 10, 10, 0.1); /* sombra reducida */
-  font-size: var(--aa-text-s);
-}
-/* Verde WhatsApp para el mensaje saliente (decoración de marca, no token del DS) */
-.aa-landing .aa-hero__bubble--out {
-  align-self: flex-end;
-  background: #d9fdd3;
-  border-bottom-right-radius: 0.3em;
-}
-.aa-landing .aa-hero__bubble--in {
-  align-self: flex-start;
-  border-bottom-left-radius: 0.3em;
-}
-
-.aa-landing .aa-hero__bubble-name {
-  display: block;
-  margin-bottom: 0.2em;
-  font-weight: var(--aa-weight-bold);
-  font-size: 0.8em;
-  color: var(--aa-accent-fg);
-}
-.aa-landing .aa-hero__bubble-text {
-  margin: 0;
-  line-height: 1.3;
-}
-.aa-landing .aa-hero__bubble-time {
-  display: block;
-  margin-top: 0.15em;
-  text-align: right;
-  font-size: 0.66em;
-  color: var(--aa-neutral-500);
-}
-
-/* Indicador "escribiendo…" — tres puntos que rebotan */
-.aa-landing .aa-hero__bubble--typing {
+/* Chip/tag — píldora con borde sutil y el acento de marca. */
+.aa-landing .aa-hero__chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.32em;
-  padding: 1.05em 1.1em;
+  gap: 0.5em;
+  padding: 0.5em 0.95em;
+  border: 1px solid color-mix(in srgb, var(--aa-fg) 16%, transparent);
+  border-radius: var(--aa-radius-pill);
+  font-size: var(--aa-text-xs);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--aa-fg-muted);
+  background: color-mix(in srgb, var(--aa-bg) 60%, transparent);
+  backdrop-filter: blur(6px);
 }
-.aa-landing .aa-hero__typing-dot {
+.aa-landing .aa-hero__chip::before {
+  content: '';
   width: 0.5em;
   height: 0.5em;
   border-radius: 50%;
-  background: var(--aa-neutral-500);
-  animation: aa-typing 1.3s ease-in-out infinite;
-}
-.aa-landing .aa-hero__typing-dot:nth-child(2) {
-  animation-delay: 0.18s;
-}
-.aa-landing .aa-hero__typing-dot:nth-child(3) {
-  animation-delay: 0.36s;
+  background: var(--aa-color-electric);
 }
 
-@keyframes aa-typing {
-  0%,
-  60%,
-  100% {
-    opacity: 0.35;
-    transform: translateY(0);
-  }
-  30% {
-    opacity: 1;
-    transform: translateY(-0.22em);
-  }
+/* Mega-text: leading tight + tracking negativo + ancho acotado para que wrapee editorial. */
+.aa-landing .aa-hero__title {
+  /* margin completo: chip→título arriba, 0 abajo. El 0 mata el margen UA del <h1> que
+     era el verdadero culpable del gap heading→subheading. */
+  margin: var(--aa-gap-s) 0 0;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  /* 16ch en xxl: el wrap mega de 3 líneas que ya funcionaba — no tocar. */
+  max-width: 16ch;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .aa-landing .aa-hero__typing-dot {
-    animation: none;
-  }
+.aa-landing .aa-hero__subtitle {
+  /* título → subtítulo: ahora SÍ lo controla este token (UA margins muertos arriba/abajo). */
+  margin: var(--aa-gap-xs) 0 0;
+  max-width: var(--hero-measure);
+  color: var(--aa-fg-muted);
 }
 
-/* Footnote bajo el card */
-.aa-landing .aa-hero__footnote {
-  margin: 0;
-  padding-top: var(--aa-gap-s);
-  text-align: right;
-  font-family: var(--aa-font-mono);
-  font-size: var(--aa-text-xxs);
-  color: var(--aa-fg-subtle);
+.aa-landing .aa-hero__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--aa-gap-s);
+  margin-top: var(--aa-gap-m); /* subtítulo → CTAs */
 }
 
-/* ─── Responsive ─────────────────────────────────────────────────────────────── */
-@media screen and (max-width: 991px) {
-  /* El card apila en columna y centra verticalmente el stack (contenido + chat). */
-  .aa-landing .aa-hero__card {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-  }
+/* Píldora del mensaje: avatar + texto, estilo "entrante" de WhatsApp sobre el fondo claro.
+   El motor controla transform/opacity vía GSAP; aquí el look y el layout. */
+.aa-landing .aa-hero__msg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  pointer-events: none;
+  white-space: nowrap;
+  padding: 0.4em 0.85em 0.4em 0.45em;
+  border-radius: var(--aa-radius-pill);
+  background: rgb(255 255 255 / 0.3); /* fill translúcido: 30% (−70%) para no competir con el copy */
+  color: var(--aa-neutral-950);
+  font-size: var(--aa-text-xs);
+  line-height: 1.2;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.14);
+  will-change: transform, opacity;
+}
+.aa-landing .aa-hero__msg-avatar {
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
   .aa-landing .aa-hero__content {
     max-width: 100%;
+    --hero-measure: 100%; /* subheading a ancho completo en mobile */
   }
-  /* Burbujas: de panel lateral absoluto a bloque en flujo, pegado al contenido.
-     position: relative para que el track absoluto se ancle a esta ventana. */
-  .aa-landing .aa-hero__chats {
-    position: relative;
-    top: auto;
-    right: auto;
-    transform: none;
-    width: 100%;
-    height: min(13rem, 32vh);
-  }
-  .aa-landing .aa-hero__chats-track {
-    left: clamp(2rem, 5vw, 5rem);
-    right: clamp(2rem, 5vw, 5rem);
-    bottom: 0.5rem;
-  }
-  .aa-landing .aa-hero__overlay {
-    background: linear-gradient(0deg, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0.2) 60%);
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .aa-landing .aa-hero__card {
-    min-height: min(82svh, 620px);
-  }
-  .aa-landing .aa-hero__chats {
-    height: min(11rem, 28vh);
-  }
-  .aa-landing .aa-hero__footnote {
-    text-align: left;
+  .aa-landing .aa-hero__title {
+    max-width: 100%; /* el título también, en mobile no fuerza el 16ch */
   }
 }

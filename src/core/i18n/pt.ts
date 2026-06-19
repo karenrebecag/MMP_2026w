@@ -4,6 +4,32 @@ export const pt = {
   navbar: {
     cta: 'Entrar na lista de espera',
   },
+  hero: {
+    tag: 'Inteligência de Conversão para WhatsApp',
+    titleBefore: 'Seu chatbot responde, nossa IA',
+    titleWords: ['vende', 'converte', 'fecha', 'agenda'],
+    subtitle:
+      'Promova seus vendedores a **supervisores da IA** que qualifica leads, fecha vendas e reduz os custos de aquisição **em até 30%**.',
+    ctaPrimary: 'Agendar demo',
+    ctaSecondary: 'Ver demo',
+    messages: [
+      'Quanto custa?',
+      'Tenho interesse',
+      'Está disponível?',
+      'Quero mais info',
+      'Fazem entregas?',
+      'Tem promoção?',
+      'Aceitam cartão?',
+      'Quero comprar',
+    ],
+  },
+  heroClassic: {
+    title: 'Torne-se Especialista em WhatsApp Marketing',
+    subtitle:
+      'A primeira formação para dominar o canal onde hoje se geram, qualificam e fecham mais oportunidades.',
+    ctaLabel: 'Entrar na lista de espera',
+    footnote: '* Primeira edição em julho · acesso prioritário para a lista de espera.',
+  },
   waitlist: {
     eyebrow: 'Lista de espera · Lançamento em julho',
     heading: 'Entre na lista de espera',

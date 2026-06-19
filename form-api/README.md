@@ -1,6 +1,6 @@
-# atom-academy-waitlist-api
+# form-api
 
-Proxy serverless (Vercel Edge Function) para la lista de espera de ATOM Academy.
+Proxy serverless (Vercel Edge Function) para los formularios del sitio (hoy: lista de espera).
 Recibe el POST del bundle público de la landing, valida, filtra bots y reenvía a un
 Apps Script Web App que escribe la fila en Google Sheets.
 
@@ -15,7 +15,7 @@ vars de Vercel**, nunca en el repo.
 ## Estructura
 
 ```
-waitlist-api/
+form-api/
 ├── api/waitlist.ts   Edge Function (cero dependencias, solo fetch)
 ├── package.json
 ├── tsconfig.json
@@ -33,9 +33,9 @@ waitlist-api/
 
 ## Deploy a Vercel
 
-1. **New Project** → importa el repo `karenrebecag/Academy_LP`.
+1. **New Project** → importa el repo `karenrebecag/MMP_2026w`.
 2. En la config del proyecto:
-   - **Root Directory**: `waitlist-api`
+   - **Root Directory**: `form-api`
    - **Framework Preset**: Other
    - **Build Command / Output Directory**: déjalos vacíos (no hay build; las funciones son la salida).
 3. **Environment Variables**: pega las tres (Production + Preview). Valores en `vercel.env.local`.
@@ -43,8 +43,8 @@ waitlist-api/
 
 ## Cerrar el círculo en la landing
 
-Reemplaza `TU-PROYECTO` por el dominio real en `src/sections/waitlist.ts`
-(`WAITLIST_ENDPOINT`) y haz push a `main` para que el CI republique el bundle.
+Reemplaza el dominio real en `src/core/config/endpoints.ts` (`WAITLIST_ENDPOINT`)
+y haz push a `main` para que el CI republique el bundle.
 
 ## Probar
 

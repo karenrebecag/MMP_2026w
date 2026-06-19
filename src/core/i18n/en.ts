@@ -4,6 +4,32 @@ export const en = {
   navbar: {
     cta: 'Join the waitlist',
   },
+  hero: {
+    tag: 'Conversion Intelligence for WhatsApp',
+    titleBefore: 'Your chatbot replies, our AI',
+    titleWords: ['sells', 'converts', 'closes', 'books'],
+    subtitle:
+      'Promote your salespeople to **supervisors of the AI** that qualifies leads, closes sales, and cuts acquisition costs **by up to 30%**.',
+    ctaPrimary: 'Book a demo',
+    ctaSecondary: 'Watch demo',
+    messages: [
+      'How much is it?',
+      "I'm interested",
+      'Is it available?',
+      'Tell me more',
+      'Do you ship?',
+      'Any promo?',
+      'Do you take cards?',
+      'I want to buy',
+    ],
+  },
+  heroClassic: {
+    title: 'Become a WhatsApp Marketing Expert',
+    subtitle:
+      'The first training to master the channel where opportunities are now generated, qualified, and closed.',
+    ctaLabel: 'Join the waitlist',
+    footnote: '* First edition in July · priority access for the waitlist.',
+  },
   waitlist: {
     eyebrow: 'Waitlist · July launch',
     heading: 'Join the waitlist',

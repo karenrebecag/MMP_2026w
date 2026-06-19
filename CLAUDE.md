@@ -1,13 +1,12 @@
-# atom-academy
+# MMP_2026w
 
-Landing page versionada para ATOM Academy. Lógica + estilos servidos vía jsDelivr;
-**el CMS/host solo aporta un punto de montaje**. Build: esbuild + TypeScript + GSAP.
-Design language: OSMO (tokens, easing, animaciones, tipografía, espaciado).
+Sitio **multipágina** versionado sobre **Mount Point Pattern**: el CMS/host solo aporta un
+punto de montaje; lógica + estilos se compilan y se sirven vía jsDelivr. Build: esbuild +
+TypeScript + GSAP. Design language: OSMO (tokens, easing, animaciones, tipografía, espaciado).
 
-> Este proyecto (`ATOM_MPP_Website2026`, MPP = *Mount Point Pattern*) evoluciona la landing
-> única hacia un **sitio completo multi-página** sobre el mismo patrón. Las secciones de
-> Elementor documentadas abajo son la referencia heredada; el host destino del sitio grande
-> es **Webflow** (ver ADR-002).
+> Evolución de la landing única original (`Academy_LP`) hacia un sitio completo sobre el mismo
+> patrón. Las secciones de Elementor documentadas abajo son la referencia heredada; el host
+> destino es **Webflow** (ver ADR-002). El backend de formularios vive en `form-api/` (monorepo).
 
 ## Decisiones de arquitectura (ADR)
 
@@ -42,18 +41,62 @@ sin renunciar a Preact donde el estado lo justifica de verdad.
 **Decisión:** el host del sitio grande es **Webflow**. Webflow gestiona contenido (Collections,
 campos, SEO, semántica de templates); el bundle servido por jsDelivr aporta estilos, animación
 y comportamiento, montado sobre `[data-widget]` / `[data-aa-mount]`. Lógica de negocio y
-secretos viven en el backend desacoplado (`waitlist-api/` es el germen), nunca en el repo
-público.
+secretos viven en el backend desacoplado (`form-api/`), nunca en el repo público.
 
 ## Identidad
 
 | Campo | Valor |
 |---|---|
-| Repo | `karenrebecag/Academy_LP` (público — requisito de jsDelivr /gh/) |
-| Remote | `https://github.com/karenrebecag/Academy_LP.git` |
-| CDN loader | `https://cdn.jsdelivr.net/gh/karenrebecag/Academy_LP@latest/loader.js` |
-| Bundle JS | `dist/landing.js` |
+| Repo | `karenrebecag/MMP_2026w` (público — requisito de jsDelivr /gh/) |
+| Remote | `https://github.com/karenrebecag/MMP_2026w.git` |
+| CDN loader | `https://cdn.jsdelivr.net/gh/karenrebecag/MMP_2026w@latest/loader.js` |
+| Bundle JS | `dist/landing.js` (entry) + `dist/chunks/` |
 | Bundle CSS | `dist/landing.css` |
+| Backend | `form-api/` (Vercel, monorepo — root directory propio) |
+
+## Arquitectura del sistema
+
+### Entry contract (cadena de carga)
+
+El host solo referencia `loader.js@latest`. Nada más del bundle se nombra en el CMS, así el
+versionado nunca lo toca.
+
+```
+host embed  (Webflow/Elementor)
+  └─ loader.js@latest                  superficie pública estable (CI regenera la versión)
+       └─ inyecta @vX.Y.Z inmutable    evita el cache agresivo de jsDelivr en @latest
+            ├─ dist/landing.css        un CSS, todos los componentes
+            └─ dist/landing.js         entry mínimo (~0.8kb)
+                 └─ import('chunks/<page>')   composer del page-type (según data-page)
+                      ├─ organisms/sections   presentación
+                      ├─ widgets/             unidades montables con estado
+                      └─ chunks compartidos   GSAP + atoms
+
+datos / negocio:
+  widget ──fetch──► form-api (Vercel) ──► Apps Script ──► Google Sheet
+   (core/api/client.ts)   guarda el secreto (env vars, no en el repo)
+```
+
+### Frontera page-types/ vs widgets/ vs design-system/
+
+Tres capas con responsabilidades que **no se mezclan**:
+
+| Capa | Qué es | Regla |
+|---|---|---|
+| `page-types/` | **Composer** de UNA página: `render(mount, ctx)`. Decide qué secciones/widgets se montan y en qué orden. 1 page-type = 1 chunk (lazy por `data-page`). | Orquesta, no implementa. Cero lógica reutilizable aquí; si algo se repite entre páginas, sube a widget u organism. |
+| `widgets/` | **Unidad montable reutilizable** con su propio ciclo de vida/estado y contrato (`config`, `onSubmit`). Montable por cualquier page-type o directo vía `[data-widget]`. Núcleo agnóstico de i18n/HTTP; el preset puentea. | Es un "producto". Si lo usan 2+ páginas y tiene estado/lifecycle propio → widget. |
+| `design-system/` | **Bloques presentacionales**: atoms/molecules/organisms (secciones) + behaviors (interacciones GSAP). | Se componen, no orquestan. Un organism es una sección; un behavior es una animación. Sin fetch ni lógica de negocio. |
+
+Decisión rápida: ¿arreglo de UNA página? → `page-types/`. ¿Unidad interactiva reusable con
+estado? → `widgets/`. ¿Sección/animación presentacional? → `design-system/`.
+
+### Backend desacoplado (`form-api/`, monorepo)
+
+`form-api/` vive en este repo (monorepo) pero es un **subproyecto Vercel independiente** (su
+propio `package.json`/`tsconfig`, Root Directory propio en Vercel). El frontend público solo
+conoce la **URL del endpoint** (`core/config/endpoints.ts`); la lógica, validación y secretos
+viven en `form-api/` y sus env vars de Vercel — nunca en el bundle público. Se puede extraer a
+su repo privado más adelante sin tocar el frontend (solo cambiaría la URL del endpoint).
 
 ## Cómo se usa en Elementor
 
@@ -61,16 +104,18 @@ Widget **HTML** con el mount + loader:
 
 ```html
 <div data-aa-mount
+     data-page="home"
      data-aa-theme="light"
      data-aa-lang="es"></div>
 
 <script data-cfasync="false"
-  src="https://cdn.jsdelivr.net/gh/karenrebecag/atom-academy@latest/loader.js"></script>
+  src="https://cdn.jsdelivr.net/gh/karenrebecag/MMP_2026w@latest/loader.js"></script>
 ```
 
 Atributos disponibles:
+- `data-page`     → page-type a renderizar (ej. `home`); el composer se carga como chunk on-demand
 - `data-aa-theme` → `light` | `dark` (default `light`)
-- `data-aa-lang`  → `es` | `en` (default `es`)
+- `data-aa-lang`  → `es` | `en` | `pt` (default `es`)
 
 ### Gotcha: plugins de "delay JS" de WordPress (WP Meteor, WP Rocket, Perfmatters…)
 
@@ -86,7 +131,7 @@ que eximir el loader del plugin de delay. Para **WP Meteor** basta el atributo:
 
 ```html
 <script data-cfasync="false" data-wpmeteor-nooptimize="true"
-  src="https://cdn.jsdelivr.net/gh/karenrebecag/Academy_LP@latest/loader.js"></script>
+  src="https://cdn.jsdelivr.net/gh/karenrebecag/MMP_2026w@latest/loader.js"></script>
 ```
 
 Para otros plugins (WP Rocket, Perfmatters, Flying Scripts), excluir la URL del loader

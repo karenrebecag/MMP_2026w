@@ -20,6 +20,7 @@
 @import '../design-system/molecules/layout.css';
 @import '../design-system/atoms/button.css';
 @import '../design-system/organisms/hero.css';
+@import '../design-system/templates/hero-classic.css';
 @import '../design-system/organisms/content-sections.css';
 @import '../design-system/behaviors/accordion.css';
 @import '../design-system/organisms/manifesto.css';
@@ -96,7 +97,7 @@
   background-repeat: repeat;
   background-size: 620px auto;
   mix-blend-mode: multiply; /* deja ver las curvas topográficas sobre el blanco */
-  opacity: 0.12;
+  opacity: 0.06;
 }
 
 /* Dark theme global + section themes (strips) viven en section-theme.css. */

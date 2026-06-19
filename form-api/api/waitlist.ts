@@ -3,7 +3,7 @@
 // público de la landing únicamente conoce la URL de esta función. Valida, filtra bots
 // (honeypot) y reenvía al Apps Script Web App, que escribe la fila en la hoja.
 //
-// Deploy: este subproyecto (waitlist-api/) es el Root Directory del proyecto en Vercel.
+// Deploy: este subproyecto (form-api/) es el Root Directory del proyecto en Vercel.
 // La ruta pública resultante es /api/waitlist.
 //
 // Env vars (Vercel → Project Settings → Environment Variables):

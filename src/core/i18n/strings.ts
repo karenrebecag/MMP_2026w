@@ -3,6 +3,23 @@ export interface Strings {
   navbar: {
     cta: string;
   };
+  hero: {
+    tag: string;
+    titleBefore: string;
+    // Última palabra rotatoria del heading ("…nuestra IA [vende|convierte|…]").
+    titleWords: string[];
+    subtitle: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+    // Mensajes de WhatsApp que brotan en el campo del hero (decorativos, glanceables).
+    messages: string[];
+  };
+  heroClassic: {
+    title: string;
+    subtitle: string;
+    ctaLabel: string;
+    footnote: string;
+  };
   waitlist: {
     eyebrow: string;
     heading: string;

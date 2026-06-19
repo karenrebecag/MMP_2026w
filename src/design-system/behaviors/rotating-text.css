@@ -5,8 +5,16 @@
 .aa-landing [data-aa-rotating-words] {
   position: relative;
 }
-.aa-landing .aa-rotating__highlight {
-  color: var(--aa-accent);
+/* Gradiente de marca sobre la palabra rotatoria (text mask). Pre-JS / reduced-motion el
+   texto vive directo en el highlight; ya animado vive en los .aa-rotating__word — ambos
+   llevan el mask para cubrir los dos estados. */
+.aa-landing .aa-rotating__highlight,
+.aa-landing .aa-rotating__highlight .aa-rotating__word {
+  background-image: var(--aa-gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* ── Inline: la palabra se queda en el flujo del texto ───────────────────────── */

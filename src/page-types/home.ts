@@ -6,7 +6,6 @@ import type { PageContext } from '../core/boot/registry';
 import { initMotion } from '../core/motion/motion';
 import { initAccordion } from '../design-system/behaviors/accordion';
 import { initSliders } from '../design-system/behaviors/slider';
-import { initHeroChat } from '../design-system/behaviors/hero-chat';
 import { initChats } from '../design-system/behaviors/chat';
 import { initMomentumHover } from '../design-system/behaviors/momentum-hover';
 import { initCursor } from '../design-system/behaviors/cursor';
@@ -15,7 +14,7 @@ import { renderBackground } from '../design-system/behaviors/background';
 import { renderMarquee, initMarquee } from '../design-system/behaviors/marquee';
 import { initMetaTheme } from '../design-system/behaviors/meta-theme';
 import { renderNavbar, initNavbar } from '../design-system/organisms/navbar';
-import { renderHero } from '../design-system/organisms/hero';
+import { renderHero, initHeroMessages, heroFromStrings } from '../design-system/organisms/hero';
 import { renderContentSections } from '../design-system/organisms/content-sections';
 import { renderFooter } from '../design-system/organisms/footer';
 import { renderWaitlist } from '../widgets/contact-form/presets/waitlist';
@@ -45,7 +44,7 @@ export function render(mount: HTMLElement, ctx: PageContext): void {
   renderBackground(root); // bg fijo texturizado detrás de todo
   renderMarquee(root); // barra fija superior (botón de registro permanente)
   renderNavbar(root); // navbar blanca de marca bajo el marquee
-  renderHero(root);
+  renderHero(root, heroFromStrings()); // hero "messages": mensajes que brotan
   renderContentSections(root);
   renderWaitlist(root);
   renderFooter(root);
@@ -56,9 +55,9 @@ export function render(mount: HTMLElement, ctx: PageContext): void {
 
   mount.replaceChildren(root);
   initAnchorScroll(root);
+  initHeroMessages(root); // motor de spawn (ambient + cursor) — tras montar en el DOM
   initAccordion(root);
   initSliders(root);
-  initHeroChat(root);
   initChats(root);
   initMomentumHover(root);
   initCursor(root);

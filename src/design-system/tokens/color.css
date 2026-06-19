@@ -36,4 +36,7 @@
   --aa-border: var(--aa-neutral-200);
   --aa-accent: var(--aa-color-electric);
   --aa-accent-fg: var(--aa-neutral-950);
+
+  /* ─── Gradients ───────────────────────────────────────────────────────────── */
+  --aa-gradient-brand: linear-gradient(90deg, #8023ff, #bf44ff, #ff6600);
 }

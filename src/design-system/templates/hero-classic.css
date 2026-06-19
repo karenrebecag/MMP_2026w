@@ -1,0 +1,248 @@
+/* atom-academy · hero. Card inset con video de fondo en loop + contenido a la izquierda. */
+
+/* Inset: padding del section que separa el card del borde del viewport.
+   El hero ocupa 100svh; el card crece para llenar (menos inset y footnote). */
+.aa-landing .aa-hero-classic {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(0.75rem, 2vw, 2rem);
+  padding-top: clamp(1.5rem, 3vw, 3rem); /* aire superior */
+}
+
+/* Card redondeado que contiene video, overlay y contenido */
+.aa-landing .aa-hero-classic__card {
+  --aa-hero-classic-radius: clamp(20px, 2.5vw, 36px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--aa-hero-classic-radius);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  background: var(--aa-neutral-900); /* fallback antes de cargar el video */
+}
+
+/* Video de fondo cover — radio propio (Safari no recorta video con overflow:hidden) */
+.aa-landing .aa-hero-classic__video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--aa-hero-classic-radius);
+}
+
+/* Overlay para legibilidad del texto (más oscuro a la izquierda) */
+.aa-landing .aa-hero-classic__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: var(--aa-hero-classic-radius);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10, 10, 10, 0.62) 0%,
+      rgba(10, 10, 10, 0.28) 46%,
+      rgba(10, 10, 10, 0) 74%
+    ),
+    linear-gradient(0deg, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0) 45%);
+}
+
+/* Contenido alineado a la izquierda */
+.aa-landing .aa-hero-classic__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--aa-gap-l);
+  max-width: 60%;
+  padding: clamp(2rem, 5vw, 5rem);
+  color: #fff;
+}
+
+.aa-landing .aa-hero-classic__title {
+  color: #fff;
+  line-height: 1.15;
+}
+
+.aa-landing .aa-hero-classic__subtitle {
+  max-width: 26em;
+  font-size: var(--aa-text-m);
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.aa-landing .aa-hero-classic__button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--aa-gap-s);
+  margin-top: var(--aa-gap-xs);
+}
+
+/* ─── Conversación de chat (tema WhatsApp) ───────────────────────────────────── */
+/* Ventana de alto fijo: las burbujas se apilan desde abajo y el overflow superior
+   se recorta con un mask que las desvanece (conversación que "sube"). */
+.aa-landing .aa-hero-classic__chats {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: clamp(2rem, 5vw, 5rem);
+  transform: translateY(-50%);
+  width: min(21rem, 30vw);
+  height: min(64%, 30rem);
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 100%);
+}
+.aa-landing .aa-hero-classic__chats-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--aa-gap-s);
+}
+
+.aa-landing .aa-hero-classic__bubble {
+  max-width: 90%;
+  padding: 0.7em 0.9em;
+  border-radius: 1.15em;
+  background: #fff;
+  color: var(--aa-neutral-950);
+  box-shadow: 0 4px 12px rgba(10, 10, 10, 0.1); /* sombra reducida */
+  font-size: var(--aa-text-s);
+}
+/* Verde WhatsApp para el mensaje saliente (decoración de marca, no token del DS) */
+.aa-landing .aa-hero-classic__bubble--out {
+  align-self: flex-end;
+  background: #d9fdd3;
+  border-bottom-right-radius: 0.3em;
+}
+.aa-landing .aa-hero-classic__bubble--in {
+  align-self: flex-start;
+  border-bottom-left-radius: 0.3em;
+}
+
+.aa-landing .aa-hero-classic__bubble-name {
+  display: block;
+  margin-bottom: 0.2em;
+  font-weight: var(--aa-weight-bold);
+  font-size: 0.8em;
+  color: var(--aa-accent-fg);
+}
+.aa-landing .aa-hero-classic__bubble-text {
+  margin: 0;
+  line-height: 1.3;
+}
+.aa-landing .aa-hero-classic__bubble-time {
+  display: block;
+  margin-top: 0.15em;
+  text-align: right;
+  font-size: 0.66em;
+  color: var(--aa-neutral-500);
+}
+
+/* Indicador "escribiendo…" — tres puntos que rebotan */
+.aa-landing .aa-hero-classic__bubble--typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32em;
+  padding: 1.05em 1.1em;
+}
+.aa-landing .aa-hero-classic__typing-dot {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--aa-neutral-500);
+  animation: aa-typing 1.3s ease-in-out infinite;
+}
+.aa-landing .aa-hero-classic__typing-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.aa-landing .aa-hero-classic__typing-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes aa-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-0.22em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-landing .aa-hero-classic__typing-dot {
+    animation: none;
+  }
+}
+
+/* Footnote bajo el card */
+.aa-landing .aa-hero-classic__footnote {
+  margin: 0;
+  padding-top: var(--aa-gap-s);
+  text-align: right;
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xxs);
+  color: var(--aa-fg-subtle);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media screen and (max-width: 991px) {
+  /* El card apila en columna y centra verticalmente el stack (contenido + chat). */
+  .aa-landing .aa-hero-classic__card {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .aa-landing .aa-hero-classic__content {
+    max-width: 100%;
+  }
+  /* Burbujas: de panel lateral absoluto a bloque en flujo, pegado al contenido.
+     position: relative para que el track absoluto se ancle a esta ventana. */
+  .aa-landing .aa-hero-classic__chats {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 100%;
+    height: min(13rem, 32vh);
+  }
+  .aa-landing .aa-hero-classic__chats-track {
+    left: clamp(2rem, 5vw, 5rem);
+    right: clamp(2rem, 5vw, 5rem);
+    bottom: 0.5rem;
+  }
+  .aa-landing .aa-hero-classic__overlay {
+    background: linear-gradient(0deg, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0.2) 60%);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .aa-landing .aa-hero-classic__card {
+    min-height: min(82svh, 620px);
+  }
+  .aa-landing .aa-hero-classic__chats {
+    height: min(11rem, 28vh);
+  }
+  .aa-landing .aa-hero-classic__footnote {
+    text-align: left;
+  }
+}

@@ -39,18 +39,18 @@ const prefersReduced = (): boolean =>
 
 function bubbleEl(turn: Turn): HTMLElement {
   const bubble = document.createElement('div');
-  bubble.className = `aa-hero__bubble aa-hero__bubble--${turn.kind}`;
+  bubble.className = `aa-hero-classic__bubble aa-hero-classic__bubble--${turn.kind}`;
   if (turn.name) {
     const name = document.createElement('span');
-    name.className = 'aa-hero__bubble-name';
+    name.className = 'aa-hero-classic__bubble-name';
     name.textContent = turn.name;
     bubble.appendChild(name);
   }
   const text = document.createElement('p');
-  text.className = 'aa-hero__bubble-text';
+  text.className = 'aa-hero-classic__bubble-text';
   text.textContent = turn.text;
   const time = document.createElement('span');
-  time.className = 'aa-hero__bubble-time';
+  time.className = 'aa-hero-classic__bubble-time';
   time.textContent = turn.time;
   bubble.append(text, time);
   return bubble;
@@ -58,10 +58,10 @@ function bubbleEl(turn: Turn): HTMLElement {
 
 function typingEl(kind: Turn['kind']): HTMLElement {
   const bubble = document.createElement('div');
-  bubble.className = `aa-hero__bubble aa-hero__bubble--${kind} aa-hero__bubble--typing`;
+  bubble.className = `aa-hero-classic__bubble aa-hero-classic__bubble--${kind} aa-hero-classic__bubble--typing`;
   for (let i = 0; i < 3; i++) {
     const dot = document.createElement('span');
-    dot.className = 'aa-hero__typing-dot';
+    dot.className = 'aa-hero-classic__typing-dot';
     bubble.appendChild(dot);
   }
   return bubble;
@@ -103,8 +103,8 @@ function trimOld(track: HTMLElement): void {
   while (track.children.length > MAX_BUBBLES) track.firstElementChild?.remove();
 }
 
-export function initHeroChat(scope: Element): void {
-  const track = scope.querySelector<HTMLElement>('[data-aa-hero-chat-track]');
+export function initHeroClassicChat(scope: Element): void {
+  const track = scope.querySelector<HTMLElement>('[data-aa-hero-classic-chat-track]');
   if (!track) return;
 
   // Sin animación: muestra los últimos turnos de forma estática.
@@ -114,7 +114,7 @@ export function initHeroChat(scope: Element): void {
   }
 
   let visible = true;
-  const card = scope.querySelector('.aa-hero__card') ?? scope;
+  const card = scope.querySelector('.aa-hero-classic__card') ?? scope;
   const io = new IntersectionObserver(
     ([entry]) => {
       visible = entry.isIntersecting;

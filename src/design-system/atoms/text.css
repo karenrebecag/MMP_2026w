@@ -51,6 +51,13 @@
   color: var(--aa-fg-muted);
 }
 
+/* Highlight narrativo: el párrafo es muted, el bold sube a contraste pleno para que
+   resalte como énfasis, no solo como peso. */
+.aa-landing :is(.aa-p-l, .aa-p-m) strong {
+  color: var(--aa-fg);
+  font-weight: var(--aa-weight-bold);
+}
+
 /* Tag de sección: badge sólido con el acento. width:fit-content para que se acomode
    solo — pegado a la izquierda en stacks normales y centrado en .aa-stack--center. */
 .aa-landing .aa-eyebrow {
@@ -72,6 +79,16 @@
    cuando la sección lo marca con aa-text-center (text-align no mueve flex-items). */
 .aa-landing .aa-eyebrow.aa-text-center {
   align-self: center;
+}
+
+/* Gradiente de marca aplicado como text mask. Combinable con cualquier .aa-h-*/.aa-p-*.
+   background-clip:text + text-fill-color:transparent pinta el glifo con el gradiente. */
+.aa-landing .aa-text-gradient {
+  background-image: var(--aa-gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* Clip wrapper para reveal de headings (SplitText sube las words desde abajo) */

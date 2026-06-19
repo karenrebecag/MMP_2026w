@@ -1,97 +1,111 @@
-// Hero — card inset (separado del borde del viewport) con video de fondo en loop,
-// contenido alineado a la izquierda y burbujas de chat decorativas (tema WhatsApp).
+// Hero del home — "messages": chip + headline + subhead + 2 CTAs sobre un campo donde brotan
+// mensajes de WhatsApp con avatar (motor en behaviors/hero-messages.ts). Sección light: no
+// pinta fondo, deja ver el .aa-bg-fixed. Z-layering: campo detrás, content encima (legibilidad).
+//
+// Parametrizado por props (i18n-agnóstico). heroFromStrings() puentea al namespace `hero`.
 
-import { renderHeading, renderParagraph } from '../atoms/text';
+import { renderParagraph } from '../atoms/text';
+import { renderRotatingHeading } from '../behaviors/rotating-text';
 import { renderButton } from '../atoms/button';
-import { R2_CONTENT } from '../../core/config/assets';
+import type { SectionTheme } from '../molecules/layout';
+import { strings } from '../../core/i18n';
+import { avatars } from '../../assets/r2';
 
-// Video de fondo en loop, servido desde Cloudflare R2 (público, con range/faststart).
-const HERO_VIDEO_SRC = `${R2_CONTENT}/hero-atom.mp4`;
+export { initHeroMessages } from '../behaviors/hero-messages';
 
-function buildVideo(): HTMLVideoElement {
-  const video = document.createElement('video');
-  video.className = 'aa-hero__video';
-  video.src = HERO_VIDEO_SRC;
-  // Autoplay silencioso en loop (requiere muted + playsinline en móvil).
-  video.muted = true;
-  video.autoplay = true;
-  video.loop = true;
-  video.playsInline = true;
-  video.setAttribute('muted', '');
-  video.setAttribute('autoplay', '');
-  video.setAttribute('loop', '');
-  video.setAttribute('playsinline', '');
-  video.setAttribute('preload', 'auto');
-  video.setAttribute('aria-hidden', 'true');
-  return video;
+export interface HeroProps {
+  tag: string;
+  titleBefore: string;
+  titleWords: string[];
+  subtitle: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta: { label: string; href: string };
+  messages: string[];
+  // Avatares para las píldoras de mensaje (se ciclan junto a messages).
+  avatars: string[];
+  theme?: SectionTheme;
 }
 
-// Ventana de chat: el track lo llena initHeroChat() (conversación animada).
-function buildChats(): HTMLElement {
-  const wrap = document.createElement('div');
-  wrap.className = 'aa-hero__chats';
-  wrap.setAttribute('aria-hidden', 'true');
-  const track = document.createElement('div');
-  track.className = 'aa-hero__chats-track';
-  track.setAttribute('data-aa-hero-chat-track', '');
-  wrap.appendChild(track);
-  return wrap;
+// Puente i18n: arma los props desde el namespace `hero` del idioma activo + avatares de assets.
+export function heroFromStrings(
+  opts: { primaryHref?: string; secondaryHref?: string } = {},
+): HeroProps {
+  const s = strings().hero;
+  return {
+    tag: s.tag,
+    titleBefore: s.titleBefore,
+    titleWords: s.titleWords,
+    subtitle: s.subtitle,
+    primaryCta: { label: s.ctaPrimary, href: opts.primaryHref ?? '#aa-waitlist' },
+    secondaryCta: { label: s.ctaSecondary, href: opts.secondaryHref ?? '#aa-demo' },
+    messages: s.messages,
+    avatars,
+  };
 }
 
-export function renderHero(root: Element): void {
+export function renderHero(root: Element, props: HeroProps): void {
   const hero = document.createElement('section');
   hero.className = 'aa-hero';
-  hero.setAttribute('data-aa-intro', ''); // anima al montar (no al hacer scroll)
-  hero.setAttribute('data-aa-section-theme', 'light');
+  hero.setAttribute('data-aa-section-theme', props.theme ?? 'light');
+  hero.setAttribute('data-aa-intro', ''); // anima al montar
 
-  // Card inset con video de fondo + overlay para legibilidad
-  const card = document.createElement('div');
-  card.className = 'aa-hero__card';
+  // Campo de spawn — detrás del contenido (z bajo, pointer-events:none vía CSS).
+  const field = document.createElement('div');
+  field.className = 'aa-hero__field';
+  field.setAttribute('data-aa-hero-field', '');
+  field.setAttribute('aria-hidden', 'true');
+  // Nodos fuente ocultos: texto + avatar. El motor los lee (behavior desacoplado de i18n).
+  props.messages.forEach((text, i) => {
+    const src = document.createElement('span');
+    src.className = 'aa-hero__msg-source';
+    src.textContent = text;
+    src.setAttribute('data-avatar', props.avatars[i % props.avatars.length]);
+    field.appendChild(src);
+  });
 
-  const overlay = document.createElement('div');
-  overlay.className = 'aa-hero__overlay';
-
-  // Contenido alineado a la izquierda
+  // Contenido — encima del campo (z alto = legibilidad garantizada).
   const content = document.createElement('div');
   content.className = 'aa-hero__content';
 
+  const chip = document.createElement('span');
+  chip.className = 'aa-hero__chip';
+  chip.textContent = props.tag;
+  chip.setAttribute('data-aa-fade', '');
+  content.appendChild(chip);
+
+  // Sin efecto on-mount: el rotating ya corre su propio SplitText sobre este nodo.
   content.appendChild(
-    renderHeading({
+    renderRotatingHeading({
       size: 'xxl',
-      text: 'Conviértete en Experto en WhatsApp Marketing',
       tag: 'h1',
-      split: true,
+      before: props.titleBefore,
+      words: props.titleWords,
       className: 'aa-hero__title aa-text-balance',
     }),
   );
 
   const subtitle = renderParagraph({
     size: 'l',
-    text: 'La primera formación para dominar el canal donde hoy se generan, califican y cierran más oportunidades.',
-    className: 'aa-hero__subtitle',
+    text: props.subtitle,
+    className: 'aa-hero__subtitle aa-text-balance',
   });
-  subtitle.setAttribute('data-aa-fade', '');
-  subtitle.setAttribute('data-aa-delay', '0.2');
+  subtitle.setAttribute('data-aa-split', '');
   content.appendChild(subtitle);
 
-  const buttonRow = document.createElement('div');
-  buttonRow.className = 'aa-hero__button-row';
-  buttonRow.setAttribute('data-aa-fade', '');
-  buttonRow.setAttribute('data-aa-delay', '0.35');
-  buttonRow.appendChild(
-    renderButton({ label: 'Únete a la lista de espera', href: '#aa-waitlist', variant: 'primary' }),
+  const ctaRow = document.createElement('div');
+  ctaRow.className = 'aa-hero__cta-row';
+  ctaRow.setAttribute('data-aa-fade', '');
+  ctaRow.setAttribute('data-aa-delay', '0.35');
+  ctaRow.append(
+    renderButton({ label: props.primaryCta.label, href: props.primaryCta.href, variant: 'primary' }),
+    renderButton({
+      label: props.secondaryCta.label,
+      href: props.secondaryCta.href,
+      variant: 'secondary',
+    }),
   );
-  content.appendChild(buttonRow);
+  content.appendChild(ctaRow);
 
-  card.append(buildVideo(), overlay, content, buildChats());
-
-  // Footnote bajo el card (anclado al lanzamiento real)
-  const footnote = document.createElement('p');
-  footnote.className = 'aa-hero__footnote';
-  footnote.textContent = '* Primera edición en julio · acceso prioritario para la lista de espera.';
-  footnote.setAttribute('data-aa-fade', '');
-  footnote.setAttribute('data-aa-delay', '0.5');
-
-  hero.append(card, footnote);
+  hero.append(field, content);
   root.appendChild(hero);
 }

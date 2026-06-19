@@ -1,7 +1,7 @@
 /* Button 004 (OSMO): flip 3D de caracteres en hover. Owner: button.ts */
 
 .aa-landing .aa-button {
-  --aa-btn-radius: var(--aa-radius-pill);
+  --aa-btn-radius: var(--aa-radius-m);
   --aa-btn-padding: 0.95em 1.5em;
   --aa-btn-translate-y: 1.25em;
   --aa-btn-focus-inset: -0.125em;
@@ -9,8 +9,8 @@
   --aa-btn-ease-hover: cubic-bezier(0.675, 0.15, 0.1, 1);
   --aa-btn-ease-click: cubic-bezier(0.4, 0, 0.2, 1);
   --aa-btn-ease-focus: cubic-bezier(0.32, 0.72, 0, 1);
-  --aa-btn-color: var(--aa-accent-fg);
-  --aa-btn-bg: var(--aa-accent);
+  --aa-btn-color: var(--aa-bg);
+  --aa-btn-bg: var(--aa-fg);
   --aa-btn-focus: var(--aa-fg);
 
   color: var(--aa-btn-color);
@@ -46,8 +46,8 @@
 
 /* Variantes por color (mapeadas a tokens del DS) */
 .aa-landing .aa-button--secondary {
-  --aa-btn-color: var(--aa-bg);
-  --aa-btn-bg: var(--aa-fg);
+  --aa-btn-color: var(--aa-fg);
+  --aa-btn-bg: var(--aa-bg);
 }
 .aa-landing .aa-button--ghost {
   --aa-btn-color: var(--aa-fg);

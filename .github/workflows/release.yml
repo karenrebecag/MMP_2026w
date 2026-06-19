@@ -73,4 +73,4 @@ jobs:
 
       - name: Purge jsDelivr (loader en @latest)
         run: |
-          curl -s "https://purge.jsdelivr.net/gh/karenrebecag/Academy_LP@latest/loader.js" || true
+          curl -s "https://purge.jsdelivr.net/gh/karenrebecag/MMP_2026w@latest/loader.js" || true
