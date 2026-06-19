@@ -1,0 +1,62 @@
+/* atom-academy · navbar blanca fija bajo el marquee. Full-bleed, logos a los
+   extremos. Se oculta deslizándose tras el marquee al bajar (ver navbar.ts). */
+
+.aa-landing .aa-navbar {
+  position: fixed;
+  top: var(--aa-marquee-height);
+  left: 0;
+  right: 0;
+  z-index: 99; /* bajo el marquee (100): se tuck detrás al ocultarse */
+  height: var(--aa-navbar-height);
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid var(--aa-border);
+  transition: transform var(--aa-duration-s) var(--aa-ease);
+  will-change: transform;
+}
+
+/* Oculto: sube su propia altura → su borde inferior queda al ras del marquee,
+   que lo cubre (z-index mayor + fondo opaco). */
+.aa-landing .aa-navbar--hidden {
+  transform: translateY(-100%);
+}
+
+.aa-landing .aa-navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Grupo de marca: logos + divider en fila, pegados a la izquierda. */
+.aa-landing .aa-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.aa-landing .aa-navbar__divider {
+  width: 1px;
+  height: 1.5rem;
+  background: var(--aa-border);
+  flex: none;
+}
+
+.aa-landing .aa-navbar__logo {
+  display: block;
+  width: auto;
+  object-fit: contain;
+}
+.aa-landing .aa-navbar__logo--atom {
+  height: clamp(1.5rem, 2.8vw, 1.95rem);
+}
+.aa-landing .aa-navbar__logo--meta {
+  height: clamp(2.25rem, 4.2vw, 2.9rem);
+}
+
+/* CTA del navbar un punto más chico que el tamaño base del botón. */
+.aa-landing .aa-navbar__inner > .aa-button {
+  transform: scale(0.8);
+  transform-origin: right center;
+}

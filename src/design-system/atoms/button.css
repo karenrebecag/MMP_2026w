@@ -1,0 +1,166 @@
+/* Button 004 (OSMO): flip 3D de caracteres en hover. Owner: button.ts */
+
+.aa-landing .aa-button {
+  --aa-btn-radius: var(--aa-radius-pill);
+  --aa-btn-padding: 0.95em 1.5em;
+  --aa-btn-translate-y: 1.25em;
+  --aa-btn-focus-inset: -0.125em;
+  --aa-btn-click-scale: 0.955 0.925;
+  --aa-btn-ease-hover: cubic-bezier(0.675, 0.15, 0.1, 1);
+  --aa-btn-ease-click: cubic-bezier(0.4, 0, 0.2, 1);
+  --aa-btn-ease-focus: cubic-bezier(0.32, 0.72, 0, 1);
+  --aa-btn-color: var(--aa-accent-fg);
+  --aa-btn-bg: var(--aa-accent);
+  --aa-btn-focus: var(--aa-fg);
+
+  color: var(--aa-btn-color);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: var(--aa-weight-bold);
+  line-height: 1;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  outline: none;
+  padding: 0;
+  display: inline-grid;
+  position: relative;
+  cursor: pointer;
+  transition: scale 0.15s var(--aa-btn-ease-click);
+}
+.aa-landing .aa-button--sm {
+  --aa-btn-padding: 0.72em 1.15em;
+  font-size: 0.875em;
+}
+
+/* Elementor (.elementor-kit-NN a:hover/visited) fuerza su color en anchors (0,2,1);
+   los CTA son <a>, así que reanclamos el color del botón en todos los estados (0,3,0). */
+.aa-landing .aa-button:hover,
+.aa-landing .aa-button:focus,
+.aa-landing .aa-button:active,
+.aa-landing .aa-button:visited {
+  color: var(--aa-btn-color);
+}
+
+/* Variantes por color (mapeadas a tokens del DS) */
+.aa-landing .aa-button--secondary {
+  --aa-btn-color: var(--aa-bg);
+  --aa-btn-bg: var(--aa-fg);
+}
+.aa-landing .aa-button--ghost {
+  --aa-btn-color: var(--aa-fg);
+  --aa-btn-bg: transparent;
+}
+.aa-landing .aa-button--ghost .aa-button__bg {
+  border: 1.5px solid var(--aa-border);
+}
+
+/* Anillo de focus accesible */
+.aa-landing .aa-button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: var(--aa-btn-focus-inset);
+  border-radius: var(--aa-btn-radius);
+  transition: box-shadow 0.3s var(--aa-btn-ease-focus);
+  pointer-events: none;
+  z-index: 1;
+}
+.aa-landing .aa-button:focus-visible::after {
+  box-shadow: 0 0 0 0.125em var(--aa-btn-focus);
+}
+.aa-landing .aa-button:active {
+  scale: var(--aa-btn-click-scale);
+}
+
+.aa-landing .aa-button__inner {
+  pointer-events: none;
+  border-radius: var(--aa-btn-radius);
+  z-index: 1;
+  padding: var(--aa-btn-padding);
+  grid-area: 1 / 1;
+  display: grid;
+  justify-items: center;
+}
+.aa-landing .aa-button__text {
+  perspective: 10em;
+  transform-style: preserve-3d;
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+.aa-landing .aa-button__split-char {
+  --base-delay: 0.05s;
+  --max-extra: 2.9s;
+  --t: calc(var(--index) / max(var(--max-index), 1));
+  --curve: sin(calc(var(--t) * 1.5deg));
+  --delay: calc(var(--base-delay) + (var(--curve) * var(--max-extra)));
+  --rot-t: calc(var(--index) / max(var(--max-index), 1));
+  --rot-curve: sin(calc(var(--rot-t) * 30deg));
+  --rot-sign: clamp(-1, var(--signed-index), 1);
+  --rot-max: 36deg;
+  display: inline-block;
+}
+.aa-landing .aa-button__text.is--default .aa-button__split-char {
+  transition:
+    transform 0.325s var(--aa-btn-ease-hover),
+    translate 0.425s var(--aa-btn-ease-hover),
+    rotate 0.45s var(--aa-btn-ease-hover),
+    opacity 0.15s ease-out;
+}
+.aa-landing .aa-button__text.is--hover .aa-button__split-char {
+  transition:
+    transform 0.35s var(--aa-btn-ease-hover),
+    translate 0.35s var(--aa-btn-ease-hover),
+    rotate 0.35s var(--aa-btn-ease-hover),
+    opacity 0.15s 0.1s ease-out;
+  rotate: 1 0 0 -72deg;
+  transform: rotateZ(calc(var(--rot-sign) * var(--rot-curve) * var(--rot-max) * -1)) scale(0.65);
+  translate: calc(var(--signed-index) * 0.125em) calc(var(--aa-btn-translate-y) * 1) 0;
+  opacity: 0;
+}
+.aa-landing .aa-button__bg {
+  background-color: var(--aa-btn-bg);
+  border-radius: var(--aa-btn-radius);
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  transition: background-color var(--aa-duration-s) var(--aa-btn-ease-hover);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .aa-landing .aa-button__split-char {
+    will-change: transform, translate, rotate, opacity;
+  }
+
+  .aa-landing
+    .aa-button:is(:hover, :focus-visible)
+    .aa-button__text.is--default
+    .aa-button__split-char {
+    translate: calc(var(--signed-index) * 0.125em) calc(var(--aa-btn-translate-y) * -1) 0;
+    rotate: 1 0 0 72deg;
+    transform: rotateZ(calc(var(--rot-sign) * var(--rot-curve) * var(--rot-max) * -1)) scale(0.65);
+    opacity: 0;
+    transition:
+      transform 0.35s var(--delay) var(--aa-btn-ease-hover),
+      translate 0.35s var(--delay) var(--aa-btn-ease-hover),
+      rotate 0.35s var(--delay) var(--aa-btn-ease-hover),
+      opacity 0.15s calc(var(--delay) + 0.1s) ease-out;
+  }
+  .aa-landing
+    .aa-button:is(:hover, :focus-visible)
+    .aa-button__text.is--hover
+    .aa-button__split-char {
+    translate: 0 0 0;
+    rotate: 1 0 0 0deg;
+    transform: rotateZ(0deg) scale(1);
+    opacity: 1;
+    transition:
+      transform 0.325s calc(var(--delay) + 0.05s) var(--aa-btn-ease-hover),
+      translate 0.425s calc(var(--delay) + 0.05s) var(--aa-btn-ease-hover),
+      rotate 0.45s calc(var(--delay) + 0.05s) var(--aa-btn-ease-hover),
+      opacity 0.15s calc(var(--delay) + 0.075s) ease-out;
+  }
+}

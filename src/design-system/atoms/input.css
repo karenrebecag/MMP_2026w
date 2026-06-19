@@ -1,0 +1,69 @@
+/* Campo de texto: .aa-field > label + input + slot de error (patrón OSMO). Owner: input.ts.
+   `.aa-field` es el wrapper compartido (también lo reusa checkbox.ts). */
+
+.aa-landing .aa-field {
+  display: flex;
+  flex-flow: column;
+  gap: var(--aa-gap-xxs);
+  min-width: 0;
+}
+
+/* Label — Haffer Mono uppercase de OSMO → font mono del DS */
+.aa-landing .aa-label {
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xxs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--aa-fg-muted);
+}
+
+/* Input — bg sólido, border transparente que aparece en hover/focus (patrón OSMO) */
+.aa-landing .aa-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--aa-input-height);
+  padding: 0.75em 1em;
+  font: inherit;
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--aa-fg);
+  background: var(--aa-input-bg);
+  border: 1px solid transparent;
+  border-radius: var(--aa-input-radius);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color var(--aa-duration-s) var(--aa-ease-out);
+}
+.aa-landing .aa-input::placeholder {
+  color: var(--aa-fg-subtle);
+}
+.aa-landing .aa-input:hover {
+  border-color: var(--aa-border);
+}
+.aa-landing .aa-input:focus {
+  border-color: var(--aa-fg-subtle);
+}
+
+.aa-landing .aa-field.has-error .aa-input {
+  border-color: var(--aa-color-coral);
+}
+
+.aa-landing .aa-error {
+  min-height: 1em;
+  font-size: var(--aa-text-xxs);
+  line-height: 1.3;
+  color: var(--aa-color-coral);
+  opacity: 0;
+  transition: opacity var(--aa-duration-s) ease;
+}
+.aa-landing .aa-error:not(:empty) {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-landing .aa-error {
+    transition: none !important;
+  }
+}

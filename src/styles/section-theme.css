@@ -1,0 +1,95 @@
+/* atom-academy · section themes (strips claro/oscuro). Adaptado del data-theme-section
+   de OSMO. OSMO usa selectores explícitos por componente; aquí remapeamos los tokens
+   --aa-* por sección: como todos los componentes leen de tokens, se adaptan solos. */
+
+/* Token set OSCURO — compartido por el tema global y las secciones dark */
+.aa-landing[data-aa-theme='dark'],
+.aa-landing [data-aa-section-theme='dark'] {
+  --aa-bg: var(--aa-neutral-950);
+  --aa-bg-subtle: var(--aa-neutral-900);
+  --aa-fg: var(--aa-neutral-50);
+  --aa-fg-muted: var(--aa-neutral-400);
+  --aa-fg-subtle: var(--aa-neutral-600);
+  --aa-border: var(--aa-neutral-800);
+  --aa-input-bg: var(--aa-neutral-850);
+}
+
+/* Token set CLARO — re-asegura los valores base cuando una sección light
+   vive dentro de un tema global dark (estrato autónomo) */
+.aa-landing [data-aa-section-theme='light'] {
+  --aa-bg: var(--aa-neutral-50);
+  --aa-bg-subtle: var(--aa-neutral-100);
+  --aa-fg: var(--aa-neutral-950);
+  --aa-fg-muted: var(--aa-neutral-600);
+  --aa-fg-subtle: var(--aa-neutral-400);
+  --aa-border: var(--aa-neutral-200);
+  --aa-input-bg: var(--aa-neutral-200);
+}
+
+/* Cada sección con tema pinta su propio strip a partir de los tokens remapeados */
+.aa-landing [data-aa-section-theme] {
+  background-color: var(--aa-bg);
+  color: var(--aa-fg);
+}
+
+/* Las strips light van transparentes: dejan ver el bg fijo texturizado global
+   (.aa-bg-fixed), así se pinta una sola vez. Las dark conservan su color sólido. */
+.aa-landing [data-aa-section-theme='light'] {
+  background-color: transparent;
+}
+
+/* Strip "La tesis + El problema": un solo bloque obsidian (#201d1d) con texto claro.
+   El problema quita su padding-top para fundirse con La tesis en una sola tira.
+   Programa conserva el mismo obsidian, pero ya aislado: lleva su padding completo. */
+.aa-landing #aa-tesis,
+.aa-landing #aa-problema,
+.aa-landing #aa-programa {
+  --aa-bg: #201d1d;
+  --aa-bg-subtle: #1a1717;
+}
+/* Cabeza del strip: esquinas superiores redondeadas contra el manifiesto claro. */
+.aa-landing #aa-tesis {
+  border-top-left-radius: var(--aa-radius-xl);
+  border-top-right-radius: var(--aa-radius-xl);
+}
+.aa-landing #aa-problema {
+  padding-top: 0;
+}
+
+/* Card flotante dark (CTA "Primera generación"): el strip light deja ver la textura y
+   el container flota como card oscuro (obsidian) con texto claro. Como el form, pero dark. */
+.aa-landing #aa-generacion .aa-container {
+  --aa-bg: #201d1d; /* superficie del card: la leen badges/botones (color: var(--aa-bg)) */
+  --aa-bg-subtle: #1a1717;
+  --aa-fg: var(--aa-neutral-50);
+  --aa-fg-muted: var(--aa-neutral-400);
+  --aa-fg-subtle: var(--aa-neutral-600);
+  --aa-border: var(--aa-neutral-800);
+  background: #201d1d; /* sobreescribe el blanco de .aa-container--card */
+  color: var(--aa-fg);
+}
+
+/* Sección con video de fondo (CTA final): el video llena el strip y un overlay
+   oscuro garantiza contraste del texto claro. El contenido vive sobre ambos. */
+.aa-landing .aa-section--media {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.aa-section__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.aa-section__media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.aa-section__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 18, 18, 0.74);
+}

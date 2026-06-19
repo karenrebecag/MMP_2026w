@@ -1,0 +1,131 @@
+/* atom-academy · landing page design system (OSMO-inspired, token-based). */
+/* Índice: esbuild inlinea estos @import en un solo dist/landing.css.          */
+/* Toda la especificidad vive bajo .aa-landing para no colisionar con Elementor. */
+
+/* Inter Tight (body) desde Google Fonts — debe ir primero (regla @import). */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap');
+
+/* Globales (cross-cutting, sin dueño de componente): fonts/split/section-theme. */
+@import './fonts.css';
+
+/* Tokens del DS (design-system/tokens/) — primero para definir las custom properties. */
+@import '../design-system/tokens/color.css';
+@import '../design-system/tokens/space.css';
+@import '../design-system/tokens/type.css';
+@import '../design-system/tokens/motion.css';
+@import '../design-system/tokens/layout.css';
+
+/* Componentes — CSS co-locado con su TS. El orden de cascada se conserva. */
+@import '../design-system/atoms/text.css';
+@import '../design-system/molecules/layout.css';
+@import '../design-system/atoms/button.css';
+@import '../design-system/organisms/hero.css';
+@import '../design-system/organisms/content-sections.css';
+@import '../design-system/behaviors/accordion.css';
+@import '../design-system/organisms/manifesto.css';
+@import '../design-system/organisms/audience.css';
+@import './split.css';
+@import '../design-system/behaviors/chat.css';
+@import '../design-system/behaviors/rotating-text.css';
+@import '../design-system/organisms/info.css';
+@import '../design-system/behaviors/slider.css';
+@import '../design-system/atoms/input.css';
+@import '../design-system/atoms/checkbox.css';
+@import '../widgets/contact-form/contact-form.css';
+@import '../design-system/organisms/footer.css';
+@import '../design-system/behaviors/marquee.css';
+@import '../design-system/organisms/navbar.css';
+@import './section-theme.css';
+@import '../design-system/behaviors/cursor.css';
+
+/* Scrollbar electric. Selector gateado a :has(.aa-landing) para no afectar otras
+   páginas de Elementor (solo aplica cuando la landing está montada). */
+:root:has(.aa-landing) {
+  scrollbar-width: thin;
+  scrollbar-color: var(--aa-color-electric) transparent;
+}
+:root:has(.aa-landing)::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+:root:has(.aa-landing)::-webkit-scrollbar-track {
+  background: transparent;
+}
+:root:has(.aa-landing)::-webkit-scrollbar-thumb {
+  background: var(--aa-color-electric);
+  border-radius: var(--aa-radius-pill);
+}
+
+/* Reset box-sizing: sin esto, width:100% + padding desbordan los contenedores y el
+   overflow-x: clip del root recorta el contenido por la derecha en todas las strips. */
+.aa-landing *,
+.aa-landing *::before,
+.aa-landing *::after {
+  box-sizing: border-box;
+}
+
+/* ─── Root wrapper ────────────────────────────────────────────────────────────── */
+.aa-landing {
+  font-family: var(--aa-font);
+  font-size: var(--aa-size-font);
+  color: var(--aa-fg);
+  background: var(--aa-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip; /* contiene cualquier desborde horizontal (slider, scribble) sin romper sticky */
+  isolation: isolate; /* contexto de apilado: contiene el bg fijo (z-index -1) */
+  padding-top: calc(
+    var(--aa-marquee-height) + var(--aa-navbar-height)
+  ); /* sitio para marquee + navbar fijos */
+}
+
+/* Fondo fijo global: color claro + textura topográfica con blend, pineado al viewport.
+   Detrás de todo (z-index -1, dentro del contexto de .aa-landing). Las strips light
+   van transparentes y lo dejan ver; las dark lo cubren con su color sólido. */
+.aa-landing .aa-bg-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  isolation: isolate; /* el multiply de la textura solo mezcla con el color de este bg */
+  background-color: #ffffff;
+  pointer-events: none;
+}
+.aa-landing .aa-bg-fixed__texture {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 620px auto;
+  mix-blend-mode: multiply; /* deja ver las curvas topográficas sobre el blanco */
+  opacity: 0.12;
+}
+
+/* Dark theme global + section themes (strips) viven en section-theme.css. */
+
+/* ─── Utilities ───────────────────────────────────────────────────────────────── */
+.aa-landing .aa-text-center {
+  text-align: center;
+}
+.aa-landing .aa-text-balance {
+  text-wrap: balance;
+}
+.aa-landing .aa-text-accent {
+  color: var(--aa-accent);
+}
+.aa-landing .aa-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.aa-landing .aa-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aa-landing .aa-gap-s {
+  gap: var(--aa-gap-s);
+}
+.aa-landing .aa-gap-m {
+  gap: var(--aa-gap-m);
+}
+.aa-landing .aa-gap-l {
+  gap: var(--aa-gap-l);
+}

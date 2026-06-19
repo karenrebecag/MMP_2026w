@@ -1,0 +1,28 @@
+/* Tokens de espaciado y radio. */
+
+:root {
+  /* ─── Spacing — section level (grande) ────────────────────────────────────── */
+  --aa-padding-xxl: 8rem;
+  --aa-padding-xl: 6rem;
+  --aa-padding-l: 4rem;
+  --aa-padding-m: 2.5rem;
+  --aa-padding-s: 1.5rem;
+  --aa-padding-xs: 1rem;
+  --aa-padding-xxs: 0.5rem;
+
+  /* ─── Spacing — component level (chico) ───────────────────────────────────── */
+  --aa-gap-xxl: 5rem;
+  --aa-gap-xl: 3.5rem;
+  --aa-gap-l: 2.5rem;
+  --aa-gap-m: 1.5rem;
+  --aa-gap-s: 1rem;
+  --aa-gap-xs: 0.75rem;
+  --aa-gap-xxs: 0.5rem;
+
+  /* ─── Border radius ───────────────────────────────────────────────────────── */
+  --aa-radius-s: 4px;
+  --aa-radius-m: 8px;
+  --aa-radius-l: 16px;
+  --aa-radius-xl: 24px;
+  --aa-radius-pill: 999px;
+}

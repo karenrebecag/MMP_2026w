@@ -1,0 +1,162 @@
+/* atom-academy · sección manifesto. Copy centrada entre dos bandas de avatar-bubbles
+   (preguntas de prospectos). Bandas con flex → centro libre, sin solapar el texto.
+   Rotación + jitter = look flotante; momentum-hover (inertia) reacciona al cursor. */
+
+.aa-landing .aa-mw {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--aa-gap-xl);
+  min-height: 86svh;
+  padding-block: var(--aa-gap-xl);
+}
+
+/* Rejilla decorativa: líneas verticales de columna, detrás del contenido */
+.aa-landing .aa-mw__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.aa-landing .aa-mw__grid-line {
+  width: 1px;
+  background: var(--aa-border);
+  opacity: 0.5;
+}
+
+/* Texto centrado */
+.aa-landing .aa-mw__text {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 40em;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--aa-gap-m);
+  text-align: center;
+}
+.aa-landing .aa-mw__text .aa-eyebrow {
+  text-align: center;
+}
+.aa-landing .aa-mw__p {
+  font-size: var(--aa-text-s);
+  line-height: 1.5;
+  color: var(--aa-fg-muted);
+}
+/* Énfasis: peso + color pleno para resaltar palabras clave sobre el cuerpo muted */
+.aa-landing .aa-mw__p strong {
+  font-weight: var(--aa-weight-semibold);
+  color: var(--aa-fg);
+}
+
+/* Capturas full-width de las burbujas — solo en mobile (sustituyen a las bandas) */
+.aa-landing .aa-mw__shot {
+  display: none;
+}
+
+/* Bandas de burbujas — repartidas a lo ancho, sin tocar el centro */
+.aa-landing .aa-mw__band {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--aa-gap-m);
+  width: 100%;
+}
+
+.aa-landing .aa-mw__item {
+  flex: 0 1 auto;
+}
+
+/* Nodo con rotación + jitter; es el que escucha el hover */
+.aa-landing .aa-mw__rot {
+  pointer-events: auto;
+  cursor: default;
+  will-change: transform;
+}
+
+/* Target del inertia: avatar + burbuja */
+.aa-landing .aa-mw__inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  will-change: transform;
+}
+/* Saliente (verde): avatar a la derecha */
+.aa-landing .aa-mw__item--out .aa-mw__inner {
+  flex-direction: row-reverse;
+}
+
+.aa-landing .aa-mw__avatar {
+  flex: none;
+  width: 2.75em;
+  height: 2.75em;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(10, 10, 10, 0.12);
+}
+
+.aa-landing .aa-mw__bubble {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.5em 0.7em;
+  border-radius: 1.1em;
+  background: #fff;
+  color: var(--aa-neutral-950);
+  box-shadow: 0 4px 12px rgba(10, 10, 10, 0.08);
+  font-size: var(--aa-text-xs);
+  white-space: nowrap;
+}
+/* Verde WhatsApp para prospectos "salientes" (variedad visual) */
+.aa-landing .aa-mw__item--out .aa-mw__bubble {
+  background: #d9fdd3;
+  border-bottom-right-radius: 0.3em;
+}
+.aa-landing .aa-mw__item--in .aa-mw__bubble {
+  border-bottom-left-radius: 0.3em;
+}
+
+.aa-landing .aa-mw__bubble-time {
+  flex: none;
+  font-size: 0.72em;
+  color: var(--aa-neutral-500);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+/* Tablet: menos burbujas por banda para que respiren */
+@media screen and (max-width: 991px) {
+  .aa-landing .aa-mw {
+    min-height: auto;
+    gap: var(--aa-gap-l);
+  }
+  .aa-landing .aa-mw__band .aa-mw__item:nth-child(n + 4) {
+    display: none;
+  }
+  .aa-landing .aa-mw__bubble {
+    font-size: var(--aa-text-xxs);
+  }
+}
+/* Móvil: se ocultan las bandas y aparecen las capturas full-width (arriba y abajo) */
+@media screen and (max-width: 767px) {
+  .aa-landing .aa-mw__band {
+    display: none;
+  }
+  .aa-landing .aa-mw__shot {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .aa-landing .aa-mw__shot--top {
+    margin-bottom: var(--aa-gap-m);
+  }
+  .aa-landing .aa-mw__shot--bottom {
+    margin-top: var(--aa-gap-m);
+  }
+}

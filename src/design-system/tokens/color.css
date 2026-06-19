@@ -1,0 +1,39 @@
+/* Tokens de color. Fuente única de verdad de la paleta del DS. */
+
+/* OJO — drift de naming: la paleta se rebrandeó a verde WhatsApp pero los nombres
+   históricos quedaron. Hoy `electric` = verde y `purple` = verde muy oscuro (NO son
+   sus colores literales). Renombrar toca usos en TS/CSS → pendiente decidido aparte.
+   No asumas el color por el nombre del token; mira el valor. */
+
+:root {
+  /* ─── Neutral scale ───────────────────────────────────────────────────────── */
+  --aa-neutral-50: #fafafa;
+  --aa-neutral-100: #f5f5f5;
+  --aa-neutral-150: #efefef;
+  --aa-neutral-200: #e5e5e5;
+  --aa-neutral-300: #d4d4d4;
+  --aa-neutral-400: #a3a3a3;
+  --aa-neutral-500: #737373;
+  --aa-neutral-600: #525252;
+  --aa-neutral-700: #404040;
+  --aa-neutral-800: #262626;
+  --aa-neutral-850: #1a1a1a;
+  --aa-neutral-900: #171717;
+  --aa-neutral-950: #0a0a0a;
+
+  /* ─── Brand accents (ver nota de drift arriba) ────────────────────────────── */
+  --aa-color-electric: #25d366; /* verde WhatsApp */
+  --aa-color-purple: #0a290f; /* verde muy oscuro */
+  --aa-color-coral: #f84131;
+  --aa-color-sky: #22d3ee;
+
+  /* ─── Semantic color tokens ───────────────────────────────────────────────── */
+  --aa-bg: var(--aa-neutral-50);
+  --aa-bg-subtle: var(--aa-neutral-100);
+  --aa-fg: var(--aa-neutral-950);
+  --aa-fg-muted: var(--aa-neutral-600);
+  --aa-fg-subtle: var(--aa-neutral-400);
+  --aa-border: var(--aa-neutral-200);
+  --aa-accent: var(--aa-color-electric);
+  --aa-accent-fg: var(--aa-neutral-950);
+}

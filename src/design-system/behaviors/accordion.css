@@ -1,0 +1,90 @@
+/* atom-academy · accordion (FAQ). Técnica de OSMO: grid-template-rows 0fr → 1fr. */
+
+.aa-landing .aa-accordion {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--aa-border);
+}
+.aa-landing .aa-accordion__item {
+  border-bottom: 1px solid var(--aa-border);
+}
+
+.aa-landing .aa-accordion__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  padding: var(--aa-gap-m) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+.aa-landing .aa-accordion__q {
+  font-size: var(--aa-text-s);
+  font-weight: var(--aa-weight-semibold);
+  line-height: 1.3;
+}
+
+/* Icono +/− construido con dos barras (la vertical desaparece al abrir) */
+.aa-landing .aa-accordion__icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 1.1em;
+  height: 1.1em;
+}
+.aa-landing .aa-accordion__icon::before,
+.aa-landing .aa-accordion__icon::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+}
+.aa-landing .aa-accordion__icon::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+}
+.aa-landing .aa-accordion__icon::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  transition: transform var(--aa-duration-s) var(--aa-ease);
+}
+.aa-landing .aa-accordion__item[data-open] .aa-accordion__icon::after {
+  transform: scaleY(0);
+}
+
+/* Body colapsable */
+.aa-landing .aa-accordion__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--aa-duration-m) var(--aa-ease);
+}
+.aa-landing .aa-accordion__item[data-open] .aa-accordion__body {
+  grid-template-rows: 1fr;
+}
+.aa-landing .aa-accordion__inner {
+  overflow: hidden;
+  min-height: 0;
+}
+.aa-landing .aa-accordion__a {
+  padding-bottom: var(--aa-gap-m);
+  max-width: 60ch;
+  color: var(--aa-fg-muted);
+  font-size: var(--aa-text-s);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-landing .aa-accordion__body,
+  .aa-landing .aa-accordion__icon::after {
+    transition: none !important;
+  }
+}

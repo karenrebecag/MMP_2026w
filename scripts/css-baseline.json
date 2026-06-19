@@ -1,0 +1,960 @@
+{
+  "source": "../ATOM_Academy/src/styles",
+  "files": 22,
+  "classCount": 200,
+  "varCount": 103,
+  "classes": {
+    "aa-landing": [
+      "accordion.css",
+      "audience.css",
+      "chat.css",
+      "components.css",
+      "cursor.css",
+      "footer.css",
+      "form.css",
+      "hero.css",
+      "info.css",
+      "landing.css",
+      "layout.css",
+      "manifesto.css",
+      "marquee.css",
+      "navbar.css",
+      "rotating-text.css",
+      "section-theme.css",
+      "sections.css",
+      "slider.css",
+      "split.css",
+      "typography.css"
+    ],
+    "aa-accordion": [
+      "accordion.css"
+    ],
+    "aa-accordion__item": [
+      "accordion.css"
+    ],
+    "aa-accordion__head": [
+      "accordion.css"
+    ],
+    "aa-accordion__q": [
+      "accordion.css"
+    ],
+    "aa-accordion__icon": [
+      "accordion.css"
+    ],
+    "aa-accordion__body": [
+      "accordion.css"
+    ],
+    "aa-accordion__inner": [
+      "accordion.css"
+    ],
+    "aa-accordion__a": [
+      "accordion.css"
+    ],
+    "aa-aud": [
+      "audience.css"
+    ],
+    "aa-aud__intro": [
+      "audience.css"
+    ],
+    "aa-aud__eyebrow": [
+      "audience.css"
+    ],
+    "aa-aud__row": [
+      "audience.css"
+    ],
+    "aa-aud__col": [
+      "audience.css"
+    ],
+    "aa-aud__info": [
+      "audience.css"
+    ],
+    "aa-aud__lead": [
+      "audience.css"
+    ],
+    "aa-aud__list": [
+      "audience.css"
+    ],
+    "aa-aud__item": [
+      "audience.css"
+    ],
+    "aa-aud__item-icon": [
+      "audience.css"
+    ],
+    "aa-aud__item-text": [
+      "audience.css"
+    ],
+    "aa-aud__img-w": [
+      "audience.css"
+    ],
+    "aa-aud__img": [
+      "audience.css"
+    ],
+    "aa-aud__media": [
+      "audience.css"
+    ],
+    "aa-aud__col--media": [
+      "audience.css"
+    ],
+    "aa-chat__track": [
+      "chat.css",
+      "split.css"
+    ],
+    "aa-chat__bubble": [
+      "chat.css"
+    ],
+    "aa-chat__bubble--in": [
+      "chat.css"
+    ],
+    "aa-chat__bubble--out": [
+      "chat.css"
+    ],
+    "aa-chat__bubble-name": [
+      "chat.css"
+    ],
+    "aa-chat__bubble-time": [
+      "chat.css"
+    ],
+    "aa-chat__bubble--typing": [
+      "chat.css"
+    ],
+    "aa-chat__typing-dot": [
+      "chat.css"
+    ],
+    "aa-button": [
+      "components.css",
+      "form.css",
+      "navbar.css"
+    ],
+    "aa-button--sm": [
+      "components.css"
+    ],
+    "aa-button--secondary": [
+      "components.css"
+    ],
+    "aa-button--ghost": [
+      "components.css"
+    ],
+    "aa-button__bg": [
+      "components.css"
+    ],
+    "aa-button__inner": [
+      "components.css"
+    ],
+    "aa-button__text": [
+      "components.css"
+    ],
+    "aa-button__split-char": [
+      "components.css"
+    ],
+    "aa-card": [
+      "components.css",
+      "sections.css"
+    ],
+    "aa-mod-card": [
+      "components.css",
+      "slider.css"
+    ],
+    "aa-mod-card--electric": [
+      "components.css"
+    ],
+    "aa-mod-card--purple": [
+      "components.css"
+    ],
+    "aa-mod-card--neutral": [
+      "components.css"
+    ],
+    "aa-mod-card__before": [
+      "components.css"
+    ],
+    "aa-mod-card__bg": [
+      "components.css"
+    ],
+    "aa-mod-card__content": [
+      "components.css"
+    ],
+    "aa-mod-card__tags": [
+      "components.css"
+    ],
+    "aa-mod-card__tag": [
+      "components.css"
+    ],
+    "aa-mod-card__center": [
+      "components.css"
+    ],
+    "aa-mod-card__h": [
+      "components.css"
+    ],
+    "aa-mod-card__p": [
+      "components.css"
+    ],
+    "aa-divider": [
+      "components.css"
+    ],
+    "aa-cursor": [
+      "cursor.css"
+    ],
+    "aa-slider__track": [
+      "cursor.css",
+      "slider.css"
+    ],
+    "aa-cursor__drag": [
+      "cursor.css"
+    ],
+    "aa-cursor--drag": [
+      "cursor.css"
+    ],
+    "aa-cursor__arrow": [
+      "cursor.css"
+    ],
+    "aa-footer": [
+      "footer.css"
+    ],
+    "aa-container--card": [
+      "footer.css",
+      "form.css",
+      "layout.css",
+      "section-theme.css"
+    ],
+    "aa-container": [
+      "footer.css",
+      "layout.css",
+      "section-theme.css"
+    ],
+    "aa-footer__badges": [
+      "footer.css"
+    ],
+    "aa-footer__badge": [
+      "footer.css"
+    ],
+    "aa-footer__links": [
+      "footer.css"
+    ],
+    "aa-footer__col": [
+      "footer.css"
+    ],
+    "aa-footer__col-title": [
+      "footer.css"
+    ],
+    "aa-footer__list": [
+      "footer.css"
+    ],
+    "aa-footer__link": [
+      "footer.css"
+    ],
+    "aa-footer__chev": [
+      "footer.css"
+    ],
+    "aa-footer__bottom": [
+      "footer.css"
+    ],
+    "aa-footer__logo": [
+      "footer.css"
+    ],
+    "aa-footer__socials": [
+      "footer.css"
+    ],
+    "aa-footer__social": [
+      "footer.css"
+    ],
+    "aa-footer__address": [
+      "footer.css"
+    ],
+    "aa-form": [
+      "form.css"
+    ],
+    "aa-form__row": [
+      "form.css"
+    ],
+    "aa-field": [
+      "form.css"
+    ],
+    "aa-label": [
+      "form.css"
+    ],
+    "aa-input": [
+      "form.css"
+    ],
+    "aa-error": [
+      "form.css"
+    ],
+    "aa-check": [
+      "form.css"
+    ],
+    "aa-check__input": [
+      "form.css"
+    ],
+    "aa-check__box": [
+      "form.css"
+    ],
+    "aa-check__icon": [
+      "form.css"
+    ],
+    "aa-check__label": [
+      "form.css"
+    ],
+    "aa-form__submit": [
+      "form.css"
+    ],
+    "aa-form__note": [
+      "form.css"
+    ],
+    "aa-form__note-text": [
+      "form.css"
+    ],
+    "aa-form__check": [
+      "form.css"
+    ],
+    "aa-hero": [
+      "hero.css"
+    ],
+    "aa-hero__card": [
+      "hero.css"
+    ],
+    "aa-hero__video": [
+      "hero.css"
+    ],
+    "aa-hero__overlay": [
+      "hero.css"
+    ],
+    "aa-hero__content": [
+      "hero.css"
+    ],
+    "aa-hero__title": [
+      "hero.css"
+    ],
+    "aa-hero__subtitle": [
+      "hero.css"
+    ],
+    "aa-hero__button-row": [
+      "hero.css"
+    ],
+    "aa-hero__chats": [
+      "hero.css"
+    ],
+    "aa-hero__chats-track": [
+      "hero.css"
+    ],
+    "aa-hero__bubble": [
+      "hero.css"
+    ],
+    "aa-hero__bubble--out": [
+      "hero.css"
+    ],
+    "aa-hero__bubble--in": [
+      "hero.css"
+    ],
+    "aa-hero__bubble-name": [
+      "hero.css"
+    ],
+    "aa-hero__bubble-text": [
+      "hero.css"
+    ],
+    "aa-hero__bubble-time": [
+      "hero.css"
+    ],
+    "aa-hero__bubble--typing": [
+      "hero.css"
+    ],
+    "aa-hero__typing-dot": [
+      "hero.css"
+    ],
+    "aa-hero__footnote": [
+      "hero.css"
+    ],
+    "aa-info__wrap": [
+      "info.css"
+    ],
+    "aa-info__large-col": [
+      "info.css"
+    ],
+    "aa-info__title": [
+      "info.css"
+    ],
+    "aa-info__list": [
+      "info.css"
+    ],
+    "aa-info__li": [
+      "info.css"
+    ],
+    "aa-info__li-title": [
+      "info.css"
+    ],
+    "aa-info__li-desc": [
+      "info.css"
+    ],
+    "aa-bg-fixed": [
+      "landing.css",
+      "section-theme.css"
+    ],
+    "aa-bg-fixed__texture": [
+      "landing.css"
+    ],
+    "aa-text-center": [
+      "landing.css",
+      "typography.css"
+    ],
+    "aa-text-balance": [
+      "landing.css"
+    ],
+    "aa-text-accent": [
+      "landing.css"
+    ],
+    "aa-flex-col": [
+      "landing.css"
+    ],
+    "aa-flex-center": [
+      "landing.css"
+    ],
+    "aa-gap-s": [
+      "landing.css"
+    ],
+    "aa-gap-m": [
+      "landing.css"
+    ],
+    "aa-gap-l": [
+      "landing.css"
+    ],
+    "aa-section": [
+      "layout.css"
+    ],
+    "aa-section--hero": [
+      "layout.css"
+    ],
+    "aa-section--sm": [
+      "layout.css"
+    ],
+    "aa-grid": [
+      "layout.css"
+    ],
+    "aa-grid--2": [
+      "layout.css"
+    ],
+    "aa-grid--3": [
+      "layout.css"
+    ],
+    "aa-grid--4": [
+      "layout.css"
+    ],
+    "aa-mw": [
+      "manifesto.css"
+    ],
+    "aa-mw__grid": [
+      "manifesto.css"
+    ],
+    "aa-mw__grid-line": [
+      "manifesto.css"
+    ],
+    "aa-mw__text": [
+      "manifesto.css"
+    ],
+    "aa-eyebrow": [
+      "manifesto.css",
+      "typography.css"
+    ],
+    "aa-mw__p": [
+      "manifesto.css"
+    ],
+    "aa-mw__shot": [
+      "manifesto.css"
+    ],
+    "aa-mw__band": [
+      "manifesto.css"
+    ],
+    "aa-mw__item": [
+      "manifesto.css"
+    ],
+    "aa-mw__rot": [
+      "manifesto.css"
+    ],
+    "aa-mw__inner": [
+      "manifesto.css"
+    ],
+    "aa-mw__item--out": [
+      "manifesto.css"
+    ],
+    "aa-mw__avatar": [
+      "manifesto.css"
+    ],
+    "aa-mw__bubble": [
+      "manifesto.css"
+    ],
+    "aa-mw__item--in": [
+      "manifesto.css"
+    ],
+    "aa-mw__bubble-time": [
+      "manifesto.css"
+    ],
+    "aa-mw__shot--top": [
+      "manifesto.css"
+    ],
+    "aa-mw__shot--bottom": [
+      "manifesto.css"
+    ],
+    "aa-marquee": [
+      "marquee.css"
+    ],
+    "aa-marquee__rows": [
+      "marquee.css"
+    ],
+    "aa-marquee__row": [
+      "marquee.css"
+    ],
+    "aa-marquee__track": [
+      "marquee.css"
+    ],
+    "aa-marquee__item": [
+      "marquee.css"
+    ],
+    "aa-marquee__text": [
+      "marquee.css"
+    ],
+    "aa-marquee__dot": [
+      "marquee.css"
+    ],
+    "aa-navbar": [
+      "navbar.css"
+    ],
+    "aa-navbar--hidden": [
+      "navbar.css"
+    ],
+    "aa-navbar__inner": [
+      "navbar.css"
+    ],
+    "aa-navbar__brand": [
+      "navbar.css"
+    ],
+    "aa-navbar__divider": [
+      "navbar.css"
+    ],
+    "aa-navbar__logo": [
+      "navbar.css"
+    ],
+    "aa-navbar__logo--atom": [
+      "navbar.css"
+    ],
+    "aa-navbar__logo--meta": [
+      "navbar.css"
+    ],
+    "aa-rotating__highlight": [
+      "rotating-text.css"
+    ],
+    "aa-rotating__block": [
+      "rotating-text.css"
+    ],
+    "aa-rotating__inner": [
+      "rotating-text.css"
+    ],
+    "aa-rotating__word": [
+      "rotating-text.css"
+    ],
+    "aa-rotating-line": [
+      "rotating-text.css"
+    ],
+    "aa-rotating-line-mask": [
+      "rotating-text.css"
+    ],
+    "aa-section--media": [
+      "section-theme.css"
+    ],
+    "aa-section__media": [
+      "section-theme.css"
+    ],
+    "aa-stack": [
+      "sections.css"
+    ],
+    "aa-stack--center": [
+      "sections.css",
+      "typography.css"
+    ],
+    "aa-cta-row": [
+      "sections.css"
+    ],
+    "aa-list": [
+      "sections.css"
+    ],
+    "aa-list__item": [
+      "sections.css"
+    ],
+    "aa-list__marker": [
+      "sections.css"
+    ],
+    "aa-list--check": [
+      "sections.css"
+    ],
+    "aa-list--dot": [
+      "sections.css"
+    ],
+    "aa-slider": [
+      "slider.css"
+    ],
+    "aa-slider__item": [
+      "slider.css"
+    ],
+    "aa-split": [
+      "split.css"
+    ],
+    "aa-split__text": [
+      "split.css"
+    ],
+    "aa-split--left": [
+      "split.css"
+    ],
+    "aa-split__media": [
+      "split.css"
+    ],
+    "aa-split__chat": [
+      "split.css"
+    ],
+    "aa-split__media--placeholder": [
+      "split.css"
+    ],
+    "aa-split__placeholder-label": [
+      "split.css"
+    ],
+    "aa-section--surface": [
+      "split.css"
+    ],
+    "aa-h-xxl": [
+      "typography.css"
+    ],
+    "aa-h-xl": [
+      "typography.css"
+    ],
+    "aa-h-l": [
+      "typography.css"
+    ],
+    "aa-h-ml": [
+      "typography.css"
+    ],
+    "aa-h-m": [
+      "typography.css"
+    ],
+    "aa-p-l": [
+      "typography.css"
+    ],
+    "aa-p-m": [
+      "typography.css"
+    ],
+    "aa-split-wrap": [
+      "typography.css"
+    ]
+  },
+  "vars": {
+    "--aa-btn-radius": [
+      "components.css"
+    ],
+    "--aa-btn-padding": [
+      "components.css"
+    ],
+    "--aa-btn-translate-y": [
+      "components.css"
+    ],
+    "--aa-btn-focus-inset": [
+      "components.css"
+    ],
+    "--aa-btn-click-scale": [
+      "components.css"
+    ],
+    "--aa-btn-ease-hover": [
+      "components.css"
+    ],
+    "--aa-btn-ease-click": [
+      "components.css"
+    ],
+    "--aa-btn-ease-focus": [
+      "components.css"
+    ],
+    "--aa-btn-color": [
+      "components.css"
+    ],
+    "--aa-btn-bg": [
+      "components.css"
+    ],
+    "--aa-btn-focus": [
+      "components.css"
+    ],
+    "--aa-cursor-stroke": [
+      "cursor.css"
+    ],
+    "--aa-footer-accent": [
+      "footer.css"
+    ],
+    "--aa-hero-radius": [
+      "hero.css"
+    ],
+    "--aa-bg": [
+      "section-theme.css",
+      "tokens.css"
+    ],
+    "--aa-bg-subtle": [
+      "section-theme.css",
+      "tokens.css"
+    ],
+    "--aa-fg": [
+      "section-theme.css",
+      "tokens.css"
+    ],
+    "--aa-fg-muted": [
+      "section-theme.css",
+      "tokens.css"
+    ],
+    "--aa-fg-subtle": [
+      "section-theme.css",
+      "tokens.css"
+    ],
+    "--aa-border": [
+      "section-theme.css",
+      "tokens.css"
+    ],
+    "--aa-input-bg": [
+      "section-theme.css",
+      "tokens.css"
+    ],
+    "--aa-size-unit": [
+      "tokens.css"
+    ],
+    "--aa-size-container-ideal": [
+      "tokens.css"
+    ],
+    "--aa-size-container-min": [
+      "tokens.css"
+    ],
+    "--aa-size-container-max": [
+      "tokens.css"
+    ],
+    "--aa-size-container": [
+      "tokens.css"
+    ],
+    "--aa-size-font": [
+      "tokens.css"
+    ],
+    "--aa-neutral-50": [
+      "tokens.css"
+    ],
+    "--aa-neutral-100": [
+      "tokens.css"
+    ],
+    "--aa-neutral-150": [
+      "tokens.css"
+    ],
+    "--aa-neutral-200": [
+      "tokens.css"
+    ],
+    "--aa-neutral-300": [
+      "tokens.css"
+    ],
+    "--aa-neutral-400": [
+      "tokens.css"
+    ],
+    "--aa-neutral-500": [
+      "tokens.css"
+    ],
+    "--aa-neutral-600": [
+      "tokens.css"
+    ],
+    "--aa-neutral-700": [
+      "tokens.css"
+    ],
+    "--aa-neutral-800": [
+      "tokens.css"
+    ],
+    "--aa-neutral-850": [
+      "tokens.css"
+    ],
+    "--aa-neutral-900": [
+      "tokens.css"
+    ],
+    "--aa-neutral-950": [
+      "tokens.css"
+    ],
+    "--aa-color-electric": [
+      "tokens.css"
+    ],
+    "--aa-color-purple": [
+      "tokens.css"
+    ],
+    "--aa-color-coral": [
+      "tokens.css"
+    ],
+    "--aa-color-sky": [
+      "tokens.css"
+    ],
+    "--aa-accent": [
+      "tokens.css"
+    ],
+    "--aa-accent-fg": [
+      "tokens.css"
+    ],
+    "--aa-padding-xxl": [
+      "tokens.css"
+    ],
+    "--aa-padding-xl": [
+      "tokens.css"
+    ],
+    "--aa-padding-l": [
+      "tokens.css"
+    ],
+    "--aa-padding-m": [
+      "tokens.css"
+    ],
+    "--aa-padding-s": [
+      "tokens.css"
+    ],
+    "--aa-padding-xs": [
+      "tokens.css"
+    ],
+    "--aa-padding-xxs": [
+      "tokens.css"
+    ],
+    "--aa-gap-xxl": [
+      "tokens.css"
+    ],
+    "--aa-gap-xl": [
+      "tokens.css"
+    ],
+    "--aa-gap-l": [
+      "tokens.css"
+    ],
+    "--aa-gap-m": [
+      "tokens.css"
+    ],
+    "--aa-gap-s": [
+      "tokens.css"
+    ],
+    "--aa-gap-xs": [
+      "tokens.css"
+    ],
+    "--aa-gap-xxs": [
+      "tokens.css"
+    ],
+    "--aa-radius-s": [
+      "tokens.css"
+    ],
+    "--aa-radius-m": [
+      "tokens.css"
+    ],
+    "--aa-radius-l": [
+      "tokens.css"
+    ],
+    "--aa-radius-xl": [
+      "tokens.css"
+    ],
+    "--aa-radius-pill": [
+      "tokens.css"
+    ],
+    "--aa-ease": [
+      "tokens.css"
+    ],
+    "--aa-ease-spring": [
+      "tokens.css"
+    ],
+    "--aa-ease-out": [
+      "tokens.css"
+    ],
+    "--aa-ease-in-out": [
+      "tokens.css"
+    ],
+    "--aa-duration-xs": [
+      "tokens.css"
+    ],
+    "--aa-duration-s": [
+      "tokens.css"
+    ],
+    "--aa-duration-m": [
+      "tokens.css"
+    ],
+    "--aa-duration-l": [
+      "tokens.css"
+    ],
+    "--aa-duration-xl": [
+      "tokens.css"
+    ],
+    "--aa-stagger": [
+      "tokens.css"
+    ],
+    "--aa-font": [
+      "tokens.css"
+    ],
+    "--aa-font-display": [
+      "tokens.css"
+    ],
+    "--aa-font-mono": [
+      "tokens.css"
+    ],
+    "--aa-font-scribble": [
+      "tokens.css"
+    ],
+    "--aa-text-xxl": [
+      "tokens.css"
+    ],
+    "--aa-text-xl": [
+      "tokens.css"
+    ],
+    "--aa-text-l": [
+      "tokens.css"
+    ],
+    "--aa-text-ml": [
+      "tokens.css"
+    ],
+    "--aa-text-m": [
+      "tokens.css"
+    ],
+    "--aa-text-s": [
+      "tokens.css"
+    ],
+    "--aa-text-xs": [
+      "tokens.css"
+    ],
+    "--aa-text-xxs": [
+      "tokens.css"
+    ],
+    "--aa-leading-tight": [
+      "tokens.css"
+    ],
+    "--aa-leading-snug": [
+      "tokens.css"
+    ],
+    "--aa-leading-normal": [
+      "tokens.css"
+    ],
+    "--aa-leading-loose": [
+      "tokens.css"
+    ],
+    "--aa-weight-regular": [
+      "tokens.css"
+    ],
+    "--aa-weight-medium": [
+      "tokens.css"
+    ],
+    "--aa-weight-semibold": [
+      "tokens.css"
+    ],
+    "--aa-weight-bold": [
+      "tokens.css"
+    ],
+    "--aa-weight-extrabold": [
+      "tokens.css"
+    ],
+    "--aa-container-max": [
+      "tokens.css"
+    ],
+    "--aa-container-pad": [
+      "tokens.css"
+    ],
+    "--aa-nav-height": [
+      "tokens.css"
+    ],
+    "--aa-marquee-height": [
+      "tokens.css"
+    ],
+    "--aa-navbar-height": [
+      "tokens.css"
+    ],
+    "--aa-input-height": [
+      "tokens.css"
+    ],
+    "--aa-input-radius": [
+      "tokens.css"
+    ]
+  }
+}

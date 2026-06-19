@@ -1,0 +1,51 @@
+/* atom-academy · @font-face self-hosted. Las URLs son relativas a dist/landing.css
+   (./fonts/...) → resuelven igual en el dev server local y en jsDelivr (dist/fonts/...).
+   esbuild marca *.woff2 / *.otf como external, así que conserva la URL literal. */
+
+/* Grift — display / headings */
+@font-face {
+  font-family: 'Grift';
+  src: url('./fonts/grift/Grift-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('./fonts/grift/Grift-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('./fonts/grift/Grift-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Interval (TBJ) — accent / eyebrows / labels (mono) */
+@font-face {
+  font-family: 'Interval';
+  src: url('./fonts/interval/TBJInterval-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Interval';
+  src: url('./fonts/interval/TBJInterval-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gantol — handwritten / scribble */
+@font-face {
+  font-family: 'Gantol';
+  src: url('./fonts/gantol/Gantol.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

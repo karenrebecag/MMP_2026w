@@ -1,0 +1,192 @@
+/* atom-academy · estilos de secciones de contenido (prose, statement, checklist, cards, cta). */
+
+/* Stack vertical genérico */
+.aa-landing .aa-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-m);
+}
+.aa-landing .aa-stack--center {
+  align-items: center;
+  text-align: center;
+}
+
+/* Reset de márgenes — el spacing lo da el gap del stack */
+.aa-landing .aa-stack :is(h1, h2, h3, p, ul) {
+  margin: 0;
+}
+
+/* CTA inline */
+.aa-landing .aa-cta-row {
+  margin-top: var(--aa-gap-s);
+}
+.aa-landing .aa-stack--center .aa-cta-row {
+  display: flex;
+  justify-content: center;
+}
+
+/* Listas / checklist */
+.aa-landing .aa-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-s);
+}
+.aa-landing .aa-list__item {
+  display: flex;
+  gap: 0.75em;
+  align-items: flex-start;
+  font-size: var(--aa-text-s);
+  line-height: 1.45;
+  color: var(--aa-fg-muted);
+}
+.aa-landing .aa-list__marker {
+  flex: 0 0 auto;
+  margin-top: 0.2em;
+  width: 1.2em;
+  height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aa-landing .aa-list--check .aa-list__marker {
+  color: var(--aa-accent);
+}
+.aa-landing .aa-list--check .aa-list__marker svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.aa-landing .aa-list--dot .aa-list__marker::before {
+  content: '';
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 50%;
+  background: var(--aa-fg-subtle);
+}
+
+/* Cards — reset de márgenes internos */
+.aa-landing .aa-card :is(h3, p) {
+  margin: 0;
+}
+
+/* ─── Card ────────────────────────────────────────────────────────────────────── */
+.aa-landing .aa-card {
+  background: var(--aa-bg-subtle);
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-radius-l);
+  padding: var(--aa-padding-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-s);
+}
+
+/* ─── Module card — réplica de la product-card de OSMO ─────────────────────────── */
+/* Valores de OSMO: radius 1em, __before 130%, __content padding 2.5em, todo centrado. */
+.aa-landing .aa-mod-card {
+  position: relative;
+  isolation: isolate; /* contiene el mix-blend-mode de la textura al área de la card */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 1em;
+  overflow: hidden;
+  background: var(--aa-neutral-900);
+  color: var(--aa-neutral-50);
+}
+/* Variantes de color reales de OSMO */
+.aa-landing .aa-mod-card--electric {
+  background: var(--aa-color-electric);
+  color: var(--aa-neutral-950);
+}
+.aa-landing .aa-mod-card--purple {
+  background: var(--aa-color-purple);
+  color: var(--aa-neutral-50);
+}
+.aa-landing .aa-mod-card--neutral {
+  background: var(--aa-neutral-200);
+  color: var(--aa-neutral-950);
+}
+
+/* Spacer que fija el aspect ratio (padding-% resuelve contra el ancho de la card) */
+.aa-landing .aa-mod-card__before {
+  padding-top: 130%;
+}
+
+/* Textura topográfica sobre el color de la card (mezclada, detrás del contenido) */
+.aa-landing .aa-mod-card__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+/* Capa de contenido sobre el fondo */
+.aa-landing .aa-mod-card__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5em;
+}
+.aa-landing .aa-mod-card__tags {
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+}
+.aa-landing .aa-mod-card__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35em 0.7em;
+  border-radius: var(--aa-radius-pill);
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xxs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.aa-landing .aa-mod-card__center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25em;
+  text-align: center;
+}
+.aa-landing .aa-mod-card__h {
+  margin: 0;
+  font-size: var(--aa-text-l);
+  font-weight: var(--aa-weight-bold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.aa-landing .aa-mod-card__p {
+  margin: 0;
+  font-size: var(--aa-text-xs);
+  line-height: 1.35;
+  text-wrap: balance;
+  opacity: 0.82;
+}
+
+@media screen and (max-width: 767px) {
+  .aa-landing .aa-mod-card__content {
+    padding: 1.5em;
+  }
+}
+
+/* ─── Divider (clase genérica; sin render activo en TS actualmente) ────────────── */
+.aa-landing .aa-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--aa-border);
+}

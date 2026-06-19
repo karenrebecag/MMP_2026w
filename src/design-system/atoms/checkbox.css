@@ -1,0 +1,79 @@
+/* Checkbox custom (input oculto + box + icono), accent al marcar. Owner: checkbox.ts.
+   Patrón radiocheck de OSMO. Usa el wrapper `.aa-field` definido en input.css. */
+
+.aa-landing .aa-check {
+  display: flex;
+  align-items: center;
+  gap: 0.65em;
+  cursor: pointer;
+}
+.aa-landing .aa-check__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.aa-landing .aa-check__box {
+  flex: 0 0 auto;
+  width: 1.35em;
+  height: 1.35em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--aa-input-bg);
+  border: 1px solid var(--aa-border);
+  border-radius: calc(var(--aa-radius-s) * 0.75);
+  transition:
+    background var(--aa-duration-xs) ease,
+    border-color var(--aa-duration-xs) ease;
+}
+.aa-landing .aa-check__icon {
+  width: 0.7em;
+  height: 0.7em;
+  color: var(--aa-accent-fg);
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity var(--aa-duration-xs) ease,
+    transform var(--aa-duration-s) var(--aa-ease-spring);
+}
+.aa-landing .aa-check__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.aa-landing .aa-check__input:checked + .aa-check__box {
+  background: var(--aa-accent);
+  border-color: var(--aa-accent);
+}
+.aa-landing .aa-check__input:checked + .aa-check__box .aa-check__icon {
+  opacity: 1;
+  transform: scale(1);
+}
+.aa-landing .aa-check__input:focus-visible + .aa-check__box {
+  border-color: var(--aa-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--aa-accent) 25%, transparent);
+}
+.aa-landing .aa-field.has-error .aa-check__box {
+  border-color: var(--aa-color-coral);
+}
+
+.aa-landing .aa-check__label {
+  font-size: var(--aa-text-xs);
+  line-height: 1.45;
+  color: var(--aa-fg-muted);
+}
+.aa-landing .aa-check__label a {
+  color: var(--aa-fg);
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-landing .aa-check__icon {
+    transition: none !important;
+  }
+}

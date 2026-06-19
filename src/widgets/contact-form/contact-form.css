@@ -1,0 +1,183 @@
+/* Layout y estados del ContactForm (motor genérico). Owner: contact-form.ts.
+   Los átomos del form (.aa-field/.aa-input/.aa-check) viven en atoms/{input,checkbox}.css.
+   La forma de card del container la da .aa-container--card (molecules/layout.css). */
+
+.aa-landing .aa-form {
+  display: flex;
+  flex-flow: column;
+  gap: var(--aa-gap-m);
+  width: 100%;
+  max-width: 40em;
+  margin-inline: auto;
+}
+
+/* Fila de campos — lado a lado en desktop, apilados en móvil (como OSMO) */
+.aa-landing .aa-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--aa-gap-s);
+}
+@media (max-width: 600px) {
+  .aa-landing .aa-form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Submit */
+.aa-landing .aa-form__submit {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--aa-gap-xs);
+}
+.aa-landing .aa-form__submit .aa-button {
+  width: 100%;
+  max-width: 24em;
+}
+
+/* Notificación (éxito / error / loading) */
+.aa-landing .aa-form__note {
+  min-height: 1.4em;
+  text-align: center;
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg-muted);
+}
+.aa-landing .aa-form__note.is--error {
+  color: var(--aa-color-coral);
+}
+.aa-landing .aa-form__note.is--success {
+  color: var(--aa-fg);
+}
+.aa-landing .aa-form__note-text {
+  vertical-align: middle;
+}
+
+/* Loading: shimmer sobre "Enviando…" (transitions.dev #15) con colores del DS. */
+.aa-landing .t-shimmer {
+  --shimmer-base: var(--aa-fg-subtle);
+  --shimmer-highlight: var(--aa-accent);
+  --shimmer-dur: 2000ms;
+  --shimmer-band: 400%;
+  position: relative;
+  display: inline-block;
+  color: var(--shimmer-base);
+}
+.aa-landing .t-shimmer::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 40%,
+    var(--shimmer-highlight) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: var(--shimmer-band) 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: t-shimmer var(--shimmer-dur) linear infinite;
+}
+@keyframes t-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+/* Success: checkmark animado (transitions.dev #10), trazo en --aa-accent. */
+.aa-landing .aa-form__check {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: 0.45em;
+  color: var(--aa-accent);
+}
+.aa-landing .t-success-check {
+  --check-rotate-from: 80deg;
+  --check-y-amount: 0.5em;
+  --check-blur-from: 10px;
+  --check-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --check-ease-bob: cubic-bezier(0.34, 1.35, 0.64, 1);
+  transform-origin: center;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+.aa-landing .t-success-check svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.aa-landing .t-success-check svg path {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+}
+.aa-landing .t-success-check[data-state='in'] {
+  animation:
+    t-check-fade 0.55s var(--check-ease-out) forwards,
+    t-check-rotate 0.55s var(--check-ease-out) forwards,
+    t-check-blur 0.5s var(--check-ease-out) forwards,
+    t-check-bob 0.45s var(--check-ease-bob) forwards;
+}
+.aa-landing .t-success-check[data-state='in'] svg path {
+  animation: t-check-draw 0.55s var(--check-ease-out) 0.08s forwards;
+}
+@keyframes t-check-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes t-check-rotate {
+  from {
+    transform: rotate(var(--check-rotate-from));
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+@keyframes t-check-blur {
+  from {
+    filter: blur(var(--check-blur-from));
+  }
+  to {
+    filter: blur(0);
+  }
+}
+@keyframes t-check-bob {
+  from {
+    translate: 0 var(--check-y-amount);
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes t-check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-landing .t-shimmer::before {
+    animation: none !important;
+  }
+  .aa-landing .t-success-check {
+    animation: none !important;
+    opacity: 1;
+  }
+  .aa-landing .t-success-check svg path {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

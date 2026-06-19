@@ -1,0 +1,151 @@
+/* atom-academy · footer corporativo. Tira de badges, 4 columnas de links y barra
+   inferior (logo + redes + dirección). Naranja ATOM como var local del footer. */
+
+.aa-landing .aa-footer {
+  --aa-footer-accent: #ff6600;
+  padding-block: var(--aa-padding-l);
+}
+
+/* Layout propio del footer; la forma de card la da .aa-container--card (layout.css). */
+.aa-landing .aa-footer .aa-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-xl);
+}
+
+/* ─── Badges ─────────────────────────────────────────────────────────────────── */
+.aa-landing .aa-footer__badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--aa-gap-m);
+}
+.aa-landing .aa-footer__badge {
+  display: inline-flex;
+  transition:
+    opacity var(--aa-duration-s) var(--aa-ease),
+    transform var(--aa-duration-s) var(--aa-ease);
+}
+.aa-landing .aa-footer__badge img {
+  display: block;
+  width: auto;
+  height: 3.5em;
+  object-fit: contain;
+}
+.aa-landing .aa-footer__badge:hover {
+  opacity: 0.7;
+  transform: translateY(-2px);
+}
+
+/* ─── Links (4 columnas) ─────────────────────────────────────────────────────── */
+.aa-landing .aa-footer__links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--aa-gap-l);
+}
+.aa-landing .aa-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-s);
+}
+.aa-landing .aa-footer__col-title {
+  color: var(--aa-footer-accent);
+  font-weight: var(--aa-weight-semibold);
+  font-size: var(--aa-text-s);
+}
+.aa-landing .aa-footer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-xs);
+}
+.aa-landing .aa-footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--aa-gap-xxs);
+  color: var(--aa-fg-muted);
+  text-decoration: none;
+  font-size: var(--aa-text-s);
+  transition: color var(--aa-duration-s) var(--aa-ease);
+}
+.aa-landing .aa-footer__chev {
+  display: inline-flex;
+  color: var(--aa-footer-accent);
+  transition: transform var(--aa-duration-s) var(--aa-ease);
+}
+.aa-landing .aa-footer__link:hover {
+  color: var(--aa-fg);
+}
+.aa-landing .aa-footer__link:hover .aa-footer__chev {
+  transform: translateX(3px);
+}
+
+/* ─── Barra inferior ─────────────────────────────────────────────────────────── */
+.aa-landing .aa-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--aa-gap-m);
+  padding-top: var(--aa-padding-m);
+  border-top: 1px solid var(--aa-border);
+}
+.aa-landing .aa-footer__logo {
+  display: block;
+  width: auto;
+  height: 1.6em;
+  object-fit: contain;
+}
+.aa-landing .aa-footer__socials {
+  display: flex;
+  align-items: center;
+  gap: var(--aa-gap-xs);
+}
+.aa-landing .aa-footer__social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25em;
+  height: 2.25em;
+  border-radius: var(--aa-radius-pill);
+  color: var(--aa-fg);
+  background: var(--aa-bg-subtle);
+  transition:
+    color var(--aa-duration-s) var(--aa-ease),
+    background var(--aa-duration-s) var(--aa-ease),
+    transform var(--aa-duration-s) var(--aa-ease);
+}
+.aa-landing .aa-footer__social:hover {
+  color: #fff;
+  background: var(--aa-footer-accent);
+  transform: translateY(-2px);
+}
+.aa-landing .aa-footer__address {
+  margin: 0;
+  color: var(--aa-fg-muted);
+  font-size: var(--aa-text-xs);
+  text-align: right;
+  max-width: 18em;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .aa-landing .aa-footer__links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .aa-landing .aa-footer__links {
+    grid-template-columns: 1fr;
+  }
+  .aa-landing .aa-footer__bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .aa-landing .aa-footer__address {
+    text-align: center;
+  }
+}

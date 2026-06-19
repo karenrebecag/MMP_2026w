@@ -1,0 +1,13 @@
+node_modules/
+.env
+*.local
+.vercel
+
+# Apps Script con el token (secreto): nunca debe llegar al repo público
+apps-script.gs
+
+# Video local de preview (producción: Cloudflare)
+media/
+
+# Assets de video para subir a R2 (no van en el bundle público)
+cloudflare-r2/

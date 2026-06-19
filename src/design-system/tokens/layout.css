@@ -1,0 +1,63 @@
+/* Tokens de layout: escala fluida, container, alturas fijas y form. Incluye los
+   overrides responsive de :root (cambian el sizing del container por breakpoint). */
+
+:root {
+  /* ─── Fluid scaling (base desktop 1440) ──────────────────────────────────── */
+  --aa-size-unit: 16;
+  --aa-size-container-ideal: 1440;
+  --aa-size-container-min: 992px;
+  --aa-size-container-max: 1920px;
+  --aa-size-container: clamp(var(--aa-size-container-min), 100vw, var(--aa-size-container-max));
+  --aa-size-font: calc(
+    var(--aa-size-container) / (var(--aa-size-container-ideal) / var(--aa-size-unit))
+  );
+
+  /* ─── Container ───────────────────────────────────────────────────────────── */
+  --aa-container-max: 1280px;
+  --aa-container-pad: var(--aa-padding-m);
+
+  /* ─── Layout heights ──────────────────────────────────────────────────────── */
+  --aa-nav-height: 4.625em; /* spacer superior del hero (alto de navbar OSMO) */
+  --aa-marquee-height: 1.75em; /* barra fija superior (botón de registro permanente) */
+  --aa-navbar-height: clamp(3rem, 5vw, 3.75rem); /* navbar blanca de marca bajo el marquee */
+
+  /* ─── Form (estilo input de OSMO) ─────────────────────────────────────────── */
+  --aa-input-height: 3em;
+  --aa-input-bg: var(--aa-neutral-200);
+  --aa-input-radius: var(--aa-radius-s);
+}
+
+@media screen and (max-width: 991px) {
+  :root {
+    --aa-size-container-ideal: 834;
+    --aa-size-container-min: 768px;
+    --aa-size-container-max: 991px;
+    --aa-container-pad: var(--aa-padding-s);
+    --aa-padding-xxl: 5rem;
+    --aa-padding-xl: 4rem;
+    --aa-padding-l: 3rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --aa-size-container-ideal: 550;
+    --aa-size-container-min: 480px;
+    --aa-size-container-max: 767px;
+    --aa-container-pad: var(--aa-padding-xs);
+    --aa-padding-xxl: 4rem;
+    --aa-padding-xl: 3rem;
+    --aa-padding-l: 2rem;
+    --aa-navbar-height: 4rem; /* más aire vertical para los logos en móvil */
+  }
+}
+
+@media screen and (max-width: 479px) {
+  :root {
+    --aa-size-container-ideal: 390;
+    --aa-size-container-min: 320px;
+    --aa-size-container-max: 479px;
+    --aa-padding-xxl: 3rem;
+    --aa-padding-xl: 2.5rem;
+  }
+}

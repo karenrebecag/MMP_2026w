@@ -1,0 +1,14 @@
+{
+  "name": "atom-academy-waitlist-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Vercel Edge proxy: ATOM Academy waitlist → Google Sheets (Apps Script).",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.4"
+  }
+}

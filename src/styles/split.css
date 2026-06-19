@@ -1,0 +1,100 @@
+/* atom-academy · sección de dos columnas (texto + imagen) sobre superficie de color
+   con textura topográfica (blend). */
+
+.aa-landing .aa-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--aa-gap-xl);
+  align-items: center;
+}
+.aa-landing .aa-split__text {
+  min-width: 0;
+}
+
+/* side=left → imagen primero (a la izquierda) */
+.aa-landing .aa-split--left .aa-split__media {
+  order: -1;
+}
+
+.aa-landing .aa-split__media {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: clamp(16px, 2vw, 28px);
+  overflow: hidden;
+}
+.aa-landing .aa-split__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ventana de conversación sobre la foto: enmascarada arriba para que las burbujas
+   viejas se desvanezcan al subir (el chat animado vive en .aa-chat__track). */
+.aa-landing .aa-split__chat {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 24%, #000 100%);
+}
+.aa-landing .aa-split__chat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(10, 10, 10, 0.32) 0%, rgba(10, 10, 10, 0) 50%);
+}
+
+/* Placeholder mientras no hay imagen real */
+.aa-landing .aa-split__media--placeholder {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--aa-fg) 8%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--aa-fg) 25%, transparent);
+}
+.aa-landing .aa-split__placeholder-label {
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--aa-fg-subtle);
+}
+
+/* Superficie de color + textura topográfica con blend, detrás del contenido */
+.aa-landing .aa-section--surface {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.aa-landing .aa-section--surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--aa-section-tex);
+  background-repeat: repeat;
+  background-size: 620px auto;
+  mix-blend-mode: overlay;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 767px) {
+  .aa-landing .aa-split {
+    grid-template-columns: 1fr;
+    gap: var(--aa-gap-l);
+  }
+  .aa-landing .aa-split--left .aa-split__media {
+    order: 0;
+  }
+  .aa-landing .aa-split__media {
+    aspect-ratio: 4 / 3;
+  }
+  .aa-landing .aa-split__media--placeholder {
+    aspect-ratio: 16 / 10;
+  }
+}
