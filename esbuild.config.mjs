@@ -1,3 +1,4 @@
+// Build del bundle servido por jsDelivr (entry + chunks + CSS).
 import * as esbuild from 'esbuild';
 import { cpSync } from 'node:fs';
 

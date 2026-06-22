@@ -8,6 +8,7 @@ on:
       - "src/**"
       - "loader.js"
       - "package.json"
+      - "package-lock.json"
       - "esbuild.config.mjs"
 
 permissions:
