@@ -3,7 +3,7 @@
 // los extrae esbuild a chunks compartidos.
 
 import type { PageContext } from '../core/boot/registry';
-import { setupGsap } from '../core/motion/gsap-env';
+import { loadGsap } from '../core/motion/gsap-env';
 import { initMotion } from '../core/motion/motion';
 import { initAccordion } from '../design-system/behaviors/accordion';
 import { initSliders } from '../design-system/behaviors/slider';
@@ -50,8 +50,8 @@ function initAnchorScroll(root: HTMLElement): void {
   });
 }
 
-export function render(mount: HTMLElement, ctx: PageContext): void {
-  setupGsap(); // registra plugins GSAP en runtime, antes de cualquier tween/ScrollTrigger
+export async function render(mount: HTMLElement, ctx: PageContext): Promise<void> {
+  await loadGsap(); // carga + registra GSAP (dynamic import) antes de cualquier tween/ScrollTrigger
 
   // Root wrapper — todo el CSS está scopeado a .aa-landing
   const root = document.createElement('div');
