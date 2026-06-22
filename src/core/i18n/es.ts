@@ -4,6 +4,9 @@ export const es = {
   navbar: {
     cta: 'Agendar demo',
   },
+  marquee: {
+    cta: 'Agendar demo',
+  },
   hero: {
     tag: 'Inteligencia de Conversión para WhatsApp',
     titleBefore: 'Tu chatbot responde, nuestra IA',

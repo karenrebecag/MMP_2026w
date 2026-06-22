@@ -13,11 +13,11 @@ describe('i18n resolver', () => {
 
   it('t() resuelve claves dot-notation por idioma', () => {
     setLang('es');
-    expect(t('navbar.cta')).toBe('Únete a la lista de espera');
+    expect(t('navbar.cta')).toBe('Agendar demo');
     setLang('en');
-    expect(t('navbar.cta')).toBe('Join the waitlist');
+    expect(t('navbar.cta')).toBe('Book a demo');
     setLang('pt');
-    expect(t('navbar.cta')).toBe('Entrar na lista de espera');
+    expect(t('navbar.cta')).toBe('Agendar demo');
   });
 
   it('t() resuelve claves anidadas profundas', () => {
@@ -41,6 +41,6 @@ describe('i18n resolver', () => {
 
   it('strings() devuelve el snapshot del idioma activo', () => {
     setLang('pt');
-    expect(strings().navbar.cta).toBe('Entrar na lista de espera');
+    expect(strings().navbar.cta).toBe('Agendar demo');
   });
 });

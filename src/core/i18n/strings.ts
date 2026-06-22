@@ -3,6 +3,10 @@ export interface Strings {
   navbar: {
     cta: string;
   };
+  // Barra superior fija (marquee CTA permanente).
+  marquee: {
+    cta: string;
+  };
   hero: {
     tag: string;
     titleBefore: string;

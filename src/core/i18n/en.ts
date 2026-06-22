@@ -4,6 +4,9 @@ export const en = {
   navbar: {
     cta: 'Book a demo',
   },
+  marquee: {
+    cta: 'Book a Demo',
+  },
   hero: {
     tag: 'Conversion Intelligence for WhatsApp',
     titleBefore: 'Your chatbot replies, our AI',

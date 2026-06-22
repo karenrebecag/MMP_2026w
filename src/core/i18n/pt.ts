@@ -4,6 +4,9 @@ export const pt = {
   navbar: {
     cta: 'Agendar demo',
   },
+  marquee: {
+    cta: 'Agendar demo',
+  },
   hero: {
     tag: 'Inteligência de Conversão para WhatsApp',
     titleBefore: 'Seu chatbot responde, nossa IA',

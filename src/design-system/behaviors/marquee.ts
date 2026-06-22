@@ -4,12 +4,13 @@
 // MWG024: una sale por arriba, la otra entra), atado al progreso con scrub.
 
 import { gsap, ScrollTrigger } from '../../core/motion/gsap-env';
+import { t } from '../../core/i18n';
+import { WHATSAPP } from '../../core/config/brand';
 
-const PHRASE = 'Únete a la lista de espera';
 const BASE_REPEAT = 4; // secuencia base; initMarquee la rellena hasta cubrir el viewport
 const SPEED = 70; // px/s — velocidad constante del loop horizontal
 
-function buildItem(): HTMLElement {
+function buildItem(phrase: string): HTMLElement {
   const item = document.createElement('span');
   item.className = 'aa-marquee__item';
   const dot = document.createElement('span');
@@ -17,32 +18,38 @@ function buildItem(): HTMLElement {
   dot.setAttribute('aria-hidden', 'true');
   const text = document.createElement('span');
   text.className = 'aa-marquee__text';
-  text.textContent = PHRASE;
+  text.textContent = phrase;
   item.append(dot, text);
   return item;
 }
 
-function buildRow(modifier: '1' | '2'): HTMLElement {
+function buildRow(phrase: string, modifier: '1' | '2'): HTMLElement {
   const row = document.createElement('div');
   row.className = `aa-marquee__row aa-marquee__row--${modifier}`;
   if (modifier === '2') row.setAttribute('aria-hidden', 'true');
   const track = document.createElement('div');
   track.className = 'aa-marquee__track';
-  for (let i = 0; i < BASE_REPEAT; i++) track.appendChild(buildItem());
+  for (let i = 0; i < BASE_REPEAT; i++) track.appendChild(buildItem(phrase));
   row.appendChild(track);
   return row;
 }
 
 export function renderMarquee(root: Element): void {
+  const phrase = t('marquee.cta');
   const bar = document.createElement('a');
   bar.className = 'aa-marquee';
-  bar.href = '#aa-waitlist';
+  // CTA permanente → WhatsApp (WCI): href wa.me de fallback + data-atom-button para tracking.
+  bar.href = `https://wa.me/${WHATSAPP.phone}?text=${encodeURIComponent(WHATSAPP.message)}`;
+  bar.target = '_blank';
+  bar.rel = 'noopener noreferrer';
   bar.setAttribute('data-aa-marquee', '');
-  bar.setAttribute('aria-label', PHRASE);
+  bar.setAttribute('data-atom-button', '');
+  bar.setAttribute('data-cta', 'top_marquee');
+  bar.setAttribute('aria-label', phrase);
 
   const rows = document.createElement('div');
   rows.className = 'aa-marquee__rows';
-  rows.append(buildRow('1'), buildRow('2'));
+  rows.append(buildRow(phrase, '1'), buildRow(phrase, '2'));
 
   bar.appendChild(rows);
   root.appendChild(bar);
