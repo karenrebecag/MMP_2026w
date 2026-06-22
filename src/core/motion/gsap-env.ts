@@ -24,16 +24,29 @@ let _promise: Promise<void> | null = null;
 
 // Carga e inicializa GSAP una sola vez (idempotente, cacheado).
 export function loadGsap(): Promise<void> {
-  if (!_promise) {
-    _promise = Promise.all([
-      import('gsap'),
-      import('gsap/ScrollTrigger'),
-      import('gsap/SplitText'),
-      import('gsap/CustomEase'),
-      import('gsap/Draggable'),
-      import('gsap/InertiaPlugin'),
-      import('gsap/MorphSVGPlugin'),
-    ]).then(([core, st, split, ce, drag, inertia, morph]) => {
+  if (_promise) return _promise;
+
+  // TEMP (coexistencia con GSAP global del host): los plugins de GSAP resuelven su core
+  // vía `window.gsap` (no por el import). Si el host (Webflow) carga una copia UMD global,
+  // nuestros plugins ESM se enganchan a ESA instancia y `registerPlugin` sobre la nuestra
+  // queda en silent no-op → "Missing plugin?". Ocultamos `window.gsap` mientras importamos
+  // y registramos, para que nuestros plugins se enganchen a NUESTRO core; luego lo
+  // restauramos para no romper las interacciones del host.
+  // Quitar este workaround cuando se elimine el GSAP duplicado del proyecto Webflow.
+  const w = window as unknown as { gsap?: unknown };
+  const hostGsap = w.gsap;
+  if (hostGsap) w.gsap = undefined;
+
+  _promise = Promise.all([
+    import('gsap'),
+    import('gsap/ScrollTrigger'),
+    import('gsap/SplitText'),
+    import('gsap/CustomEase'),
+    import('gsap/Draggable'),
+    import('gsap/InertiaPlugin'),
+    import('gsap/MorphSVGPlugin'),
+  ])
+    .then(([core, st, split, ce, drag, inertia, morph]) => {
       gsap = core.gsap;
       ScrollTrigger = st.ScrollTrigger;
       SplitText = split.SplitText;
@@ -51,7 +64,10 @@ export function loadGsap(): Promise<void> {
       // GSAP no parsea cubic-bezier como string → registrarlo como CustomEase.
       ce.CustomEase.create('osmo', '0.625, 0.05, 0, 1');
       gsap.defaults({ ease: EASE, duration: DURATION });
+    })
+    .finally(() => {
+      if (hostGsap) w.gsap = hostGsap; // restaurar el GSAP global del host (Webflow)
     });
-  }
+
   return _promise;
 }
