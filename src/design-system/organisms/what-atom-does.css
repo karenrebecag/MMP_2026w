@@ -11,7 +11,7 @@
 }
 /* Contenido más ancho que el container global (1280) — acerca al full-bleed de la referencia. */
 .aa-landing .aa-whatdo .aa-container {
-  max-width: min(100rem, 94vw);
+  max-width: calc(var(--aa-container-max) + 400px);
 }
 
 .aa-landing .aa-whatdo__grid {

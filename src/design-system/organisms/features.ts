@@ -58,7 +58,11 @@ function titleBlock(copy: CardCopy, size: 'xl' | 'l'): HTMLElement {
   // Body en `l` — mismo nivel que el subtítulo del hero (aa-p-l).
   const p = renderParagraph({ size: 'l', text: copy.body, className: 'aa-feat__body' });
   p.setAttribute('data-aa-fade', '');
-  wrap.append(stat, h, p);
+  // Agrupa stat + título: en el top card (full-width) es la columna izquierda y el body la derecha.
+  const head = document.createElement('div');
+  head.className = 'aa-feat__title-head';
+  head.append(stat, h);
+  wrap.append(head, p);
   return wrap;
 }
 
@@ -100,13 +104,26 @@ function btn(href: string): HTMLElement {
 
 // Patrón grid-small de fourmula. srcs: [izq, centro-grande, abajo-1, abajo-2, der]. Los paneles
 // laterales sangran por el borde de la card (redondeados solo en su esquina interna).
-function gridCluster(srcs: string[]): HTMLElement {
+// Contenedor de lottie lazy: 'cover' (slice) por defecto; 'contain' (entero) para logos.
+function lottieBox(key: string, fit: 'cover' | 'contain'): HTMLElement {
+  const lot = document.createElement('div');
+  lot.className = 'aa-feat__lottie';
+  lot.setAttribute('data-lottie', key);
+  if (fit === 'contain') lot.setAttribute('data-lottie-fit', 'contain');
+  lot.setAttribute('aria-hidden', 'true');
+  return lot;
+}
+
+function gridCluster(
+  srcs: string[],
+  opts: { leftLottie?: string; cellLottie?: string } = {},
+): HTMLElement {
   const m = document.createElement('div');
   m.className = 'aa-feat__media aa-feat__media--grid';
 
   const left = document.createElement('div');
   left.className = 'aa-feat__grid-side is-left';
-  left.appendChild(assetImg(srcs[0]));
+  left.appendChild(opts.leftLottie ? lottieBox(opts.leftLottie, 'cover') : assetImg(srcs[0]));
 
   const col = document.createElement('div');
   col.className = 'aa-feat__grid-col';
@@ -115,10 +132,11 @@ function gridCluster(srcs: string[]): HTMLElement {
   lead.appendChild(assetImg(srcs[1]));
   const row = document.createElement('div');
   row.className = 'aa-feat__grid-row';
-  [srcs[2], srcs[3]].forEach((src) => {
+  // El cell 0 = cuadro 1:1 inferior-izquierdo (recibe el lottie si se pide).
+  [srcs[2], srcs[3]].forEach((src, idx) => {
     const cell = document.createElement('div');
     cell.className = 'aa-feat__grid-cell';
-    cell.appendChild(assetImg(src));
+    cell.appendChild(idx === 0 && opts.cellLottie ? lottieBox(opts.cellLottie, 'contain') : assetImg(src));
     row.appendChild(cell);
   });
   col.append(lead, row);
@@ -149,11 +167,21 @@ export function renderFeatures(root: Element): void {
   // BOTTOM — Califica + Cierra (collage de 3 slots c/u).
   const left = document.createElement('div');
   left.className = 'aa-feat__card aa-feat__left';
-  left.append(tag(s.califica.tag), gridCluster(featureShots.califica), titleBlock(s.califica, 'l'), btn('#aa-waitlist'));
+  left.append(
+    tag(s.califica.tag),
+    gridCluster(featureShots.califica, { cellLottie: 'atom-logo' }), // logo en el 1:1 inferior-izq
+    titleBlock(s.califica, 'l'),
+    btn('#aa-waitlist'),
+  );
 
   const right = document.createElement('div');
   right.className = 'aa-feat__card aa-feat__right';
-  right.append(tag(s.cierra.tag), gridCluster(featureShots.cierra), titleBlock(s.cierra, 'l'), btn('#aa-waitlist'));
+  right.append(
+    tag(s.cierra.tag),
+    gridCluster(featureShots.cierra, { leftLottie: 'integrations-features' }), // lottie en el panel izquierdo
+    titleBlock(s.cierra, 'l'),
+    btn('#aa-waitlist'),
+  );
 
   const bottom = document.createElement('div');
   bottom.className = 'aa-feat__bottom';

@@ -115,11 +115,6 @@ export function renderHero(root: Element, props: HeroProps): void {
   ctaRow.setAttribute('data-aa-delay', '0.35');
   ctaRow.append(
     renderButton({ label: props.primaryCta.label, href: props.primaryCta.href, variant: 'primary' }),
-    renderButton({
-      label: props.secondaryCta.label,
-      href: props.secondaryCta.href,
-      variant: 'secondary',
-    }),
   );
   content.appendChild(ctaRow);
 

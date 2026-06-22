@@ -51,13 +51,15 @@ function shape(s: SectionContent): Record<string, unknown> {
 const shapes = (arr: SectionContent[]) => arr.map(shape);
 
 describe('content getSections', () => {
-  it('devuelve las secciones del idioma activo', () => {
+  it('devuelve las secciones visibles del idioma activo (sin info/audience)', () => {
+    const visible = (arr: SectionContent[]) =>
+      arr.filter((s) => s.kind !== 'info' && s.kind !== 'audience');
     setLang('es');
-    expect(getSections()).toBe(es);
+    expect(getSections()).toEqual(visible(es));
     setLang('en');
-    expect(getSections()).toBe(en);
+    expect(getSections()).toEqual(visible(en));
     setLang('pt');
-    expect(getSections()).toBe(pt);
+    expect(getSections()).toEqual(visible(pt));
   });
 
   it('la primera sección es el manifiesto en todos los idiomas', () => {

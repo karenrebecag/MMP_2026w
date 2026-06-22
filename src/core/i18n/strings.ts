@@ -25,6 +25,20 @@ export interface Strings {
     titleL2: string;
     lead: string;
   };
+  // Cinta de flujo del lead (MWG104): hint de scroll + pasos (texto que fluye en la línea).
+  // El componente intercala media entre cada paso y resalta algunos con gradiente.
+  leadFlow: {
+    scroll: string;
+    steps: string[];
+  };
+  // Onboarding/soporte (MWG031): stack 3D de tarjetas. Cada paso = título + 2 bullets +
+  // descripción; CTA y label de panel compartidos.
+  onboarding: {
+    scroll: string;
+    cta: string;
+    panelLabel: string;
+    steps: { title: string; desc: string; features: string[] }[];
+  };
   // Sección de features (3 tarjetas: stat + tag + título + body).
   features: {
     responde: { stat: string; tag: string; title: string; body: string };
@@ -42,6 +56,12 @@ export interface Strings {
   // Sección de logos "Trusted by".
   logos: {
     eyebrow: string;
+  };
+  // Sección CAC: bloque split (texto + CTA a la izquierda, marquee de badges a la derecha).
+  cac: {
+    heading: string;
+    body: string;
+    cta: string;
   };
   heroClassic: {
     title: string;

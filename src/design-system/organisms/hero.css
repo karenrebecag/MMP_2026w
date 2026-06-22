@@ -131,7 +131,7 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  align-self: flex-end;
+  align-self: center;
 }
 /* Hora: pequeña y tenue, abajo a la derecha como en WhatsApp. */
 .aa-landing .aa-hero__msg-time {
@@ -139,6 +139,240 @@
   margin-left: 0.1em;
   font-size: 0.72em;
   color: var(--aa-neutral-500);
+}
+/* Doble-check de "leído" (azul WhatsApp), compactado. */
+.aa-landing .aa-hero__msg-checks {
+  align-self: flex-end;
+  font-size: 0.72em;
+  letter-spacing: -0.16em;
+  color: #34b7f1;
+}
+
+/* ── Nota de audio (réplica del player de WhatsApp): avatar + play + onda + meta. ───────────── */
+.aa-landing .aa-hero__msg--audio {
+  align-items: center;
+}
+.aa-hero__audio-play {
+  flex-shrink: 0;
+  width: 0;
+  height: 0;
+  border-left: 0.72em solid var(--aa-neutral-700);
+  border-top: 0.42em solid transparent;
+  border-bottom: 0.42em solid transparent;
+}
+.aa-hero__audio-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28em;
+}
+.aa-hero__audio-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 14px;
+}
+.aa-hero__audio-wave i {
+  display: block;
+  width: 2px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--aa-neutral-500) 70%, transparent);
+}
+.aa-hero__audio-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+}
+/* Micrófono: cápsula azul (decorativo, evoca el ícono de grabar). */
+.aa-hero__audio-mic {
+  flex-shrink: 0;
+  width: 0.5em;
+  height: 0.8em;
+  border-radius: 0.25em;
+  background: #34b7f1;
+}
+.aa-hero__audio-dur {
+  font-size: 0.72em;
+  color: var(--aa-neutral-500);
+}
+.aa-hero__audio-meta .aa-hero__msg-time {
+  margin-left: auto; /* empuja hora + checks a la derecha */
+}
+
+/* ── Llamada (contenedor oscuro): cabecera con nombre/duración + fila de controles. ─────────── */
+.aa-landing .aa-hero__msg--call {
+  flex-direction: column;
+  align-items: stretch;
+  white-space: normal;
+  width: 12em;
+  gap: 0.6em;
+  padding: 0.7em 0.7em 0.8em;
+  background: var(--aa-neutral-900);
+  color: #fff;
+  border-radius: 1.2em;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.28);
+}
+.aa-hero__call-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.aa-hero__call-id {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+.aa-hero__call-name {
+  font-weight: 600;
+  font-size: 0.95em;
+}
+.aa-hero__call-dur {
+  font-size: 0.7em;
+  color: rgb(255 255 255 / 0.6);
+}
+.aa-hero__call-btn {
+  position: relative;
+  flex-shrink: 0;
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.12);
+}
+.aa-hero__call-min::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.55em;
+  height: 0.55em;
+  border: 0.14em solid #fff;
+  border-radius: 0.12em;
+  transform: translate(-50%, -50%);
+}
+.aa-hero__call-add::before {
+  content: '+';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 1.1em;
+  line-height: 1;
+  color: #fff;
+}
+.aa-hero__call-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3em;
+}
+.aa-hero__call-ctl {
+  position: relative;
+  flex-shrink: 0;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.14);
+}
+/* Íconos de control dibujados en CSS (aprox. al tamaño del hero). */
+.aa-hero__call-ctl--more::before {
+  content: '⋯';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 1em;
+  line-height: 1;
+  color: #fff;
+}
+/* Íconos (Font Awesome) embebidos como mask para tintarlos en blanco sobre el botón. */
+.aa-hero__call-ctl--cam::before,
+.aa-hero__call-ctl--spk::before,
+.aa-hero__call-ctl--mute::before,
+.aa-hero__call-ctl--end::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 52%;
+  mask-size: 52%;
+}
+.aa-hero__call-ctl--cam::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cpath d='M128 128C92.7 128 64 156.7 64 192L64 448C64 483.3 92.7 512 128 512L384 512C419.3 512 448 483.3 448 448L448 192C448 156.7 419.3 128 384 128L128 128zM496 400L569.5 458.8C573.7 462.2 578.9 464 584.3 464C597.4 464 608 453.4 608 440.3L608 199.7C608 186.6 597.4 176 584.3 176C578.9 176 573.7 177.8 569.5 181.2L496 240L496 400z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cpath d='M128 128C92.7 128 64 156.7 64 192L64 448C64 483.3 92.7 512 128 512L384 512C419.3 512 448 483.3 448 448L448 192C448 156.7 419.3 128 384 128L128 128zM496 400L569.5 458.8C573.7 462.2 578.9 464 584.3 464C597.4 464 608 453.4 608 440.3L608 199.7C608 186.6 597.4 176 584.3 176C578.9 176 573.7 177.8 569.5 181.2L496 240L496 400z'/%3E%3C/svg%3E");
+}
+.aa-hero__call-ctl--spk::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cpath d='M112 416L160 416L294.1 535.2C300.5 540.9 308.7 544 317.2 544C336.4 544 352 528.4 352 509.2L352 130.8C352 111.6 336.4 96 317.2 96C308.7 96 300.5 99.1 294.1 104.8L160 224L112 224C85.5 224 64 245.5 64 272L64 368C64 394.5 85.5 416 112 416zM505.1 171C494.8 162.6 479.7 164.2 471.3 174.5C462.9 184.8 464.5 199.9 474.8 208.3C507.3 234.7 528 274.9 528 320C528 365.1 507.3 405.3 474.8 431.8C464.5 440.2 463 455.3 471.3 465.6C479.6 475.9 494.8 477.4 505.1 469.1C548.3 433.9 576 380.2 576 320.1C576 260 548.3 206.3 505.1 171.1zM444.6 245.5C434.3 237.1 419.2 238.7 410.8 249C402.4 259.3 404 274.4 414.3 282.8C425.1 291.6 432 305 432 320C432 335 425.1 348.4 414.3 357.3C404 365.7 402.5 380.8 410.8 391.1C419.1 401.4 434.3 402.9 444.6 394.6C466.1 376.9 480 350.1 480 320C480 289.9 466.1 263.1 444.5 245.5z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cpath d='M112 416L160 416L294.1 535.2C300.5 540.9 308.7 544 317.2 544C336.4 544 352 528.4 352 509.2L352 130.8C352 111.6 336.4 96 317.2 96C308.7 96 300.5 99.1 294.1 104.8L160 224L112 224C85.5 224 64 245.5 64 272L64 368C64 394.5 85.5 416 112 416zM505.1 171C494.8 162.6 479.7 164.2 471.3 174.5C462.9 184.8 464.5 199.9 474.8 208.3C507.3 234.7 528 274.9 528 320C528 365.1 507.3 405.3 474.8 431.8C464.5 440.2 463 455.3 471.3 465.6C479.6 475.9 494.8 477.4 505.1 469.1C548.3 433.9 576 380.2 576 320.1C576 260 548.3 206.3 505.1 171.1zM444.6 245.5C434.3 237.1 419.2 238.7 410.8 249C402.4 259.3 404 274.4 414.3 282.8C425.1 291.6 432 305 432 320C432 335 425.1 348.4 414.3 357.3C404 365.7 402.5 380.8 410.8 391.1C419.1 401.4 434.3 402.9 444.6 394.6C466.1 376.9 480 350.1 480 320C480 289.9 466.1 263.1 444.5 245.5z'/%3E%3C/svg%3E");
+}
+.aa-hero__call-ctl--mute::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cpath d='M39 39.1C48.4 29.7 63.6 29.7 72.9 39.1L223.9 190.1L223.9 159.9C223.9 106.9 266.9 63.9 319.9 63.9C370.2 63.9 411.5 102.6 415.6 151.9L360 152C346.7 152 336 162.7 336 176C336 189.3 346.7 200 360 200L416 200L416 248L360 248C346.7 248 336 258.7 336 272C336 285.3 346.7 296 360 296L415.7 296C413.8 318.9 403.9 339.4 388.8 355L422.7 388.9C448.2 362.9 464 327.3 464 288L464 248C464 234.7 474.7 224 488 224C501.3 224 512 234.7 512 248L512 288C512 340.6 490.9 388.2 456.7 422.8L601 567.1C610.4 576.5 610.4 591.7 601 601C591.6 610.3 576.4 610.4 567.1 601L39 73.1C29.7 63.7 29.7 48.5 39 39.1zM329.8 431.7L371.2 473.1C362.4 475.5 353.3 477.4 343.9 478.5L343.9 528L391.9 528C405.2 528 415.9 538.7 415.9 552C415.9 565.3 405.2 576 391.9 576L247.9 576C234.6 576 223.9 565.3 223.9 552C223.9 538.7 234.6 528 247.9 528L295.9 528L295.9 478.5C201.3 466.7 128 385.9 128 288L128 248C128 242.9 129.6 238.1 132.4 234.2L176 277.8L176 288C176 367.5 240.5 432 320 432C323.3 432 326.6 431.9 329.8 431.7z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cpath d='M39 39.1C48.4 29.7 63.6 29.7 72.9 39.1L223.9 190.1L223.9 159.9C223.9 106.9 266.9 63.9 319.9 63.9C370.2 63.9 411.5 102.6 415.6 151.9L360 152C346.7 152 336 162.7 336 176C336 189.3 346.7 200 360 200L416 200L416 248L360 248C346.7 248 336 258.7 336 272C336 285.3 346.7 296 360 296L415.7 296C413.8 318.9 403.9 339.4 388.8 355L422.7 388.9C448.2 362.9 464 327.3 464 288L464 248C464 234.7 474.7 224 488 224C501.3 224 512 234.7 512 248L512 288C512 340.6 490.9 388.2 456.7 422.8L601 567.1C610.4 576.5 610.4 591.7 601 601C591.6 610.3 576.4 610.4 567.1 601L39 73.1C29.7 63.7 29.7 48.5 39 39.1zM329.8 431.7L371.2 473.1C362.4 475.5 353.3 477.4 343.9 478.5L343.9 528L391.9 528C405.2 528 415.9 538.7 415.9 552C415.9 565.3 405.2 576 391.9 576L247.9 576C234.6 576 223.9 565.3 223.9 552C223.9 538.7 234.6 528 247.9 528L295.9 528L295.9 478.5C201.3 466.7 128 385.9 128 288L128 248C128 242.9 129.6 238.1 132.4 234.2L176 277.8L176 288C176 367.5 240.5 432 320 432C323.3 432 326.6 431.9 329.8 431.7z'/%3E%3C/svg%3E");
+}
+.aa-hero__call-ctl--end {
+  background: #f5343f;
+}
+.aa-hero__call-ctl--end::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cpath d='M602 430.2C591.9 447.9 570.2 455.3 551.4 447.6L453.9 407.5C437.3 400.7 427.2 383.8 429 366L434.7 309.3C361.1 281.6 279.8 280.3 205.5 305.4L211.6 366.1C213.4 383.9 203.3 400.8 186.7 407.6L89.1 447.6C70.3 455.4 48.6 447.9 38.5 430.2L35.6 425.2C2.4 367 7.6 283.8 72.9 241.3C222.8 143.8 417.6 143.8 567.5 241.3C632.9 283.8 638 367.1 604.8 425.2L601.9 430.2z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Cpath d='M602 430.2C591.9 447.9 570.2 455.3 551.4 447.6L453.9 407.5C437.3 400.7 427.2 383.8 429 366L434.7 309.3C361.1 281.6 279.8 280.3 205.5 305.4L211.6 366.1C213.4 383.9 203.3 400.8 186.7 407.6L89.1 447.6C70.3 455.4 48.6 447.9 38.5 430.2L35.6 425.2C2.4 367 7.6 283.8 72.9 241.3C222.8 143.8 417.6 143.8 567.5 241.3C632.9 283.8 638 367.1 604.8 425.2L601.9 430.2z'/%3E%3C/svg%3E");
+}
+
+/* ── Imagen + texto (mensaje con foto y CTA verde, estilo broadcast). ───────────────────────── */
+.aa-landing .aa-hero__msg--image {
+  flex-direction: column;
+  align-items: stretch;
+  white-space: normal;
+  width: 13em;
+  gap: 0.45em;
+  padding: 0.4em 0.4em 0.2em;
+}
+.aa-hero__img-thumb {
+  display: block;
+  width: 100%;
+  height: 6.5em;
+  border-radius: 0.7em;
+  object-fit: cover;
+}
+.aa-hero__img-body {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4em;
+  padding-inline: 0.25em;
+}
+.aa-hero__msg--image .aa-hero__msg-text {
+  flex: 1;
+  white-space: normal;
+}
+.aa-hero__img-body .aa-hero__msg-time {
+  margin-left: auto;
+}
+.aa-hero__img-action {
+  margin-top: 0.1em;
+  padding: 0.5em;
+  text-align: center;
+  border-top: 1px solid var(--aa-neutral-200);
+  font-weight: 600;
+  color: var(--aa-color-electric);
+}
+
+/* ── Burbuja de emoji: círculo blanco pequeño con un emoji grande centrado. ─────────────────── */
+.aa-landing .aa-hero__msg--emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: normal;
+  width: 4.6em;
+  height: 4.6em;
+  padding: 0;
+  border-radius: 50%;
+}
+.aa-hero__emoji-glyph {
+  font-size: 2.9em;
+  line-height: 1;
 }
 
 @media (max-width: 768px) {

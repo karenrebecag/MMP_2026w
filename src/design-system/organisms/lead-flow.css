@@ -1,0 +1,45 @@
+/* Cinta de flujo del lead (MWG104 adaptado). Light strip: la línea es un carril invisible;
+   lo visible son el texto (Grift) y la media que la recorren y curvan. Scoped a .aa-landing. */
+.aa-landing .aa-leadflow {
+  position: relative;
+}
+.aa-landing .aa-leadflow__pin {
+  height: 300vh; /* recorrido del pin (scroll medio) */
+}
+.aa-landing .aa-leadflow__container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.aa-landing .aa-leadflow__scroll {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  margin: 0;
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--aa-fg-muted);
+}
+.aa-landing .aa-leadflow svg {
+  display: block;
+  width: 120%;
+  height: auto;
+  margin-left: -10%; /* centra el bleed del 120% */
+  overflow: visible;
+}
+/* Texto: display Grift, oscuro sobre light; los pasos resaltados llevan fill=url(#grad) inline. */
+.aa-landing .aa-leadflow__text {
+  font-family: var(--aa-font-display);
+  font-weight: var(--aa-weight-medium);
+  fill: var(--aa-fg);
+}
+/* Media: placeholder neutro hasta tener assets reales. */
+.aa-landing .aa-leadflow__media {
+  fill: var(--aa-neutral-200);
+}

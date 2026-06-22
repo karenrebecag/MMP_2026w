@@ -18,13 +18,13 @@ export function renderLogos(root: Element): void {
   track.className = 'aa-logos__track';
   // 2× la lista → translateX(-50%) encadena el loop sin costura.
   const fill = (): void =>
-    trustedLogos.forEach((src) => {
+    trustedLogos.forEach(({ name, src }) => {
       const card = document.createElement('div');
       card.className = 'aa-logos__card';
       const img = document.createElement('img');
       img.className = 'aa-logos__logo';
       img.src = src;
-      img.alt = '';
+      img.alt = name;
       img.loading = 'lazy';
       card.appendChild(img);
       track.appendChild(card);

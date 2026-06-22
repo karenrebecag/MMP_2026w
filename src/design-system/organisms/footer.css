@@ -13,31 +13,6 @@
   gap: var(--aa-gap-xl);
 }
 
-/* ─── Badges ─────────────────────────────────────────────────────────────────── */
-.aa-landing .aa-footer__badges {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--aa-gap-m);
-}
-.aa-landing .aa-footer__badge {
-  display: inline-flex;
-  transition:
-    opacity var(--aa-duration-s) var(--aa-ease),
-    transform var(--aa-duration-s) var(--aa-ease);
-}
-.aa-landing .aa-footer__badge img {
-  display: block;
-  width: auto;
-  height: 3.5em;
-  object-fit: contain;
-}
-.aa-landing .aa-footer__badge:hover {
-  opacity: 0.7;
-  transform: translateY(-2px);
-}
-
 /* ─── Links (4 columnas) ─────────────────────────────────────────────────────── */
 .aa-landing .aa-footer__links {
   display: grid;

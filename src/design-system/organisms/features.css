@@ -7,7 +7,7 @@
   background: var(--aa-bg);
 }
 .aa-landing .aa-feat .aa-container {
-  max-width: none; /* sin cap: cards anchas */
+  max-width: calc(var(--aa-container-max) + 400px); /* cap surface + 400px */
   /* Gutter del viewport (como la referencia): las cards quedan insertadas. El sangrado de las
      imágenes es contra el borde de la CARD, no del viewport. */
   padding-inline: clamp(1rem, 3vw, 3rem);
@@ -76,6 +76,10 @@
   padding-inline: var(--feat-pad-x);
   max-width: calc(40rem + 2 * var(--feat-pad-x));
 }
+.aa-landing .aa-feat__title-head {
+  display: flex;
+  flex-direction: column;
+}
 /* Número grande en gradiente de marca (como la referencia del equipo de copy). */
 .aa-landing .aa-feat__stat {
   align-self: flex-start;
@@ -93,12 +97,29 @@
   max-width: 44ch;
   color: var(--aa-fg-muted);
 }
-/* Top card (full-width): el bloque de texto se ensancha para no quedar angosto a la izquierda. */
+/* Top card (full-width): el footer va en 2 columnas — stat+título a la izquierda, body a la
+   derecha — para llenar el ancho en vez de amontonar el texto a la izquierda. */
 .aa-landing .aa-feat__top .aa-feat__title-block {
-  max-width: calc(58rem + 2 * var(--feat-pad-x));
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  column-gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+  max-width: none;
 }
 .aa-landing .aa-feat__top .aa-feat__body {
-  max-width: 62ch;
+  max-width: 52ch;
+}
+/* En 2-col el margen título→body descuadra el bottom-align: lo neutralizamos. */
+.aa-landing .aa-feat__top .aa-feat__title {
+  margin-bottom: 0;
+}
+/* Tablet y abajo: el footer del top card vuelve a una sola columna. */
+@media (max-width: 991px) {
+  .aa-landing .aa-feat__top .aa-feat__title-block {
+    grid-template-columns: 1fr;
+    row-gap: var(--aa-gap-s);
+    align-items: start;
+  }
 }
 
 /* ─── Cluster visual (centro, ocupa el espacio libre) ─────────────────────── */
@@ -183,6 +204,22 @@
 }
 .aa-landing .aa-feat__grid-side.is-right .aa-feat__asset {
   object-position: 0% 50%;
+}
+/* Lottie: por defecto llena su contenedor (ej. el cell 1:1 de la 2ª card). */
+.aa-landing .aa-feat__lottie {
+  width: 100%;
+  height: 100%;
+}
+.aa-landing .aa-feat__lottie svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* En el panel lateral (is-left) sangra a todo el alto del lado (como las imágenes). */
+.aa-landing .aa-feat__grid-side .aa-feat__lottie {
+  align-self: stretch;
+  width: 110%;
+  height: auto;
 }
 
 .aa-landing .aa-feat__grid-col {

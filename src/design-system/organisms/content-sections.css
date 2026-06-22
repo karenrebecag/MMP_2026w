@@ -97,18 +97,42 @@
   background: var(--aa-neutral-900);
   color: var(--aa-neutral-50);
 }
-/* Variantes de color reales de OSMO */
-.aa-landing .aa-mod-card--electric {
-  background: var(--aa-color-electric);
+/* Marca ATOM: fondos dark, light y naranja. */
+.aa-landing .aa-mod-card--dark {
+  background: var(--aa-neutral-900);
+  color: var(--aa-neutral-50);
+  border: 1px solid var(--aa-neutral-800); /* separa la card dark de la franja obsidiana */
+}
+.aa-landing .aa-mod-card--neutral {
+  background: var(--aa-neutral-100);
   color: var(--aa-neutral-950);
 }
+/* Cards pastel (texto oscuro) sobre la franja obsidiana. */
+.aa-landing .aa-mod-card--mint {
+  background: var(--aa-card-mint);
+  color: var(--aa-neutral-950);
+}
+.aa-landing .aa-mod-card--lavender {
+  background: var(--aa-card-lavender);
+  color: var(--aa-neutral-950);
+}
+.aa-landing .aa-mod-card--peach {
+  background: var(--aa-card-peach);
+  color: var(--aa-neutral-950);
+}
+.aa-landing .aa-mod-card--sky {
+  background: var(--aa-card-sky);
+  color: var(--aa-neutral-950);
+}
+/* Card naranja de marca (nombre `electric` heredado, ver drift en tokens/color.css). */
+.aa-landing .aa-mod-card--electric {
+  background: var(--aa-color-orange);
+  color: var(--aa-neutral-950);
+}
+/* purple: variante OSMO heredada, sin uso en la marca ATOM. */
 .aa-landing .aa-mod-card--purple {
   background: var(--aa-color-purple);
   color: var(--aa-neutral-50);
-}
-.aa-landing .aa-mod-card--neutral {
-  background: var(--aa-neutral-200);
-  color: var(--aa-neutral-950);
 }
 
 /* Spacer que fija el aspect ratio (padding-% resuelve contra el ancho de la card) */
@@ -189,4 +213,207 @@
   width: 100%;
   height: 1px;
   background: var(--aa-border);
+}
+
+/* ─── Reviews — marquee scroll-driven en dos filas opuestas (MWG087 adaptado) ──── */
+.aa-landing .aa-section--reviews {
+  overflow: hidden;
+  position: relative;
+  padding-block: 0; /* la sección se ancla completa: el alto lo aporta .aa-reviews (100svh) */
+}
+/* La sección entera se fija (pin): heading + filas caben en un viewport y se centran. */
+.aa-landing .aa-reviews {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  min-height: 100svh;
+}
+.aa-landing .aa-reviews__rows {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  overflow: hidden;
+}
+.aa-landing .aa-reviews__row {
+  width: 100%;
+}
+.aa-landing .aa-reviews__track {
+  display: flex;
+  width: max-content;
+  gap: clamp(1rem, 1.5vw, 1.5rem);
+  padding-inline: clamp(1rem, 4vw, 3rem);
+  white-space: nowrap;
+  will-change: transform;
+}
+.aa-landing .aa-reviews__card {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(280px, 30vw, 380px);
+  aspect-ratio: 1.5;
+}
+.aa-landing .aa-reviews__card-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  height: 100%;
+  padding: clamp(1.5rem, 2vw, 2.25rem);
+  border-radius: var(--aa-radius-l);
+  white-space: normal;
+  will-change: transform;
+}
+
+/* Rotación de color por card: mismos pasteles que las cards de programa (texto oscuro). */
+.aa-landing .aa-reviews__card:nth-child(4n - 3) .aa-reviews__card-inner {
+  background: var(--aa-card-mint);
+  color: var(--aa-neutral-950);
+}
+.aa-landing .aa-reviews__card:nth-child(4n - 2) .aa-reviews__card-inner {
+  background: var(--aa-card-lavender);
+  color: var(--aa-neutral-950);
+}
+.aa-landing .aa-reviews__card:nth-child(4n - 1) .aa-reviews__card-inner {
+  background: var(--aa-card-peach);
+  color: var(--aa-neutral-950);
+}
+.aa-landing .aa-reviews__card:nth-child(4n) .aa-reviews__card-inner {
+  background: var(--aa-card-sky);
+  color: var(--aa-neutral-950);
+}
+
+.aa-landing .aa-reviews__stars {
+  display: flex;
+  gap: 0.15em;
+  font-size: var(--aa-text-s);
+  line-height: 1;
+}
+.aa-landing .aa-reviews__star {
+  color: currentColor;
+  opacity: 0.25;
+}
+.aa-landing .aa-reviews__star.is-on {
+  opacity: 1;
+}
+.aa-landing .aa-reviews__quote {
+  flex: 1;
+  margin: 0;
+  font-size: var(--aa-text-ml);
+  font-weight: var(--aa-weight-medium);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.aa-landing .aa-reviews__author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.aa-landing .aa-reviews__avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  font-size: var(--aa-text-xs);
+  font-weight: var(--aa-weight-bold);
+  letter-spacing: 0.02em;
+}
+.aa-landing .aa-reviews__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: var(--aa-text-xs);
+  line-height: 1.3;
+}
+.aa-landing .aa-reviews__name {
+  font-weight: var(--aa-weight-bold);
+}
+.aa-landing .aa-reviews__role {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 767px) {
+  .aa-landing .aa-reviews__card {
+    width: 72vw;
+  }
+}
+
+/* ─── Tabs — sección "motor de IA" (light) ────────────────────────────────────── */
+.aa-landing .aa-tabs__head {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+/* Gradiente sobre el highlight: SplitText parte el span en words nuevas sin fondo, así
+   que se aplica también a sus descendientes (igual que whatAtom/howItWorks). */
+.aa-landing .aa-tabs__head .aa-text-gradient,
+.aa-landing .aa-tabs__head .aa-text-gradient * {
+  background-image: var(--aa-gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.aa-landing .aa-tabs__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* selector centrado, alineado con el head */
+  gap: 0.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.aa-landing .aa-tabs__tab {
+  appearance: none;
+  cursor: pointer;
+  padding: 0.6em 1.1em;
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-radius-pill);
+  background: transparent;
+  color: var(--aa-fg-muted);
+  font: inherit;
+  font-size: var(--aa-text-s);
+  font-weight: var(--aa-weight-medium);
+  line-height: 1;
+  transition:
+    color var(--aa-duration-s) var(--aa-ease),
+    background-color var(--aa-duration-s) var(--aa-ease),
+    border-color var(--aa-duration-s) var(--aa-ease);
+}
+.aa-landing .aa-tabs__tab:hover {
+  color: var(--aa-fg);
+  border-color: var(--aa-fg-subtle);
+}
+/* Chip activa: stroke con gradiente de marca (doble fondo: relleno en padding-box +
+   gradiente en border-box, para conservar el border-radius del pill). */
+.aa-landing .aa-tabs__tab.is-active {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--aa-bg), var(--aa-bg)) padding-box,
+    var(--aa-gradient-brand) border-box;
+  color: var(--aa-fg);
+}
+.aa-landing .aa-tabs__panel {
+  display: none;
+}
+.aa-landing .aa-tabs__panel.is-active {
+  display: block;
+  animation: aa-tab-in var(--aa-duration-m) var(--aa-ease) both;
+}
+@keyframes aa-tab-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-landing .aa-tabs__panel.is-active {
+    animation: none;
+  }
 }

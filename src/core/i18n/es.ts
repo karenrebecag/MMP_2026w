@@ -14,24 +14,26 @@ export const es = {
     ctaPrimary: 'Agendar demo',
     ctaSecondary: 'Ver demo',
     messages: [
-      '¿Cuánto cuesta?',
-      'Me interesa',
-      '¿Está disponible?',
-      'Quiero más info',
-      '¿Hacen envíos?',
-      '¿Tienen promo?',
-      '¿Aceptan tarjeta?',
-      'Quiero comprar',
+      '¿Tienen el SUV en stock?',
+      '¿Cuándo abre la inscripción?',
+      '¿Cómo aumento mi cupo?',
+      'Quiero cotizar el sedán',
+      '¿Hay beca disponible?',
+      'Quiero un crédito',
+      '¿Hacen prueba de manejo?',
+      '¿Tienen modalidad en línea?',
+      '¿Qué tasa manejan?',
     ],
     replies: [
-      'Te paso los planes ahora mismo',
-      '¡Genial! Te explico cómo funciona',
-      'Sí, con cupo disponible hoy',
-      'Claro, te lo resumo en 1 minuto',
-      'Sí, enviamos a todo el país',
-      'Hoy: 30% off de lanzamiento',
-      'Sí, aceptamos todas las tarjetas',
-      'Perfecto, te paso el link',
+      'Te paso el inventario disponible hoy',
+      'Inscripción abierta, te comparto fechas',
+      'Aprobado: subimos tu cupo ahora',
+      'Tu cotización lista en 1 minuto',
+      'Sí, tenemos beca para tu carrera',
+      'Crédito preaprobado, te paso el link',
+      'Agendo tu prueba de manejo hoy',
+      'Sí, 100% en línea, te explico',
+      'Tasa preferencial esta semana',
     ],
   },
   whatAtom: {
@@ -39,6 +41,38 @@ export const es = {
     titleL1: 'Conversa, califica y *cierra.*',
     titleL2: 'Todo en tu *WhatsApp.*',
     lead: 'atom responde a cada lead al instante, lo califica y agenda la venta. Tu equipo solo supervisa y cierra.',
+  },
+  leadFlow: {
+    scroll: 'Desliza',
+    steps: [
+      'Un lead escribe',
+      'atom responde y califica',
+      'agenda la venta',
+      'tu equipo cierra',
+      'y cada venta optimiza tu pauta',
+    ],
+  },
+  onboarding: {
+    scroll: 'Desliza',
+    cta: 'Agendar demo',
+    panelLabel: 'Vista previa',
+    steps: [
+      {
+        title: 'Diseñamos los flujos contigo',
+        desc: 'Creamos junto a tu equipo los escenarios donde la IA conversa con tus leads, según tus procesos y objetivos, aprovechando aprendizajes de empresas similares.',
+        features: ['Sesiones con tu equipo', 'Aprendizajes de tu industria'],
+      },
+      {
+        title: 'Integramos Atom a tu stack',
+        desc: 'Nos encargamos de la integración técnica con WhatsApp Business API, tu CRM y las plataformas que ya usas. Sin desarrollos del lado de tu equipo de IT.',
+        features: ['WhatsApp Business API', 'Tu CRM y plataformas'],
+      },
+      {
+        title: 'Asciendes a tus vendedores a supervisores',
+        desc: 'Activamos a tus asesores en la plataforma para facilitar su trabajo y mantenerlos enfocados en los cierres que realmente importan.',
+        features: ['Onboarding de asesores', 'Foco en los cierres'],
+      },
+    ],
   },
   features: {
     responde: {
@@ -78,6 +112,11 @@ export const es = {
   },
   logos: {
     eyebrow: 'Confían en nosotros',
+  },
+  cac: {
+    heading: 'Cada lead perdido aumenta tu CAC.',
+    body: 'Habla con un asesor hoy y descubre cómo Atom puede transformar WhatsApp en tu canal de ventas más poderoso.',
+    cta: 'Agendar demo',
   },
   heroClassic: {
     title: 'Conviértete en Experto en WhatsApp Marketing',

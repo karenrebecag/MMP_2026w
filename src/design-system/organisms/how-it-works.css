@@ -11,7 +11,7 @@
 
 /* Full width: el marquee mega ocupa el ancho disponible (como el ejemplo). */
 .aa-landing .aa-hiw .aa-container {
-  max-width: none;
+  max-width: calc(var(--aa-container-max) + 400px);
   /* Mismo inset que el TEXTO de features: gutter del container + padding interno de la card
      (--feat-pad-x), para que el borde izquierdo del contenido alinee con la sección de arriba. */
   padding-inline: calc(clamp(1rem, 3vw, 3rem) + clamp(1.5rem, 3vw, 3.25rem));

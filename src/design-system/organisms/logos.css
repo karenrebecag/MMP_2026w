@@ -5,7 +5,7 @@
   background: var(--aa-bg);
 }
 .aa-landing .aa-logos .aa-container {
-  max-width: none;
+  max-width: calc(var(--aa-container-max) + 400px);
   padding-inline: clamp(1rem, 3vw, 3rem);
 }
 

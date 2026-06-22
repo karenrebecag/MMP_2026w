@@ -37,7 +37,7 @@ export interface CardsContent {
     title: string;
     desc: string;
     tag?: string;
-    variant?: 'dark' | 'electric' | 'purple' | 'neutral'; // variantes reales de product-card
+    variant?: 'dark' | 'electric' | 'purple' | 'neutral' | 'mint' | 'lavender' | 'peach' | 'sky';
   }[];
 }
 
@@ -114,6 +114,41 @@ export interface CtaContent {
   bgVideo?: { webm: string; mp4: string; poster: string };
 }
 
+export interface ReviewItem {
+  quote: string;
+  name: string;
+  role: string;
+  rating: number; // 1..5 — estrellas reales de la reseña (Capterra)
+}
+
+export interface ReviewsContent {
+  kind: 'reviews';
+  id?: string;
+  theme: SectionTheme;
+  eyebrow?: string;
+  heading: string;
+  subheading?: string;
+  // Reseñas en dos filas (marquee scroll-driven en sentidos opuestos): la primera mitad
+  // va en la fila 1, el resto en la 2.
+  reviews: ReviewItem[];
+}
+
+export interface TabItem {
+  label: string; // texto del selector
+  heading: string; // título de la columna izquierda
+  paragraphs: string[]; // cuerpo de la columna izquierda
+  image: { src: string; alt: string }; // columna derecha (solo imagen)
+}
+
+export interface TabsContent {
+  kind: 'tabs';
+  id?: string;
+  theme: SectionTheme;
+  eyebrow?: string;
+  heading: string; // título de la sección, sobre el selector
+  tabs: TabItem[];
+}
+
 export type SectionContent =
   | ProseContent
   | CardsContent
@@ -122,4 +157,6 @@ export type SectionContent =
   | ManifestoContent
   | InfoContent
   | FaqContent
-  | CtaContent;
+  | CtaContent
+  | ReviewsContent
+  | TabsContent;

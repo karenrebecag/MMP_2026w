@@ -11,6 +11,7 @@ import { initMomentumHover } from '../design-system/behaviors/momentum-hover';
 import { initCursor } from '../design-system/behaviors/cursor';
 import { initRotatingText } from '../design-system/behaviors/rotating-text';
 import { initOdometer } from '../design-system/behaviors/odometer';
+import { initLottie } from '../design-system/behaviors/lottie';
 import { renderBackground } from '../design-system/behaviors/background';
 import { renderMarquee, initMarquee } from '../design-system/behaviors/marquee';
 import { initMetaTheme } from '../design-system/behaviors/meta-theme';
@@ -23,11 +24,16 @@ import {
 } from '../design-system/organisms/hero';
 import { renderWhatAtomDoes } from '../design-system/organisms/what-atom-does';
 import { renderFeatures } from '../design-system/organisms/features';
+import { renderOnboarding, initOnboarding } from '../design-system/organisms/onboarding';
 import { renderHowItWorks, initVerticalMarquee } from '../design-system/organisms/how-it-works';
 import { renderLogos } from '../design-system/organisms/logos';
 import { renderContentSections } from '../design-system/organisms/content-sections';
+import { initReviewsMarquee } from '../design-system/behaviors/reviews-marquee';
+import { initTabs } from '../design-system/behaviors/tabs';
+import { renderCac } from '../design-system/organisms/cac';
+import { initBadgesMarquee } from '../design-system/behaviors/badges-marquee';
 import { renderFooter } from '../design-system/organisms/footer';
-import { renderWaitlist } from '../widgets/contact-form/presets/waitlist';
+// import { renderWaitlist } from '../widgets/contact-form/presets/waitlist'; // strip oculta en el home
 
 // Scroll suave para anclas internas (#id) con scroll nativo.
 function initAnchorScroll(root: HTMLElement): void {
@@ -59,13 +65,20 @@ export function render(mount: HTMLElement, ctx: PageContext): void {
   renderFeatures(root); // tarjetas de features (réplica anatomía fourmula)
   renderHowItWorks(root); // "Cómo funciona": grid + marquee vertical de features
   renderLogos(root); // "Trusted by": marquee horizontal de logos
+  renderOnboarding(root); // soporte/facilidad: stack 3D de pasos, bajo el marquee de logos
   renderContentSections(root);
-  renderWaitlist(root);
+  renderCac(root); // bloque CAC: texto + CTA + marquee de badges (movidas del footer)
+  // Strip del formulario oculta en el home.
+  // renderWaitlist(root);
   renderFooter(root);
+  // El bloque CAC vive justo arriba de la sección de reseñas.
+  const cac = root.querySelector('#aa-cac');
+  const reviews = root.querySelector('#aa-reviews');
+  if (cac && reviews) root.insertBefore(cac, reviews);
   // El form vive entre "Para quién" (audience) y "Primera generación" (#aa-generacion).
-  const waitlist = root.querySelector('#aa-waitlist');
-  const generacion = root.querySelector('#aa-generacion');
-  if (waitlist && generacion) root.insertBefore(waitlist, generacion);
+  // const waitlist = root.querySelector('#aa-waitlist');
+  // const generacion = root.querySelector('#aa-generacion');
+  // if (waitlist && generacion) root.insertBefore(waitlist, generacion);
 
   mount.replaceChildren(root);
   initAnchorScroll(root);
@@ -79,6 +92,11 @@ export function render(mount: HTMLElement, ctx: PageContext): void {
   initCursor(root);
   initRotatingText(root);
   initOdometer(root); // stats que ruedan al entrar en viewport
+  initOnboarding(root); // pin + 3D del stack de pasos
+  initReviewsMarquee(root); // reseñas: marquee scroll-driven en sentidos opuestos
+  initBadgesMarquee(root); // CAC: marquee infinito de badges
+  initTabs(root); // sección "motor de IA": selector de tabs
+  initLottie(root); // lotties lazy (carga el lib al acercarse al viewport)
   initMarquee(root);
   initNavbar(root);
   initMegaNav(root);

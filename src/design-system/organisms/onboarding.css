@@ -1,0 +1,201 @@
+/* Onboarding/soporte (MWG031 adaptado): stack 3D de tarjetas. Maquetación fiel al snippet,
+   colores/typo en tokens de marca. Surround oscuro; cards claro / verde / coral. Scoped. */
+/* Light/transparente: sin bg sólido, deja ver el bg-fixed (coherente con el marquee de logos).
+   Sin el padding 100vh del snippet → sin spacing vacío arriba/abajo; el pin arranca al entrar. */
+.aa-landing .aa-onb {
+  position: relative;
+  overflow: hidden;
+}
+
+.aa-landing .aa-onb__slide {
+  height: 100vh;
+  box-shadow: 3px 3px 30px rgb(0 0 0 / 0.14);
+}
+.aa-landing .aa-onb__wrapper {
+  width: 100%;
+  height: 100%;
+  perspective: 250vw;
+}
+.aa-landing .aa-onb__content {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 10%;
+  overflow: hidden; /* clip del panel que sangra por el borde inferior de la card */
+  padding: clamp(2.25rem, 6vh, 5rem) clamp(1.75rem, 3.5vw, 3.5rem) 0; /* más aire arriba; sin bottom */
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.4vh, 2rem);
+}
+
+/* ── Head: título (izq) + número grande (der) ───────────────────────────────── */
+.aa-landing .aa-onb__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: clamp(1rem, 3vw, 3rem);
+}
+.aa-landing .aa-onb__title {
+  margin: 0;
+  max-width: 60%;
+  font-family: var(--aa-font-display);
+  font-size: clamp(2rem, 5vw, 5rem);
+  font-weight: var(--aa-weight-semibold);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.aa-landing .aa-onb__num {
+  flex: none;
+  font-family: var(--aa-font-display);
+  font-size: clamp(2.25rem, 5.5vw, 5.5rem);
+  font-weight: var(--aa-weight-semibold);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+/* ── Banda de 2 bullets con divisores ───────────────────────────────────────── */
+.aa-landing .aa-onb__feats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+}
+.aa-landing .aa-onb__feat {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: clamp(0.7rem, 1.4vw, 1.1rem) clamp(0.5rem, 1.4vw, 1.4rem);
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xs);
+}
+.aa-landing .aa-onb__feat:not(:first-child) {
+  border-left: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  padding-left: clamp(1rem, 2vw, 2rem);
+}
+.aa-landing .aa-onb__feat-dot {
+  flex: none;
+  width: 0.5em;
+  height: 0.5em;
+  background: currentColor;
+}
+.aa-landing .aa-onb__feat-label {
+  letter-spacing: 0.01em;
+}
+
+/* ── Descripción: lead a color pleno + resto tenue ──────────────────────────── */
+.aa-landing .aa-onb__text {
+  margin: 0;
+  max-width: 32ch;
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: color-mix(in srgb, currentColor 55%, transparent);
+}
+.aa-landing .aa-onb__lead {
+  color: currentColor;
+}
+
+/* ── CTA: botón oficial del DS (.aa-button, variant primary). Solo posiciona/dimensiona. ─── */
+.aa-landing .aa-onb__cta {
+  align-self: center;
+  margin-block: clamp(0.5rem, 1.5vh, 1.25rem);
+  font-size: var(--aa-text-s);
+}
+
+/* ── Panel inferior con grid (sangra por el borde de la card) ────────────────── */
+.aa-landing .aa-onb__panel {
+  min-height: 58vh; /* rebasa el borde inferior → bleed, clipeado por el overflow del content */
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  padding: clamp(1rem, 2vw, 1.75rem);
+  border-radius: var(--aa-radius-l) var(--aa-radius-l) 0 0;
+  /* Tinte con el color de contraste de la card (adapta a light y dark). */
+  background: color-mix(in srgb, currentColor 7%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+}
+.aa-landing .aa-onb__panel-label {
+  font-family: var(--aa-font-display);
+  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+  font-weight: var(--aa-weight-semibold);
+}
+.aa-landing .aa-onb__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(0.5rem, 1vw, 0.85rem);
+}
+.aa-landing .aa-onb__cell {
+  aspect-ratio: 3 / 4;
+  border-radius: var(--aa-radius-m);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+/* ── Fondos por card (sistema de gradientes de marca) ────────────────────────── */
+/* G1 — Light hero: blanco sostenido 0–40%, tinte violet-50 solo en el tercio inferior. */
+.aa-landing .aa-onb__content--1 {
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 40%, #f5efff 70%, #f0eaff 100%);
+  color: var(--aa-neutral-950);
+}
+/* G2 — Dark feature: base zinc + 2 glows radiales (violet top 13%, orange bottom 6%). */
+.aa-landing .aa-onb__content--2 {
+  background:
+    radial-gradient(
+      ellipse 70% 45% at 50% 0%,
+      color-mix(in srgb, #8023ff 13%, transparent) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 40% 30% at 80% 100%,
+      color-mix(in srgb, #ff6600 6%, transparent) 0%,
+      transparent 100%
+    ),
+    linear-gradient(180deg, #0e0c14 0%, #120e1a 100%);
+  color: var(--aa-neutral-100);
+}
+/* G3 — Gradiente de marca (el mismo del gradient-text highlight): violeta → magenta → naranja. */
+.aa-landing .aa-onb__content--3 {
+  background: var(--aa-gradient-brand);
+  color: #ffffff;
+}
+
+/* ── reduced-motion: sin pin/3D, tarjetas apiladas normales ──────────────────── */
+.aa-landing .aa-onb.is-static {
+  padding: var(--aa-padding-l) 0;
+}
+.aa-landing .aa-onb.is-static .aa-onb__slide {
+  height: auto;
+}
+.aa-landing .aa-onb.is-static .aa-onb__content {
+  position: static;
+}
+.aa-landing .aa-onb.is-static .aa-onb__scroll {
+  display: none;
+}
+
+/* ── Mobile (retrato): título/num más chicos, bullets en columna, grid 3-col ──── */
+@media (max-aspect-ratio: 1 / 1) {
+  .aa-landing .aa-onb__content {
+    padding: clamp(1.25rem, 5vw, 2rem) clamp(1.25rem, 5vw, 2rem) 0;
+    gap: clamp(0.75rem, 3vw, 1.5rem);
+  }
+  .aa-landing .aa-onb__title {
+    max-width: 100%;
+    font-size: clamp(1.75rem, 9vw, 3rem);
+  }
+  .aa-landing .aa-onb__num {
+    font-size: clamp(1.75rem, 9vw, 3rem);
+  }
+  .aa-landing .aa-onb__feats {
+    grid-template-columns: 1fr;
+  }
+  .aa-landing .aa-onb__feat:not(:first-child) {
+    border-left: none;
+    border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+    padding-left: clamp(0.5rem, 1.4vw, 1.4rem);
+  }
+  .aa-landing .aa-onb__text {
+    max-width: 100%;
+  }
+  .aa-landing .aa-onb__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

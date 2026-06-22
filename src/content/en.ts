@@ -2,7 +2,7 @@
 // **…** marks words to emphasize (typographic weight) to reinforce the narrative.
 
 import type { SectionContent } from './types';
-import { WAITLIST, CTA_BG_VIDEO, PROBLEMA_IMG, VISION_IMG } from './shared';
+import { WAITLIST, CTA_BG_VIDEO, ENGINE_IMG } from './shared';
 
 export const en: SectionContent[] = [
   {
@@ -32,85 +32,88 @@ export const en: SectionContent[] = [
   {
     kind: 'statement',
     id: 'aa-tesis',
-    theme: 'dark',
+    theme: 'light',
     eyebrow: 'The thesis',
-    heading: 'WhatsApp Marketing isn’t about sending messages. It’s about designing conversations that sell.',
-    rotate: {
-      before: 'WhatsApp Marketing isn’t about sending messages. It’s about designing conversations that',
-      words: ['sell', 'convert', 'close', 'build loyalty', 'scale'],
-      after: '.',
-    },
-    paragraphs: [
-      'In this program you’ll learn how to think of WhatsApp as a strategic channel within the sales funnel. From the first click on a campaign to lead qualification, follow-up, recovering inactive opportunities and truly measuring results.',
-      'Because every conversation can be a sale. But only if it’s designed to move forward.',
+    heading: 'Everything you need to run WhatsApp as a sales channel',
+    paragraphs: [],
+  },
+  {
+    kind: 'cards',
+    id: 'aa-programa',
+    theme: 'light',
+    heading: '',
+    layout: 'slider',
+    cards: [
+      {
+        variant: 'mint',
+        title: 'Transactional AI on WhatsApp',
+        desc: 'An AI that runs your WhatsApp conversations end to end, so your reps only step in when needed.',
+      },
+      {
+        variant: 'lavender',
+        title: 'Smart remarketing',
+        desc: 'With follow-up messages and calls, Atom recovers leads that don’t buy on first contact and keeps them engaged until they’re ready to move forward.',
+      },
+      {
+        variant: 'peach',
+        title: 'Service with experts',
+        desc: 'Our team of experts in your industry guides you through implementing AI in your operation and trains you to reach autonomy.',
+      },
+      {
+        variant: 'sky',
+        title: 'From ad click to sale, fully visible',
+        desc: 'The only system that converts, recovers and traces every lead, from Meta, Google or TikTok to the close in your CRM.',
+      },
+      {
+        variant: 'mint',
+        title: 'More conversions, lower cost',
+        desc: 'With Conversions API integration, increase qualified leads and cut your ad costs by up to 30%.',
+      },
     ],
   },
   {
-    kind: 'checklist',
-    id: 'aa-problema',
-    theme: 'dark',
-    eyebrow: 'The problem',
-    heading: 'From lost lead to converted opportunity',
-    media: {
-      side: 'left',
-      src: PROBLEMA_IMG,
-      alt: '',
-      chat: [
-        { kind: 'in', text: 'Hi, I’m interested 🙌', time: '18:40' },
-        { kind: 'in', text: 'Can you send me the price?', time: '18:41' },
-        { kind: 'in', text: 'Hello? Are you still there?', time: '19:55' },
-        { kind: 'in', text: 'Still waiting 😐', time: '20:48' },
-        { kind: 'in', text: 'Fine, I’ll look elsewhere', time: '21:30' },
-        { kind: 'in', text: 'Thanks anyway 👋', time: '21:31' },
-      ],
-    },
-    intro: [
-      'Most companies invest in generating demand, but lose opportunities once the lead reaches WhatsApp.',
-    ],
-    marker: 'dot',
-    items: [
-      'Slow replies.',
-      'Messages without context.',
-      'Overwhelmed agents.',
-      'Lack of follow-up.',
-      'Data that never makes it back to campaigns.',
-      'Interested leads that never reach sales.',
-    ],
-    outro: [
-      'WhatsApp Marketing exists to solve that problem.',
-      'It’s not about generating more conversations. It’s about converting the conversations you’re already generating better.',
-    ],
-  },
-  {
-    kind: 'prose',
+    kind: 'tabs',
     id: 'aa-vision',
-    theme: 'dark',
-    eyebrow: 'The vision',
-    heading: 'The new role companies are going to need',
-    surface: { color: '#25d366', text: 'dark' },
-    media: {
-      side: 'right',
-      src: VISION_IMG,
-      alt: '',
-      chat: [
-        { kind: 'in', text: 'Hi, I saw your ad 👀', time: '12:01' },
-        { kind: 'out', text: 'Hi! 👋 Want me to explain how it works?', time: '12:01' },
-        { kind: 'in', text: 'Yes, please', time: '12:02' },
-        { kind: 'out', text: 'We connect your ad → WhatsApp → close', time: '12:02' },
-        { kind: 'in', text: 'What if I don’t reply in time?', time: '12:03' },
-        { kind: 'out', text: 'The AI replies instantly and notifies you ⚡', time: '12:03' },
-        { kind: 'in', text: 'I’m interested 🔥 price?', time: '12:05' },
-        { kind: 'out', text: 'Today with launch spots: 30% off', time: '12:05' },
-        { kind: 'in', text: 'I want it 🙌', time: '12:06' },
-        { kind: 'out', text: 'Here’s the link to book 📅', time: '12:06' },
-        { kind: 'in', text: 'Booked! ✅', time: '12:08' },
-      ],
-    },
-    paragraphs: [
-      'Companies already have ad specialists. CRM specialists. Automation specialists. Sales specialists.',
-      'But between the click and the sale there’s a critical zone: the conversation. That’s where the WhatsApp Marketer role is born.',
-      'Someone able to understand the strategy, design the experience, optimize the messages, read the data and turn WhatsApp into a growth channel.',
-      'It’s not just about replying faster. It’s about selling better.',
+    theme: 'light',
+    eyebrow: 'Atom’s AI engine',
+    heading: 'An *AI engine* built to speed up your processes',
+    tabs: [
+      {
+        label: 'Conversation summary',
+        heading: 'Conversation summary',
+        paragraphs: [
+          'While other bots just store the chat history, Atom’s AI reads every conversation and hands you a clear summary: what the lead wants, what stage they’re in, and the next step.',
+          'Your team picks up any chat in seconds — no scrolling through hundreds of messages, no lost context.',
+        ],
+        image: { src: ENGINE_IMG.summary, alt: 'Sales rep reviewing a conversation summary' },
+      },
+      {
+        label: 'Smart suggestions',
+        heading: 'Smart suggestions',
+        paragraphs: [
+          'Atom goes beyond canned replies: it suggests the ideal next message based on the real context of the conversation and your sales strategy.',
+          'Your reps respond better and faster, with an expert’s consistency in every chat.',
+        ],
+        image: { src: ENGINE_IMG.suggestions, alt: 'Professional getting smart AI suggestions' },
+      },
+      {
+        label: 'Conversation prioritization',
+        heading: 'Conversation prioritization',
+        paragraphs: [
+          'Instead of an endless first-come inbox, Atom’s AI detects buying intent and surfaces hot leads first.',
+          'Your team spends its time on the conversations that actually close deals.',
+        ],
+        image: { src: ENGINE_IMG.priority, alt: 'Team prioritizing the most important conversations' },
+      },
+      {
+        label: 'WhatsApp calls with AI',
+        heading: 'WhatsApp calls with AI',
+        paragraphs: [
+          'Atom goes beyond text: it makes and assists WhatsApp calls with AI to answer questions, book meetings, and close without friction.',
+          'A voice layer no traditional chatbot offers, built into the same channel.',
+        ],
+        image: { src: ENGINE_IMG.calls, alt: 'Professional on an AI-assisted WhatsApp call' },
+      },
     ],
   },
   {
@@ -148,52 +151,6 @@ export const en: SectionContent[] = [
     ],
   },
   {
-    kind: 'cards',
-    id: 'aa-programa',
-    theme: 'dark',
-    eyebrow: 'Program',
-    heading: 'What you’ll learn',
-    layout: 'slider',
-    cards: [
-      {
-        variant: 'dark',
-        tag: 'Basics',
-        title: 'Fundamentals',
-        desc: 'Why WhatsApp is today one of the key marketing and sales channels in LATAM.',
-      },
-      {
-        variant: 'electric',
-        tag: 'Strategy',
-        title: 'Conversational strategy',
-        desc: 'Journeys, flows and messages that take the lead from interest to purchase.',
-      },
-      {
-        variant: 'purple',
-        tag: 'Acquisition',
-        title: 'Click to WhatsApp',
-        desc: 'Campaigns that take users straight to WhatsApp without losing leads after the first message.',
-      },
-      {
-        variant: 'neutral',
-        tag: 'AI',
-        title: 'Automation and AI',
-        desc: 'AI to reply, qualify, schedule and recover leads without losing personalization.',
-      },
-      {
-        variant: 'dark',
-        tag: 'Data',
-        title: 'Traceability and data',
-        desc: 'Measure what happens inside WhatsApp and connect it to your CRM to optimize campaigns.',
-      },
-      {
-        variant: 'electric',
-        tag: 'Conversion',
-        title: 'Sales optimization',
-        desc: 'Improve response times, prioritize leads and recover inactive opportunities.',
-      },
-    ],
-  },
-  {
     kind: 'audience',
     id: 'aa-audience',
     theme: 'light',
@@ -208,6 +165,64 @@ export const en: SectionContent[] = [
       'You need to improve conversion across lead, conversation and sale.',
       'You’re looking to integrate WhatsApp with AI, automation, CRM and data.',
       'You want to develop a skill that’s increasingly important for modern sales teams.',
+    ],
+  },
+  {
+    kind: 'reviews',
+    id: 'aa-reviews',
+    theme: 'light',
+    eyebrow: 'Reviews',
+    heading: 'Real sales teams. Measurable results.',
+    subheading: 'What teams already running WhatsApp on Atom are saying.',
+    reviews: [
+      {
+        quote: 'We’ve managed to automate our entire WhatsApp sales process.',
+        name: 'Reyna P.',
+        role: 'Operations Manager',
+        rating: 5,
+      },
+      {
+        quote: 'Atom gives us a strong, professional competitive edge.',
+        name: 'Carlos M.',
+        role: 'Customer Service Head',
+        rating: 5,
+      },
+      {
+        quote: 'How easy it is to segment customers by why they reach out.',
+        name: 'Hamit A.',
+        role: 'Logistics & Transport',
+        rating: 5,
+      },
+      {
+        quote: 'The Facebook and WhatsApp integration was easily my top feature.',
+        name: 'Frederick G.',
+        role: 'Exec Director',
+        rating: 4,
+      },
+      {
+        quote: 'It’s intuitive and feels very productive from day one.',
+        name: 'Laura S.',
+        role: 'Benefits Manager',
+        rating: 4,
+      },
+      {
+        quote: 'All the functionality you need, wrapped in a clean UI.',
+        name: 'Sean D.',
+        role: 'Marketing Assistant',
+        rating: 5,
+      },
+      {
+        quote: 'How smooth it is to use, with a really friendly interface.',
+        name: 'Nteziyaremye I.',
+        role: 'Information Technology',
+        rating: 4,
+      },
+      {
+        quote: 'We were impressed with its features and performance.',
+        name: 'Chris C.',
+        role: 'IT Managing Director',
+        rating: 4,
+      },
     ],
   },
   {

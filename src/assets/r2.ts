@@ -32,7 +32,25 @@ export const featureShots = {
 };
 
 // Logos "Trusted by" (organisms/logos). Pendientes de subir a R2 (SVG monocromo ideal).
-export const trustedLogos = Array.from({ length: 7 }, (_, i) => `${R2}/logo-${String(i + 1).padStart(2, '0')}.svg`);
+// Logos "Trusted by" — servidos del CDN de Webflow (mismo bucket que el bottom marquee).
+// TEMP: swap por R2 antes de prod.
+const WF_CDN = 'https://cdn.prod.website-files.com/6890d2a7153362eed21e1c49';
+export const trustedLogos: { name: string; src: string }[] = [
+  { name: 'Jetour', src: `${WF_CDN}/6a1f4a4ea001ddddbfa53a5a_jetour.svg` },
+  { name: 'KIA', src: `${WF_CDN}/6a1f4a4edf567a7654329a1b_kia.svg` },
+  { name: 'Finandina', src: `${WF_CDN}/6a1f4a4ecea605e1f474079f_finandina.svg` },
+  { name: 'Farma Value', src: `${WF_CDN}/6a1f4a4e3af4992f365bd5ed_farma-value.svg` },
+  { name: 'Berlitz', src: `${WF_CDN}/6a1f4a4e9f0e2fcba998dcca_Berlitz.svg` },
+  { name: 'Areandina', src: `${WF_CDN}/6a1f4a4e3eead4fcccb94e08_areandina.svg` },
+  { name: 'Toyota', src: `${WF_CDN}/6a1f4a4e37ac0e747fc40d79_toyota.svg` },
+  { name: 'CNCI', src: `${WF_CDN}/6a1f4a4ede5478cee0196163_cnci.svg` },
+  { name: 'Avista', src: `${WF_CDN}/6a1f4a4f485ce08c1a53d06d_avista.svg` },
+  { name: 'Volkswagen', src: `${WF_CDN}/6a1f4a4f35da0ec096c03d85_volkswagen.svg` },
+  { name: 'Anahuac', src: `${WF_CDN}/6a1f4a4ffee97aeff0529279_anahuac.svg` },
+  { name: 'Ford', src: `${WF_CDN}/6a1f4a4f7df4f7e56979db80_ford.svg` },
+  { name: 'Salud SA', src: `${WF_CDN}/6a1f4a4fb281d0f1bfa4294f_salud-sa.svg` },
+  { name: 'Hertz', src: `${WF_CDN}/6a1f4a4f7df4f7e56979db84_hertz.svg` },
+];
 
 export const avatars = [
   `${R2}/avatar-01.jpg`,

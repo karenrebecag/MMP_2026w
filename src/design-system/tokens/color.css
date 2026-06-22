@@ -22,10 +22,19 @@
   --aa-neutral-950: #0a0a0a;
 
   /* ─── Brand accents (ver nota de drift arriba) ────────────────────────────── */
-  --aa-color-electric: #25d366; /* verde WhatsApp */
+  --aa-color-electric: #25d366; /* verde WhatsApp (deprecado como fondo de marca) */
   --aa-color-purple: #0a290f; /* verde muy oscuro */
   --aa-color-coral: #f84131;
   --aa-color-sky: #22d3ee;
+
+  /* ─── Marca ATOM: naranja solo como highlight/acento (nunca fondo grande). ────── */
+  --aa-color-orange: #ff6600;
+
+  /* ─── Fondos pastel para cards de producto ────────────────────────────────────── */
+  --aa-card-mint: #f3fdf5;
+  --aa-card-lavender: #f5f3fe;
+  --aa-card-peach: #fdf4ee;
+  --aa-card-sky: #f0f6fe;
 
   /* ─── Semantic color tokens ───────────────────────────────────────────────── */
   --aa-bg: var(--aa-neutral-50);

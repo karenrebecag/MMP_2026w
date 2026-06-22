@@ -2,6 +2,11 @@
    (preguntas de prospectos). Bandas con flex → centro libre, sin solapar el texto.
    Rotación + jitter = look flotante; momentum-hover (inertia) reacciona al cursor. */
 
+/* Oculta la sección manifesto completa (incluye su section wrapper + padding). */
+.aa-landing .aa-section:has(.aa-mw) {
+  display: none;
+}
+
 .aa-landing .aa-mw {
   position: relative;
   display: flex;

@@ -25,6 +25,9 @@ import {
   type InfoContent,
   type FaqContent,
   type CtaContent,
+  type ReviewsContent,
+  type ReviewItem,
+  type TabsContent,
 } from '../../content';
 
 const CHECK_ICON =
@@ -242,7 +245,7 @@ function moduleCardEl(card: {
   title: string;
   desc: string;
   tag?: string;
-  variant?: 'dark' | 'electric' | 'purple' | 'neutral';
+  variant?: 'dark' | 'electric' | 'purple' | 'neutral' | 'mint' | 'lavender' | 'peach' | 'sky';
 }): HTMLElement {
   const el = document.createElement('article');
   el.className = 'aa-mod-card';
@@ -288,9 +291,11 @@ function buildCards(c: CardsContent): HTMLElement {
     eyebrow.classList.add('aa-text-center');
     s.appendChild(eyebrow);
   }
-  s.appendChild(
-    renderHeading({ size: 'l', text: c.heading, split: true, className: 'aa-text-center' }),
-  );
+  if (c.heading) {
+    s.appendChild(
+      renderHeading({ size: 'l', text: c.heading, split: true, className: 'aa-text-center' }),
+    );
+  }
 
   if (c.layout === 'slider') {
     const slider = document.createElement('div');
@@ -300,7 +305,7 @@ function buildCards(c: CardsContent): HTMLElement {
     // A11y: región enfocable y navegable por teclado (flechas / Home / End).
     slider.setAttribute('role', 'group');
     slider.setAttribute('aria-roledescription', 'carrusel');
-    slider.setAttribute('aria-label', c.heading);
+    slider.setAttribute('aria-label', c.heading || c.eyebrow || 'Tarjetas');
     slider.setAttribute('tabindex', '0');
     slider.setAttribute('aria-keyshortcuts', 'ArrowLeft ArrowRight Home End');
     const track = document.createElement('div');
@@ -373,6 +378,185 @@ function renderBgVideo(m: NonNullable<CtaContent['bgVideo']>): HTMLElement {
   return wrap;
 }
 
+// Reseñas: dos filas de cards (marquee scroll-driven en sentidos opuestos, init en
+// behaviors/reviews-marquee). El color de cada card rota por nth-child (tokens de marca).
+function initialsOf(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('');
+}
+
+function reviewStars(rating: number): HTMLElement {
+  const row = document.createElement('div');
+  row.className = 'aa-reviews__stars';
+  row.setAttribute('aria-label', `${rating}/5`);
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement('span');
+    star.className = i < rating ? 'aa-reviews__star is-on' : 'aa-reviews__star';
+    star.textContent = '★';
+    star.setAttribute('aria-hidden', 'true');
+    row.appendChild(star);
+  }
+  return row;
+}
+
+function reviewCard(r: ReviewItem): HTMLElement {
+  const card = document.createElement('article');
+  card.className = 'aa-reviews__card';
+
+  // El inner es el objetivo del lag por velocidad (children[0], como en el snippet).
+  const inner = document.createElement('div');
+  inner.className = 'aa-reviews__card-inner';
+
+  const quote = document.createElement('p');
+  quote.className = 'aa-reviews__quote';
+  quote.textContent = `“${r.quote}”`;
+
+  const author = document.createElement('div');
+  author.className = 'aa-reviews__author';
+  const avatar = document.createElement('span');
+  avatar.className = 'aa-reviews__avatar';
+  avatar.setAttribute('aria-hidden', 'true');
+  avatar.textContent = initialsOf(r.name);
+  const meta = document.createElement('span');
+  meta.className = 'aa-reviews__meta';
+  const name = document.createElement('strong');
+  name.className = 'aa-reviews__name';
+  name.textContent = r.name;
+  const role = document.createElement('span');
+  role.className = 'aa-reviews__role';
+  role.textContent = r.role;
+  meta.append(name, role);
+  author.append(avatar, meta);
+
+  inner.append(reviewStars(r.rating), quote, author);
+  card.appendChild(inner);
+  return card;
+}
+
+function reviewRow(items: ReviewItem[], modifier: '1' | '2'): HTMLElement {
+  const row = document.createElement('div');
+  row.className = `aa-reviews__row aa-reviews__row--${modifier}`;
+  const track = document.createElement('div');
+  track.className = 'aa-reviews__track';
+  items.forEach((r) => track.appendChild(reviewCard(r)));
+  row.appendChild(track);
+  return row;
+}
+
+function buildReviews(c: ReviewsContent): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.className = 'aa-reviews';
+  wrap.setAttribute('data-aa-reviews', '');
+
+  const head = document.createElement('div');
+  head.className = 'aa-container aa-container--default aa-reviews__head';
+  const s = stack(true);
+  if (c.eyebrow) s.appendChild(fadeEyebrow(c.eyebrow));
+  s.appendChild(
+    renderHeading({ size: 'xl', text: c.heading, split: true, className: 'aa-text-balance' }),
+  );
+  if (c.subheading) s.appendChild(fadeParagraph(c.subheading));
+  head.appendChild(s);
+
+  const rows = document.createElement('div');
+  rows.className = 'aa-reviews__rows';
+  const mid = Math.ceil(c.reviews.length / 2);
+  rows.append(reviewRow(c.reviews.slice(0, mid), '1'), reviewRow(c.reviews.slice(mid), '2'));
+
+  wrap.append(head, rows);
+  return wrap;
+}
+
+// Marca `*palabra*` → span con gradiente de marca; el resto cae a text nodes. Sin innerHTML.
+function appendWithGradient(el: HTMLElement, text: string): void {
+  text.split(/\*(.+?)\*/g).forEach((part, i) => {
+    if (!part) return;
+    if (i % 2 === 1) {
+      const span = document.createElement('span');
+      span.className = 'aa-text-gradient';
+      span.textContent = part;
+      el.appendChild(span);
+    } else {
+      el.appendChild(document.createTextNode(part));
+    }
+  });
+}
+
+// Sección "motor de IA": selector de tabs (carbon dark) que alterna paneles de dos
+// columnas (texto izq + imagen der). Switch en behaviors/tabs.
+function buildTabs(c: TabsContent): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.className = 'aa-tabs';
+  wrap.setAttribute('data-aa-tabs', '');
+
+  const head = stack(true); // contenido superior centrado
+  head.classList.add('aa-tabs__head');
+  if (c.eyebrow) head.appendChild(fadeEyebrow(c.eyebrow));
+  // Heading con highlight en gradiente (`*…*`) + SplitText on-scroll (como whatAtom).
+  const heading = document.createElement('h2');
+  heading.className = 'aa-h-xl';
+  heading.setAttribute('data-aa-split', '');
+  appendWithGradient(heading, c.heading);
+  head.appendChild(heading);
+  wrap.appendChild(head);
+
+  const nav = document.createElement('div');
+  nav.className = 'aa-tabs__nav';
+  nav.setAttribute('role', 'tablist');
+
+  const panels = document.createElement('div');
+  panels.className = 'aa-tabs__panels';
+
+  c.tabs.forEach((tab, i) => {
+    const active = i === 0;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = active ? 'aa-tabs__tab is-active' : 'aa-tabs__tab';
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', String(active));
+    btn.setAttribute('data-aa-tab', String(i));
+    btn.textContent = tab.label;
+    nav.appendChild(btn);
+
+    const panel = document.createElement('div');
+    panel.className = active ? 'aa-tabs__panel is-active' : 'aa-tabs__panel';
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('data-aa-panel', String(i));
+    if (!active) panel.hidden = true;
+
+    const row = document.createElement('div');
+    row.className = 'aa-split aa-split--right';
+
+    const textCol = document.createElement('div');
+    textCol.className = 'aa-split__text';
+    const s = stack();
+    s.appendChild(renderHeading({ size: 'l', text: tab.heading, tag: 'h3' }));
+    tab.paragraphs.forEach((p) => s.appendChild(fadeParagraph(p)));
+    textCol.appendChild(s);
+
+    const mediaCol = document.createElement('div');
+    mediaCol.className = 'aa-split__media';
+    const img = document.createElement('img');
+    img.src = tab.image.src;
+    img.alt = tab.image.alt;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    mediaCol.appendChild(img);
+
+    row.append(textCol, mediaCol);
+    panel.appendChild(row);
+    panels.appendChild(panel);
+  });
+
+  wrap.append(nav, panels);
+  return wrap;
+}
+
 function buildInner(c: SectionContent): HTMLElement {
   switch (c.kind) {
     case 'prose':
@@ -392,6 +576,10 @@ function buildInner(c: SectionContent): HTMLElement {
       return buildFaq(c);
     case 'cta':
       return buildCta(c);
+    case 'reviews':
+      return buildReviews(c);
+    case 'tabs':
+      return buildTabs(c);
   }
 }
 
@@ -404,6 +592,29 @@ function sizeFor(kind: SectionContent['kind']): ContainerSize {
 
 export function renderContentSections(root: Element): void {
   getSections().forEach((c) => {
+    // Reseñas: full-bleed (sin el container estándar). buildReviews controla su layout
+    // (header en container + filas a ancho completo para el marquee horizontal).
+    if (c.kind === 'reviews') {
+      const section = renderSection({
+        theme: c.theme,
+        className: 'aa-section--reviews',
+        children: [buildReviews(c)],
+      });
+      if (c.id) section.id = c.id;
+      root.appendChild(section);
+      return;
+    }
+    // Tabs: sección "motor de IA" (selector + paneles dos columnas).
+    if (c.kind === 'tabs') {
+      const section = renderSection({
+        theme: c.theme,
+        className: 'aa-section--tabs',
+        children: [renderContainer({ children: [buildTabs(c)] })],
+      });
+      if (c.id) section.id = c.id;
+      root.appendChild(section);
+      return;
+    }
     const bgVideo = c.kind === 'cta' ? c.bgVideo : undefined;
     const media = mediaOf(c);
     const surface = surfaceOf(c);

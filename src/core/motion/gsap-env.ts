@@ -6,8 +6,9 @@ import { SplitText } from 'gsap/SplitText';
 import { CustomEase } from 'gsap/CustomEase';
 import { Draggable } from 'gsap/Draggable';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
+import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 
-gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, Draggable, InertiaPlugin);
+gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, Draggable, InertiaPlugin, MorphSVGPlugin);
 
 // GSAP no parsea cubic-bezier como string → hay que registrarlo como CustomEase.
 CustomEase.create('osmo', '0.625, 0.05, 0, 1');
@@ -19,4 +20,4 @@ export const STAGGER = 0.05;
 
 gsap.defaults({ ease: EASE, duration: DURATION });
 
-export { gsap, ScrollTrigger, SplitText, Draggable };
+export { gsap, ScrollTrigger, SplitText, Draggable, MorphSVGPlugin };
