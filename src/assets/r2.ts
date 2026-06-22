@@ -20,14 +20,14 @@ export const featureShots = {
     `${R2}/feat-califica-2.webp`,
     `${R2}/feat-califica-3.webp`,
     `${R2}/feat-califica-4.webp`,
-    `${R2}/feat-califica-5.webp`,
+    `${R2}/OldWomanEN_98b23750bfa961c97918904bf8a72a2b86a4699f099acaf10617e9c33f1c52d1.webp`,
   ],
   cierra: [
     `${R2}/feat-cierra-1.webp`,
     `${R2}/feat-cierra-2.webp`,
     `${R2}/feat-cierra-3.webp`,
     `${R2}/feat-cierra-4.webp`,
-    `${R2}/feat-cierra-5.webp`,
+    `${R2}/BandejasEN_d7fa72a9a0a83806069f2c3b1516092419bc20228556b351f40131e79da2c6ed.webp`,
   ],
 };
 

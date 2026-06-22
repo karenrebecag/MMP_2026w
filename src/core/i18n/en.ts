@@ -2,7 +2,7 @@ import type { Strings } from './strings';
 
 export const en = {
   navbar: {
-    cta: 'Join the waitlist',
+    cta: 'Book a demo',
   },
   hero: {
     tag: 'Conversion Intelligence for WhatsApp',

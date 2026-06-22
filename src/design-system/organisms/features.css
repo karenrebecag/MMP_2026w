@@ -205,6 +205,11 @@
 .aa-landing .aa-feat__grid-side.is-right .aa-feat__asset {
   object-position: 0% 50%;
 }
+/* Card "califica" (OldWoman): imagen centrada, sin el zoom/bleed del panel. */
+.aa-landing .aa-feat__left .aa-feat__grid-side.is-right .aa-feat__asset {
+  width: 100%;
+  object-position: center;
+}
 /* Lottie: por defecto llena su contenedor (ej. el cell 1:1 de la 2ª card). */
 .aa-landing .aa-feat__lottie {
   width: 100%;

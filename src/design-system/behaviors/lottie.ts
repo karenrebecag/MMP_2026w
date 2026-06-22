@@ -2,11 +2,13 @@
 // lottie-web se importa de forma dinámica DENTRO del observer → queda en un chunk aparte
 // que solo se descarga si el usuario llega a la sección (no infla el entry).
 //
-// Los JSON se sirven como assets (no bundleados). TEMP: paths locales; swap por R2 antes de prod.
+// Los JSON se sirven desde R2 (no bundleados, no rutas relativas al host → evita 404 en jsDelivr/Webflow).
+
+import { R2_MEDIA as R2 } from '../../core/config/assets';
 
 const SOURCES: Record<string, string> = {
-  'integrations-features': '/assets/lottie/integrations-features.json',
-  'atom-logo': '/assets/lottie/atom-logo.json',
+  'integrations-features': `${R2}/integrations-features.json`,
+  'atom-logo': `${R2}/atom-logo.json`,
 };
 
 const prefersReduced = (): boolean =>

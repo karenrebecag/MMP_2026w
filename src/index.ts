@@ -24,22 +24,16 @@ function resolveTheme(raw: string | undefined): Theme {
 }
 
 function resolveLang(raw: string | undefined): Lang {
-  return raw === 'en' || raw === 'pt' ? raw : 'es';
+  return raw === 'es' || raw === 'pt' ? raw : 'en';
 }
 
 async function boot(): Promise<void> {
   const mounts = document.querySelectorAll<HTMLElement>('[data-aa-mount]');
-  // Override de idioma elegido por el usuario (selector del navbar) sobre el data-aa-lang del embed.
-  let stored: string | null = null;
-  try {
-    stored = localStorage.getItem('aa-lang');
-  } catch {
-    /* storage no disponible */
-  }
 
   for (const mount of mounts) {
     const theme = resolveTheme(mount.dataset.aaTheme);
-    const lang = resolveLang(stored ?? mount.dataset.aaLang);
+    // Idioma del embed (data-aa-lang); default inglés. El selector de idioma se retiró.
+    const lang = resolveLang(mount.dataset.aaLang);
     const page = mount.dataset.page ?? 'home';
     setLang(lang); // resuelve t()/strings() para los render* de esta instancia
 

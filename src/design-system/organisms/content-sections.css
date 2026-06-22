@@ -287,7 +287,7 @@
 .aa-landing .aa-reviews__stars {
   display: flex;
   gap: 0.15em;
-  font-size: var(--aa-text-s);
+  font-size: var(--aa-text-xs);
   line-height: 1;
 }
 .aa-landing .aa-reviews__star {
@@ -300,9 +300,9 @@
 .aa-landing .aa-reviews__quote {
   flex: 1;
   margin: 0;
-  font-size: var(--aa-text-ml);
+  font-size: var(--aa-text-s);
   font-weight: var(--aa-weight-medium);
-  line-height: 1.2;
+  line-height: var(--aa-leading-snug);
   letter-spacing: -0.01em;
   text-wrap: balance;
 }

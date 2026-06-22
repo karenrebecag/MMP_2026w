@@ -16,7 +16,7 @@ function resolve(obj: unknown, path: string): string {
   return typeof node === 'string' ? node : path;
 }
 
-let _lang: Lang = 'es';
+let _lang: Lang = 'en';
 
 export function setLang(lang: Lang): void {
   _lang = lang;

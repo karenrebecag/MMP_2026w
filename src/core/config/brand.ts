@@ -27,3 +27,14 @@ export const PARTNERS = {
   hubspot: 'https://ecosystem.hubspot.com/marketplace/apps/marketing/live-chat/atomchat-1053281',
   meta: 'https://www.facebook.com/business/partner-directory/search?solution_type=messaging&ref=pd_home_hero_cta&id=3701304469998183&section=overview',
 };
+
+// WhatsApp Conversion Intelligence (WCI): Atom convierte por WhatsApp, no por forms.
+// El SDK (modo attach) se engancha a los [data-atom-button] del bundle, genera chatId,
+// dispara webhook de atribución y abre WhatsApp. El company-token es público (tipo
+// publishable key); el phone incluye código de país. wa.me como fallback si el SDK no carga.
+export const WHATSAPP = {
+  widget: 'https://api.atomchat.io/wci/widget.js',
+  companyToken: '2461fbb8-911f-c77b-5ba1-aef91156d512',
+  phone: '5215535150142',
+  message: 'Hola, quiero más información sobre Atom',
+};

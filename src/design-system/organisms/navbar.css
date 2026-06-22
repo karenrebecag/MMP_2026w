@@ -37,6 +37,12 @@
   height: var(--aa-navbar-height);
 }
 
+/* CTA a la derecha (navbar minimal: marca + CTA). */
+.aa-landing .aa-nav__cta {
+  margin-left: auto;
+  flex: none;
+}
+
 /* ── Marca ──────────────────────────────────────────────────────────────────── */
 .aa-landing .aa-nav__brand {
   flex: none;

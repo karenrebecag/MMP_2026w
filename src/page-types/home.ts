@@ -33,6 +33,7 @@ import { initReviewsMarquee } from '../design-system/behaviors/reviews-marquee';
 import { initTabs } from '../design-system/behaviors/tabs';
 import { renderCac } from '../design-system/organisms/cac';
 import { initBadgesMarquee } from '../design-system/behaviors/badges-marquee';
+import { initWhatsApp } from '../design-system/behaviors/whatsapp';
 import { renderFooter } from '../design-system/organisms/footer';
 // import { renderWaitlist } from '../widgets/contact-form/presets/waitlist'; // strip oculta en el home
 
@@ -105,4 +106,5 @@ export async function render(mount: HTMLElement, ctx: PageContext): Promise<void
   initMegaNav(root);
   initMetaTheme(root);
   initMotion(root);
+  initWhatsApp(); // WCI: engancha los CTAs primarios ([data-atom-button]) a WhatsApp
 }
