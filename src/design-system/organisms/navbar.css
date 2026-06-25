@@ -95,8 +95,9 @@
   align-items: center;
 }
 /* El botón es font-size:inherit; sin esto hereda el --aa-size-font fluido del root (gigante).
-   1rem base → el sm queda con texto ~14px, a la escala de los nav links. */
-.aa-landing .aa-nav__action .aa-button {
+   El CTA visible vive en .aa-nav__cta; misma proporción default que el CTA del hero,
+   anclado a 1rem para que quepa compacto en --aa-navbar-height. */
+.aa-landing .aa-nav__cta .aa-button {
   font-size: 1rem;
 }
 

@@ -20,6 +20,7 @@
 @import '../design-system/molecules/layout.css';
 @import '../design-system/atoms/button.css';
 @import '../design-system/organisms/hero.css';
+@import '../design-system/organisms/hero-2.css';
 @import '../design-system/organisms/what-atom-does.css';
 @import '../design-system/organisms/lead-flow.css';
 @import '../design-system/organisms/features.css';

@@ -3,6 +3,12 @@ import { R2_MEDIA as R2 } from '../core/config/assets';
 
 export const contourTexture = `${R2}/contour.jpg`;
 
+// Video del hero 2 (variante de dos columnas). webm primero; .mov (hvc1) como fallback Safari.
+export const heroVideo = {
+  webm: `${R2}/ATOM_transparent.webm`,
+  mov: `${R2}/ATOM_Background_Header-3-Industrias-02-06-26_transparent.mov`,
+};
+
 export const audiencePhotos = [`${R2}/aud-1.jpg`, `${R2}/aud-2.jpg`, `${R2}/aud-3.jpg`];
 
 export const manifestoShots = {

@@ -107,22 +107,36 @@
   background: var(--aa-neutral-100);
   color: var(--aa-neutral-950);
 }
-/* Cards pastel (texto oscuro) sobre la franja obsidiana. */
+/* Cards de producto: cluster monocromático del naranja de marca, alternando tints claros y shades
+   profundos (crema ↔ terracota) para dar ritmo. Familia única, cohesiva y on-brand — reemplaza los
+   pasteles deslavados. Texto cálido oscuro sobre claros, crema sobre profundos. La sombra difusa
+   las levanta sobre la strip clara (#aa-programa). El orden de programa queda claro/profundo/.../. */
+.aa-landing
+  :is(
+    .aa-mod-card--mint,
+    .aa-mod-card--lavender,
+    .aa-mod-card--peach,
+    .aa-mod-card--sky
+  ) {
+  box-shadow:
+    0 1px 2px rgba(64, 18, 10, 0.06),
+    0 18px 56px rgba(64, 18, 10, 0.12);
+}
 .aa-landing .aa-mod-card--mint {
-  background: var(--aa-card-mint);
-  color: var(--aa-neutral-950);
+  background: var(--aa-orange-100);
+  color: var(--aa-orange-950);
 }
 .aa-landing .aa-mod-card--lavender {
-  background: var(--aa-card-lavender);
-  color: var(--aa-neutral-950);
+  background: var(--aa-orange-700);
+  color: var(--aa-orange-50);
 }
 .aa-landing .aa-mod-card--peach {
-  background: var(--aa-card-peach);
-  color: var(--aa-neutral-950);
+  background: var(--aa-orange-200);
+  color: var(--aa-orange-950);
 }
 .aa-landing .aa-mod-card--sky {
-  background: var(--aa-card-sky);
-  color: var(--aa-neutral-950);
+  background: var(--aa-orange-600);
+  color: var(--aa-orange-50);
 }
 /* Card naranja de marca (nombre `electric` heredado, ver drift en tokens/color.css). */
 .aa-landing .aa-mod-card--electric {
@@ -149,7 +163,7 @@
   background-size: cover;
   background-position: center;
   mix-blend-mode: overlay;
-  opacity: 0.5;
+  opacity: 0.22;
 }
 
 /* Capa de contenido sobre el fondo */
@@ -264,24 +278,32 @@
   border-radius: var(--aa-radius-l);
   white-space: normal;
   will-change: transform;
+  /* Mismo cluster tonal del naranja que las cards de programa; la sombra difusa las separa. */
+  box-shadow:
+    0 1px 2px rgba(64, 18, 10, 0.06),
+    0 18px 56px rgba(64, 18, 10, 0.12);
 }
 
-/* Rotación de color por card: mismos pasteles que las cards de programa (texto oscuro). */
+/* Rotación tonal claro/profundo; --card-accent pinta la estrella activa con contraste sobre el bg. */
 .aa-landing .aa-reviews__card:nth-child(4n - 3) .aa-reviews__card-inner {
-  background: var(--aa-card-mint);
-  color: var(--aa-neutral-950);
+  background: var(--aa-orange-100);
+  color: var(--aa-orange-950);
+  --card-accent: var(--aa-orange-600);
 }
 .aa-landing .aa-reviews__card:nth-child(4n - 2) .aa-reviews__card-inner {
-  background: var(--aa-card-lavender);
-  color: var(--aa-neutral-950);
+  background: var(--aa-orange-700);
+  color: var(--aa-orange-50);
+  --card-accent: var(--aa-orange-200);
 }
 .aa-landing .aa-reviews__card:nth-child(4n - 1) .aa-reviews__card-inner {
-  background: var(--aa-card-peach);
-  color: var(--aa-neutral-950);
+  background: var(--aa-orange-200);
+  color: var(--aa-orange-950);
+  --card-accent: var(--aa-orange-600);
 }
 .aa-landing .aa-reviews__card:nth-child(4n) .aa-reviews__card-inner {
-  background: var(--aa-card-sky);
-  color: var(--aa-neutral-950);
+  background: var(--aa-orange-600);
+  color: var(--aa-orange-50);
+  --card-accent: var(--aa-orange-100);
 }
 
 .aa-landing .aa-reviews__stars {
@@ -296,6 +318,7 @@
 }
 .aa-landing .aa-reviews__star.is-on {
   opacity: 1;
+  color: var(--card-accent); /* estrella activa = acento full-opacity de la card */
 }
 .aa-landing .aa-reviews__quote {
   flex: 1;
@@ -393,6 +416,13 @@
     linear-gradient(var(--aa-bg), var(--aa-bg)) padding-box,
     var(--aa-gradient-brand) border-box;
   color: var(--aa-fg);
+}
+/* Contenedor de paneles como card: mismo estilo que las .aa-feat__card (bg-subtle + radio xl,
+   sin border ni shadow) + padding. */
+.aa-landing .aa-tabs__panels {
+  background: var(--aa-bg-subtle);
+  border-radius: var(--aa-radius-xl);
+  padding: clamp(1.5rem, 3vw, 3.25rem);
 }
 .aa-landing .aa-tabs__panel {
   display: none;

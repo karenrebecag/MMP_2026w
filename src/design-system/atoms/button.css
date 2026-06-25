@@ -81,6 +81,23 @@
   z-index: 1;
   padding: var(--aa-btn-padding);
   grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+/* Ícono fijo: no entra al flip; tamaño relativo al texto del botón. */
+.aa-landing .aa-button__icon {
+  display: inline-flex;
+  flex: none;
+}
+.aa-landing .aa-button__icon svg {
+  display: block;
+  width: 1.2em;
+  height: 1.2em;
+}
+/* Stack que apila las dos copias del label (default + hover) en la misma celda. */
+.aa-landing .aa-button__text-stack {
   display: grid;
   justify-items: center;
 }

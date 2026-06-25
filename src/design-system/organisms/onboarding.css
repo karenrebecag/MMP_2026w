@@ -1,10 +1,13 @@
 /* Onboarding/soporte (MWG031 adaptado): stack 3D de tarjetas. Maquetación fiel al snippet,
    colores/typo en tokens de marca. Surround oscuro; cards claro / verde / coral. Scoped. */
 /* Light/transparente: sin bg sólido, deja ver el bg-fixed (coherente con el marquee de logos).
-   Sin el padding 100vh del snippet → sin spacing vacío arriba/abajo; el pin arranca al entrar. */
+   No usa .aa-section, así que la costura superior y el aire de entrada van aquí: el padding-top
+   empuja el primer slide → el pin arranca tras ese aire, igualando el ritmo de las demás strips. */
 .aa-landing .aa-onb {
   position: relative;
   overflow: hidden;
+  border-top: 1px solid var(--aa-border);
+  padding-top: var(--aa-padding-xl);
 }
 
 .aa-landing .aa-onb__slide {

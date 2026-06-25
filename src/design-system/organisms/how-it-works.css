@@ -1,9 +1,7 @@
 /* "Cómo funciona": grid 2-col como la strip what-atom-does (eyebrow angosto + divisoria vertical
    + contenido ancho). A la derecha, el marquee vertical de features. Scoped a .aa-landing. */
 
-.aa-landing .aa-hiw {
-  border-top: 1px solid var(--aa-border);
-}
+/* La costura superior la aporta .aa-section (layout.css). */
 /* El atributo vence al background:transparent que section-theme fuerza en strips light. */
 .aa-landing .aa-hiw[data-aa-section-theme='light'] {
   background: var(--aa-bg);

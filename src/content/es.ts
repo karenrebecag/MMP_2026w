@@ -36,7 +36,7 @@ export const es: SectionContent[] = [
     kind: 'statement',
     id: 'aa-tesis',
     theme: 'light',
-    eyebrow: 'La tesis',
+    eyebrow: 'Todo en uno',
     heading: 'Todo lo que necesitas para operar WhatsApp como un canal de ventas',
     paragraphs: [],
   },

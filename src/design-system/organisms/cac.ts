@@ -2,7 +2,7 @@
 // (partners/reviews) a la derecha. Las badges vivían en el footer y se movieron aquí.
 
 import { renderContainer, renderSection } from '../molecules/layout';
-import { renderHeading, renderParagraph } from '../atoms/text';
+import { renderHeading, renderParagraph, renderEyebrow } from '../atoms/text';
 import { renderButton } from '../atoms/button';
 import { strings } from '../../core/i18n';
 import { UPLOADS, PARTNERS } from '../../core/config/brand';
@@ -118,9 +118,18 @@ function buildBadgeMarquee(): HTMLElement {
 function buildText(): HTMLElement {
   const s = strings().cac;
   const col = document.createElement('div');
-  col.className = 'aa-cac__text aa-stack';
+  col.className = 'aa-cac__text aa-stack aa-stack--center';
 
-  const heading = renderHeading({ size: 'xl', text: s.heading, split: true });
+  const eyebrow = renderEyebrow(s.eyebrow);
+  eyebrow.setAttribute('data-aa-fade', '');
+
+  const heading = renderHeading({
+    size: 'xl',
+    text: s.heading,
+    split: true,
+    className: 'aa-text-balance',
+  });
+
   const body = renderParagraph({ size: 'l', text: s.body });
   body.setAttribute('data-aa-fade', '');
 
@@ -129,7 +138,7 @@ function buildText(): HTMLElement {
   row.setAttribute('data-aa-fade', '');
   row.appendChild(renderButton({ label: s.cta, href: '#aa-waitlist', variant: 'primary' }));
 
-  col.append(heading, body, row);
+  col.append(eyebrow, heading, body, row);
   return col;
 }
 

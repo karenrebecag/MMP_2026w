@@ -17,12 +17,8 @@ import { renderBackground } from '../design-system/behaviors/background';
 import { renderMarquee, initMarquee } from '../design-system/behaviors/marquee';
 import { initMetaTheme } from '../design-system/behaviors/meta-theme';
 import { renderNavbar, initNavbar, initMegaNav } from '../design-system/organisms/navbar';
-import {
-  renderHero,
-  initHeroMessages,
-  initBottomMarquee,
-  heroFromStrings,
-} from '../design-system/organisms/hero';
+import { heroFromStrings } from '../design-system/organisms/hero';
+import { renderHero2 } from '../design-system/organisms/hero-2';
 import { renderWhatAtomDoes } from '../design-system/organisms/what-atom-does';
 import { renderFeatures } from '../design-system/organisms/features';
 import { renderOnboarding, initOnboarding } from '../design-system/organisms/onboarding';
@@ -64,7 +60,7 @@ export async function render(mount: HTMLElement, ctx: PageContext): Promise<void
   renderBackground(root); // bg fijo texturizado detrás de todo
   renderMarquee(root); // barra fija superior (botón de registro permanente)
   renderNavbar(root); // navbar blanca de marca bajo el marquee
-  renderHero(root, heroFromStrings()); // hero "messages": mensajes que brotan
+  renderHero2(root, heroFromStrings()); // hero 2: dos columnas (contenido + video en loop)
   renderWhatAtomDoes(root); // strip "qué hace atom" bajo el hero
   renderFeatures(root); // tarjetas de features (réplica anatomía fourmula)
   renderHowItWorks(root); // "Cómo funciona": grid + marquee vertical de features
@@ -86,8 +82,6 @@ export async function render(mount: HTMLElement, ctx: PageContext): Promise<void
 
   mount.replaceChildren(root);
   initAnchorScroll(root);
-  initHeroMessages(root); // motor de spawn (ambient + cursor) — tras montar en el DOM
-  initBottomMarquee(root); // loop + grow/squash de la tira inferior del hero
   initVerticalMarquee(root); // marquee vertical de "Cómo funciona"
   initAccordion(root);
   initSliders(root);

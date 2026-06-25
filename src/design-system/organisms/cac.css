@@ -1,20 +1,18 @@
 /* Sección CAC: split texto + CTA (izq) y marquee infinito de badges (der). */
-/* Fondo light sólido (las strips light son transparentes por defecto en section-theme). */
-.aa-landing .aa-cac[data-aa-section-theme='light'] {
-  background-color: var(--aa-neutral-50);
-}
+/* Strip transparente: deja ver el bg-fixed texturizado global (default de las strips light). */
 .aa-landing .aa-cac__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: clamp(2rem, 5vw, 5rem);
+  gap: clamp(2.5rem, 5vw, 4rem);
 }
 .aa-landing .aa-cac__text {
-  max-width: 32rem;
+  max-width: 46rem;
 }
 
-/* Marquee: overflow oculto + máscara de desvanecido en los bordes. */
+/* Marquee: full-width bajo la columna, overflow oculto + máscara de desvanecido en los bordes. */
 .aa-landing .aa-cac__marquee {
+  width: 100%;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(
     90deg,
@@ -48,9 +46,6 @@
 }
 
 @media screen and (max-width: 767px) {
-  .aa-landing .aa-cac__grid {
-    grid-template-columns: 1fr;
-  }
   .aa-landing .aa-cac__badge img {
     height: 4em;
   }

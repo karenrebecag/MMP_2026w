@@ -1,9 +1,7 @@
 /* Strip "qué hace atom": grid editorial de 2 columnas (eyebrow angosto + headline ancho) con
-   divisoria vertical entre ambas y borde superior, como la referencia. Scoped a .aa-landing. */
+   divisoria vertical entre ambas. La costura superior la aporta .aa-section (layout.css).
+   Scoped a .aa-landing. */
 
-.aa-landing .aa-whatdo {
-  border-top: 1px solid var(--aa-border);
-}
 /* section-theme.css fuerza background:transparent en strips light (misma especificidad, gana
    por orden). El atributo sube la especificidad para imponer el light sólido sobre la textura. */
 .aa-landing .aa-whatdo[data-aa-section-theme='light'] {

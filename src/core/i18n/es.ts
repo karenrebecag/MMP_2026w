@@ -117,6 +117,7 @@ export const es = {
     eyebrow: 'Confían en nosotros',
   },
   cac: {
+    eyebrow: 'Reduce tu CAC',
     heading: 'Cada lead perdido aumenta tu CAC.',
     body: 'Habla con un asesor hoy y descubre cómo Atom puede transformar WhatsApp en tu canal de ventas más poderoso.',
     cta: 'Agendar demo',

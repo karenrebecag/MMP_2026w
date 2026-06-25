@@ -37,14 +37,19 @@
 }
 
 /* ─── Section — espaciado vertical por padding tokens ─────────────────────────── */
+/* Divisor hairline en TODA costura de sección: única fuente de verdad para la separación
+   entre strips (antes vivía suelto en whatdo/hiw). El hero (aa-hero2, no .aa-section) no lo
+   recibe; el resto hereda una costura consistente al hacer scroll. */
 .aa-landing .aa-section {
   padding-block: var(--aa-padding-xl);
+  border-top: 1px solid var(--aa-border);
 }
 .aa-landing .aa-section--hero {
   padding-block: var(--aa-padding-xxl);
   min-height: 100svh;
   display: flex;
   align-items: center;
+  border-top: 0; /* el hero abre la página: sin costura superior */
 }
 .aa-landing .aa-section--sm {
   padding-block: var(--aa-padding-l);

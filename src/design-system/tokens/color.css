@@ -30,11 +30,23 @@
   /* ─── Marca ATOM: naranja solo como highlight/acento (nunca fondo grande). ────── */
   --aa-color-orange: #ff6600;
 
-  /* ─── Fondos pastel para cards de producto ────────────────────────────────────── */
-  --aa-card-mint: #f3fdf5;
-  --aa-card-lavender: #f5f3fe;
-  --aa-card-peach: #fdf4ee;
-  --aa-card-sky: #f0f6fe;
+  /* ─── Escala tonal del naranja de marca (50 → 950) ─────────────────────────────
+     Cluster monocromático para jugar con fondos de cards/superficies: del crema cálido
+     (50-200) al terracota profundo (700-950). Familia única, cohesiva y on-brand. */
+  --aa-orange-50: #fef6ee;
+  --aa-orange-100: #fdead7;
+  --aa-orange-200: #f9d2af;
+  --aa-orange-300: #f5b27c;
+  --aa-orange-400: #f08847;
+  --aa-orange-500: #ed702e;
+  --aa-orange-600: #dd5019;
+  --aa-orange-700: #b83b16;
+  --aa-orange-800: #92301a;
+  --aa-orange-900: #762a18;
+  --aa-orange-950: #40120a;
+
+  /* Nota: los antiguos tokens pastel (--aa-card-mint/lavender/peach/sky) se retiraron — las cards
+     de producto y de reseñas pasaron a superficie obsidiana con acento de marca (ver content-sections.css). */
 
   /* ─── Semantic color tokens ───────────────────────────────────────────────── */
   --aa-bg: var(--aa-neutral-50);

@@ -49,7 +49,7 @@ export function renderNavbar(root: Element): void {
   const start = el('div', 'aa-nav__start');
 
   const cta = el('div', 'aa-nav__cta');
-  cta.appendChild(renderButton({ label: t('navbar.cta'), variant: 'primary', size: 'sm' }));
+  cta.appendChild(renderButton({ label: t('navbar.cta'), variant: 'primary' }));
 
   start.append(buildBrand(), cta);
   inner.appendChild(start);

@@ -38,10 +38,16 @@
   background-color: transparent;
 }
 
-/* Strip "La tesis + Programa": franja light (sin override de fondo; usa el theme light de
-   cada sección). Programa quita su padding-top para fundirse con La tesis en una sola tira. */
+/* Strip "La tesis + Programa": son una sola tira por diseño, no por semántica. Mismo bg sólido
+   en ambas y sin costura entre ellas: Programa quita padding-top y el divisor base para fundirse
+   con La tesis. La costura superior la conserva #aa-tesis (separa la tira del bloque anterior). */
+.aa-landing #aa-tesis,
+.aa-landing #aa-programa {
+  background: var(--aa-bg);
+}
 .aa-landing #aa-programa {
   padding-top: 0;
+  border-top: 0;
 }
 
 /* Card flotante dark (CTA "Primera generación"): el strip light deja ver la textura y

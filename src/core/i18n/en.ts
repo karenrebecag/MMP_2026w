@@ -117,6 +117,7 @@ export const en = {
     eyebrow: 'Trusted by',
   },
   cac: {
+    eyebrow: 'Lower your CAC',
     heading: 'Every lost lead raises your CAC.',
     body: 'Talk to an advisor today and discover how Atom can turn WhatsApp into your most powerful sales channel.',
     cta: 'Book a demo',

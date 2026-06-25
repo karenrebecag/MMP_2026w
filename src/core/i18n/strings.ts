@@ -61,8 +61,9 @@ export interface Strings {
   logos: {
     eyebrow: string;
   };
-  // Sección CAC: bloque split (texto + CTA a la izquierda, marquee de badges a la derecha).
+  // Sección CAC: columna centrada (tag + heading + body + CTA) sobre el marquee de badges.
   cac: {
+    eyebrow: string;
     heading: string;
     body: string;
     cta: string;

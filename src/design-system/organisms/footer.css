@@ -4,6 +4,7 @@
 .aa-landing .aa-footer {
   --aa-footer-accent: #ff6600;
   padding-block: var(--aa-padding-l);
+  border-top: 1px solid var(--aa-border); /* costura con el bloque anterior; no usa .aa-section */
 }
 
 /* Layout propio del footer; la forma de card la da .aa-container--card (layout.css). */
@@ -91,6 +92,11 @@
     color var(--aa-duration-s) var(--aa-ease),
     background var(--aa-duration-s) var(--aa-ease),
     transform var(--aa-duration-s) var(--aa-ease);
+}
+.aa-landing .aa-footer__social svg {
+  display: block;
+  width: 1.25em;
+  height: 1.25em;
 }
 .aa-landing .aa-footer__social:hover {
   color: #fff;

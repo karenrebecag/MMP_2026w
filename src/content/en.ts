@@ -33,7 +33,7 @@ export const en: SectionContent[] = [
     kind: 'statement',
     id: 'aa-tesis',
     theme: 'light',
-    eyebrow: 'The thesis',
+    eyebrow: 'All in one',
     heading: 'Everything you need to run WhatsApp as a sales channel',
     paragraphs: [],
   },

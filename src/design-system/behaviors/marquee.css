@@ -18,9 +18,9 @@
     color var(--aa-duration-s) var(--aa-ease);
 }
 
-/* Hover: invierte (fondo electric, texto oscuro) */
+/* Hover: invierte (fondo orange brand, texto oscuro) */
 .aa-landing .aa-marquee:hover {
-  background: var(--aa-color-electric);
+  background: var(--aa-color-orange);
   color: var(--aa-neutral-950);
 }
 

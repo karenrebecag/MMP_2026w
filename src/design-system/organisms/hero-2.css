@@ -1,0 +1,117 @@
+/* Hero 2 — variante de dos columnas: contenido (izq) + video en loop (der). Sección LIGHT y SIN
+   fondo propio → deja ver el .aa-bg-fixed. Sin campo de mensajes ni bottom marquee. Scoped a
+   .aa-landing. El visual reusa los tokens del hero "messages"; el layout es grid 2 col → stack. */
+
+.aa-landing .aa-hero2 {
+  position: relative;
+  overflow: hidden;
+  /* mismo cálculo de alto visible que el hero: resta marquee + navbar fijos. */
+  min-height: calc(100vh - var(--aa-marquee-height) - var(--aa-navbar-height));
+  min-height: calc(100svh - var(--aa-marquee-height) - var(--aa-navbar-height));
+  display: flex;
+  align-items: center;
+  padding-block: var(--aa-padding-xl);
+  /* sin background: la sección light es transparente y deja ver el .aa-bg-fixed */
+}
+
+.aa-landing .aa-hero2__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  width: 100%;
+}
+
+/* ── Columna izquierda: contenido (left-aligned) ────────────────────────────────── */
+.aa-landing .aa-hero2__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  /* ancho del subtítulo acotado para wrap editorial, en rem (independiente del font-size). */
+  --hero-measure: clamp(20rem, 32vw, 38rem);
+}
+
+/* Chip/tag — píldora monospace (eco del hero). */
+.aa-landing .aa-hero2__chip {
+  display: inline-block;
+  padding: 0.5em 0.95em;
+  border: 1px solid color-mix(in srgb, var(--aa-fg) 16%, transparent);
+  border-radius: var(--aa-radius-pill);
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xs);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--aa-fg-muted);
+  background: color-mix(in srgb, var(--aa-bg) 60%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.aa-landing .aa-hero2__title {
+  margin: var(--aa-gap-s) 0 0;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+}
+
+.aa-landing .aa-hero2__subtitle {
+  margin: var(--aa-gap-xs) 0 0;
+  max-width: var(--hero-measure);
+  color: var(--aa-fg-muted);
+}
+
+.aa-landing .aa-hero2__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--aa-gap-s);
+  margin-top: var(--aa-gap-m);
+  /* fija el font-size del botón (inherit) a un token, igual que el hero. */
+  font-size: var(--aa-text-s);
+}
+
+/* ── Columna derecha: media ─────────────────────────────────────────────────────── */
+.aa-landing .aa-hero2__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.aa-landing .aa-hero2__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: calc(100svh - var(--aa-marquee-height) - var(--aa-navbar-height));
+  object-fit: contain;
+}
+
+/* ── Responsive: ≤tablet (991px) — column-reverse (video arriba), texto centrado full-width ── */
+@media (max-width: 991px) {
+  .aa-landing .aa-hero2 {
+    min-height: 0;
+  }
+  .aa-landing .aa-hero2__inner {
+    display: flex;
+    flex-direction: column-reverse; /* DOM = contenido→media; invertido = video arriba */
+    gap: clamp(1.5rem, 6vw, 3rem);
+  }
+  .aa-landing .aa-hero2__content {
+    width: 100%;
+    max-width: none;
+    align-items: center;
+    text-align: center;
+    --hero-measure: 100%; /* subtítulo a full width */
+  }
+  .aa-landing .aa-hero2__title {
+    max-width: none; /* título full width */
+  }
+  .aa-landing .aa-hero2__cta-row {
+    justify-content: center;
+  }
+  .aa-landing .aa-hero2__media {
+    width: 100%;
+  }
+  .aa-landing .aa-hero2__video {
+    max-height: 50vh;
+  }
+}
