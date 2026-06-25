@@ -8,6 +8,18 @@
   <!-- Estilos del bundle local (dev) -->
   <link rel="stylesheet" href="/dist/landing.css" />
 
+  <!-- GSAP global: simula lo que Webflow inyecta (Core + plugins activados en Project settings →
+       GSAP). El bundle NO empaqueta GSAP (external en esbuild); lo consume vía window.gsap. Sin
+       estos scripts, loadGsap() no encontraría GSAP en el preview. Mantener en sync con los plugins
+       activados en Webflow: ScrollTrigger, SplitText, Draggable, Inertia, MorphSVG, CustomEase. -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Draggable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/InertiaPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/MorphSVGPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/CustomEase.min.js"></script>
+
   <style>
     /* El DS usa --aa-font: inherit (adopta la fuente del host). En Elementor la toma
        del tema; aquí simulamos un host con una sans moderna para el preview. */

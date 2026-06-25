@@ -26,6 +26,11 @@ const jsOptions = {
   splitting: true,
   minify: true,
   sourcemap: true,
+  // GSAP NO se empaqueta: el host (Webflow) lo inyecta como global (Core + plugins activados en
+  // el panel GSAP). El bundle lo consume vía window en core/motion/gsap-env. Externalizarlo evita
+  // la doble instancia (causa del "Missing plugin? ScrollTrigger") y baja ~150kb. Todo acceso a
+  // GSAP debe pasar por gsap-env; un `import 'gsap'` directo fallaría en runtime (bare specifier).
+  external: ['gsap', 'gsap/*'],
 };
 
 const cssOptions = {
