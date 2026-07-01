@@ -13,15 +13,22 @@
   color: var(--aa-neutral-50);
   text-decoration: none;
   cursor: pointer;
-  transition:
-    background var(--aa-duration-s) var(--aa-ease),
-    color var(--aa-duration-s) var(--aa-ease);
 }
 
-/* Hover: invierte (fondo orange brand, texto oscuro) */
-.aa-landing .aa-marquee:hover {
-  background: var(--aa-color-orange);
-  color: var(--aa-neutral-950);
+/* Overlay del gradiente de marca (mismo que .aa-onb__content--3): background-image no es
+   animatable, así que el hover se resuelve con un cross-fade de opacity (sí animatable). */
+.aa-landing .aa-marquee::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--aa-gradient-brand);
+  opacity: 0;
+  transition: opacity var(--aa-duration-s) var(--aa-ease);
+}
+
+.aa-landing .aa-marquee:hover::before {
+  opacity: 1;
 }
 
 /* Pista de apilado de las dos filas (cada una ocupa el alto completo de la barra) */

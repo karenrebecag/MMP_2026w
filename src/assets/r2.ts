@@ -18,9 +18,15 @@ export const manifestoShots = {
 
 // Slots de la sección de features (organisms/features). Pendientes de subir a R2.
 // califica/cierra siguen el patrón grid-small de fourmula: [izq, centro-grande, abajo-1, abajo-2, der].
+// TEMP: videos externos (no R2) para slots del cluster de features; swap por R2 antes de prod.
+const FEATURE_VIDEO_HOST = 'https://renem24.sg-host.com';
+
 export const featureShots = {
   respondeBefore: `${R2}/feat-responde-a.webp`,
   respondeAfter: `${R2}/feat-responde-b.webp`,
+  respondeAfterVideo: `${FEATURE_VIDEO_HOST}/videos/Funcionalidades_AI-Agent_WhatsApp_Atom.mp4`,
+  calificaLeadVideo: `${FEATURE_VIDEO_HOST}/videos/Funcionalidades_Reporteria_Atom.mp4`,
+  cierraLeadVideo: `${FEATURE_VIDEO_HOST}/videos/Funcionalidades_Integracion-CRM_Atom.mp4`,
   califica: [
     `${R2}/feat-califica-1.webp`,
     `${R2}/feat-califica-2.webp`,

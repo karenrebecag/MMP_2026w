@@ -107,36 +107,24 @@
   background: var(--aa-neutral-100);
   color: var(--aa-neutral-950);
 }
-/* Cards de producto: cluster monocromático del naranja de marca, alternando tints claros y shades
-   profundos (crema ↔ terracota) para dar ritmo. Familia única, cohesiva y on-brand — reemplaza los
-   pasteles deslavados. Texto cálido oscuro sobre claros, crema sobre profundos. La sombra difusa
-   las levanta sobre la strip clara (#aa-programa). El orden de programa queda claro/profundo/.../. */
-.aa-landing
-  :is(
-    .aa-mod-card--mint,
-    .aa-mod-card--lavender,
-    .aa-mod-card--peach,
-    .aa-mod-card--sky
-  ) {
-  box-shadow:
-    0 1px 2px rgba(64, 18, 10, 0.06),
-    0 18px 56px rgba(64, 18, 10, 0.12);
-}
+/* Cards de producto: cluster monocromático de neutrales, alternando tints claros y shades
+   profundos para dar ritmo sin competir con el naranja de marca (reservado como acento, ver
+   .aa-mod-card--electric). */
 .aa-landing .aa-mod-card--mint {
-  background: var(--aa-orange-100);
-  color: var(--aa-orange-950);
+  background: var(--aa-neutral-100);
+  color: var(--aa-neutral-950);
 }
 .aa-landing .aa-mod-card--lavender {
-  background: var(--aa-orange-700);
-  color: var(--aa-orange-50);
+  background: var(--aa-neutral-800);
+  color: var(--aa-neutral-50);
 }
 .aa-landing .aa-mod-card--peach {
-  background: var(--aa-orange-200);
-  color: var(--aa-orange-950);
+  background: var(--aa-neutral-200);
+  color: var(--aa-neutral-950);
 }
 .aa-landing .aa-mod-card--sky {
-  background: var(--aa-orange-600);
-  color: var(--aa-orange-50);
+  background: var(--aa-neutral-600);
+  color: var(--aa-neutral-50);
 }
 /* Card naranja de marca (nombre `electric` heredado, ver drift en tokens/color.css). */
 .aa-landing .aa-mod-card--electric {
@@ -267,6 +255,8 @@
   width: clamp(280px, 30vw, 380px);
   aspect-ratio: 1.5;
 }
+/* Un solo tono para todas las cards: la rotación clara/oscura fragmentaba la lectura
+   (tablero de ajedrez). --card-accent es el naranja de marca, único acento sobre el bg. */
 .aa-landing .aa-reviews__card-inner {
   display: flex;
   flex-direction: column;
@@ -278,32 +268,9 @@
   border-radius: var(--aa-radius-l);
   white-space: normal;
   will-change: transform;
-  /* Mismo cluster tonal del naranja que las cards de programa; la sombra difusa las separa. */
-  box-shadow:
-    0 1px 2px rgba(64, 18, 10, 0.06),
-    0 18px 56px rgba(64, 18, 10, 0.12);
-}
-
-/* Rotación tonal claro/profundo; --card-accent pinta la estrella activa con contraste sobre el bg. */
-.aa-landing .aa-reviews__card:nth-child(4n - 3) .aa-reviews__card-inner {
-  background: var(--aa-orange-100);
-  color: var(--aa-orange-950);
-  --card-accent: var(--aa-orange-600);
-}
-.aa-landing .aa-reviews__card:nth-child(4n - 2) .aa-reviews__card-inner {
-  background: var(--aa-orange-700);
-  color: var(--aa-orange-50);
-  --card-accent: var(--aa-orange-200);
-}
-.aa-landing .aa-reviews__card:nth-child(4n - 1) .aa-reviews__card-inner {
-  background: var(--aa-orange-200);
-  color: var(--aa-orange-950);
-  --card-accent: var(--aa-orange-600);
-}
-.aa-landing .aa-reviews__card:nth-child(4n) .aa-reviews__card-inner {
-  background: var(--aa-orange-600);
-  color: var(--aa-orange-50);
-  --card-accent: var(--aa-orange-100);
+  background: var(--aa-neutral-100);
+  color: var(--aa-neutral-950);
+  --card-accent: var(--aa-color-orange);
 }
 
 .aa-landing .aa-reviews__stars {

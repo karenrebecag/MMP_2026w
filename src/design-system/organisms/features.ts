@@ -82,6 +82,26 @@ function shot(src: string, cls = ''): HTMLElement {
   return box;
 }
 
+// Mismo contrato visual que assetImg (clase aa-feat__asset → hereda width/height/object-fit del
+// slot), en loop silencioso para poder autoplay sin gesto del usuario.
+function assetVideo(src: string): HTMLVideoElement {
+  const video = document.createElement('video');
+  video.className = 'aa-feat__asset';
+  video.src = src;
+  video.autoplay = true;
+  video.loop = true;
+  video.muted = true;
+  video.playsInline = true;
+  return video;
+}
+
+function shotVideo(src: string, cls = ''): HTMLElement {
+  const box = document.createElement('div');
+  box.className = cls ? `aa-feat__shot ${cls}` : 'aa-feat__shot';
+  box.appendChild(assetVideo(src));
+  return box;
+}
+
 function arrow(): HTMLElement {
   const el = document.createElement('span');
   el.className = 'aa-feat__arrow';
@@ -116,7 +136,7 @@ function lottieBox(key: string, fit: 'cover' | 'contain'): HTMLElement {
 
 function gridCluster(
   srcs: string[],
-  opts: { leftLottie?: string; cellLottie?: string } = {},
+  opts: { leftLottie?: string; cellLottie?: string; leadVideo?: string } = {},
 ): HTMLElement {
   const m = document.createElement('div');
   m.className = 'aa-feat__media aa-feat__media--grid';
@@ -129,7 +149,7 @@ function gridCluster(
   col.className = 'aa-feat__grid-col';
   const lead = document.createElement('div');
   lead.className = 'aa-feat__grid-cell is-lead';
-  lead.appendChild(assetImg(srcs[1]));
+  lead.appendChild(opts.leadVideo ? assetVideo(opts.leadVideo) : assetImg(srcs[1]));
   const row = document.createElement('div');
   row.className = 'aa-feat__grid-row';
   // El cell 0 = cuadro 1:1 inferior-izquierdo (recibe el lottie si se pide).
@@ -158,7 +178,7 @@ export function renderFeatures(root: Element): void {
   topMedia.append(
     shot(featureShots.respondeBefore, 'is-before'),
     arrow(),
-    shot(featureShots.respondeAfter, 'is-after'),
+    shotVideo(featureShots.respondeAfterVideo, 'is-after'),
   );
   const top = document.createElement('div');
   top.className = 'aa-feat__card aa-feat__top';
@@ -169,7 +189,10 @@ export function renderFeatures(root: Element): void {
   left.className = 'aa-feat__card aa-feat__left';
   left.append(
     tag(s.califica.tag),
-    gridCluster(featureShots.califica, { cellLottie: 'atom-logo' }), // logo en el 1:1 inferior-izq
+    gridCluster(featureShots.califica, {
+      cellLottie: 'atom-logo', // logo en el 1:1 inferior-izq
+      leadVideo: featureShots.calificaLeadVideo, // video en el cell grande superior (is-lead)
+    }),
     titleBlock(s.califica, 'l'),
     btn('#aa-waitlist'),
   );
@@ -178,7 +201,10 @@ export function renderFeatures(root: Element): void {
   right.className = 'aa-feat__card aa-feat__right';
   right.append(
     tag(s.cierra.tag),
-    gridCluster(featureShots.cierra, { leftLottie: 'integrations-features' }), // lottie en el panel izquierdo
+    gridCluster(featureShots.cierra, {
+      leftLottie: 'integrations-features', // lottie en el panel izquierdo
+      leadVideo: featureShots.cierraLeadVideo, // video en el cell grande superior (is-lead)
+    }),
     titleBlock(s.cierra, 'l'),
     btn('#aa-waitlist'),
   );
