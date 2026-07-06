@@ -436,3 +436,98 @@
     padding-left: 0;
   }
 }
+
+/* ── Nav links: dropdown "Industrias" (navbar minimal, language-aware) ─────────── */
+.aa-landing .aa-nav__links {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 var(--aa-gap-l); /* separa del brand */
+}
+.aa-landing .aa-nav__dropdown {
+  position: relative;
+}
+.aa-landing .aa-nav__dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.5em 0.75em;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg);
+  cursor: pointer;
+  border-radius: var(--aa-nav-radius);
+}
+.aa-landing .aa-nav__dropdown-trigger:hover {
+  background: var(--aa-bg-subtle);
+}
+.aa-landing .aa-nav__chevron {
+  display: inline-flex;
+  transition: transform var(--aa-duration-s) var(--aa-ease);
+}
+.aa-landing .aa-nav__chevron svg {
+  width: 1em;
+  height: 1em;
+}
+.aa-landing .aa-nav__dropdown:hover .aa-nav__chevron,
+.aa-landing .aa-nav__dropdown.is-open .aa-nav__chevron {
+  transform: rotate(180deg);
+}
+
+/* Menú: oculto por default; abre por hover/focus (desktop) o .is-open (click/táctil). */
+.aa-landing .aa-nav__menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  min-width: 12rem;
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+  background: #ffffff;
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-nav-radius-box);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity var(--aa-duration-s) var(--aa-ease),
+    transform var(--aa-duration-s) var(--aa-ease),
+    visibility 0s linear var(--aa-duration-s);
+  z-index: 5;
+}
+.aa-landing .aa-nav__dropdown:hover .aa-nav__menu,
+.aa-landing .aa-nav__dropdown:focus-within .aa-nav__menu,
+.aa-landing .aa-nav__dropdown.is-open .aa-nav__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+.aa-landing .aa-nav__menu-item {
+  margin: 0;
+}
+.aa-landing .aa-nav__menu-link {
+  display: block;
+  padding: 0.6em 0.75em;
+  border-radius: var(--aa-nav-radius);
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.aa-landing .aa-nav__menu-link:hover {
+  background: var(--aa-bg-subtle);
+}
+
+/* Mobile compacto: oculta el badge Meta para dejar sitio al dropdown + CTA. */
+@media (max-width: 600px) {
+  .aa-landing .aa-nav__logo--meta,
+  .aa-landing .aa-nav__divider {
+    display: none;
+  }
+  .aa-landing .aa-nav__links {
+    margin-left: var(--aa-gap-s);
+  }
+}
