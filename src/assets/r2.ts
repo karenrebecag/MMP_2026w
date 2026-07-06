@@ -11,6 +11,13 @@ export const heroVideo = {
 
 export const audiencePhotos = [`${R2}/aud-1.jpg`, `${R2}/aud-2.jpg`, `${R2}/aud-3.jpg`];
 
+// Videos del hero por industria (col derecha del industria-hero). webm loop muted.
+export const industriaHeroVideo = {
+  financiera: `${R2}/LP_FINTECH_ES.webm`,
+  automotriz: `${R2}/LP_AUTOMOTRIZ_ES.webm`,
+  educativa: `${R2}/LP_EDUCACION_ES.webm`,
+};
+
 export const manifestoShots = {
   top: `${R2}/bubbles-top.webp`,
   bottom: `${R2}/bubbles-bottom.webp`,

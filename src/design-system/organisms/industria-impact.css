@@ -1,0 +1,163 @@
+/* Industria impact — contenido (izq: pill + heading + sub + lista numerada + stat) +
+   imagen (der). Lenguaje visual del home: fills sutiles + radios grandes, sin bordes duros;
+   stat en gradiente de marca. Sección light. Scoped a .aa-landing. */
+
+.aa-landing .aa-ind-impact {
+  padding-block: var(--aa-padding-xl);
+}
+
+.aa-landing .aa-ind-impact__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+/* ── Columna izquierda: contenido ─────────────────────────────────────────────── */
+.aa-landing .aa-ind-impact__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.aa-landing .aa-ind-impact__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--aa-gap-s);
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg-muted);
+}
+/* Dot electric del eyebrow (idioma del home: tag = dot + label mono). */
+.aa-landing .aa-ind-impact__eyebrow::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--aa-ind-accent, var(--aa-color-electric));
+}
+.aa-landing .aa-ind-impact__heading {
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+.aa-landing .aa-ind-impact__sub {
+  margin: var(--aa-gap-xs) 0 0;
+  color: var(--aa-fg-muted);
+}
+
+/* Lista numerada. */
+.aa-landing .aa-ind-impact__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-l);
+  margin-top: var(--aa-gap-l);
+  width: 100%;
+}
+.aa-landing .aa-ind-impact__item {
+  display: flex;
+  align-items: center;
+  gap: var(--aa-gap-m);
+}
+/* Círculo numerado: fill con el tint del cluster, número display — sin borde duro. */
+.aa-landing .aa-ind-impact__num {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0;
+  border-radius: 50%;
+  background: var(--aa-ind-tint, var(--aa-bg-subtle));
+  color: var(--aa-fg);
+  line-height: 1;
+}
+.aa-landing .aa-ind-impact__item-body {
+  min-width: 0;
+}
+.aa-landing .aa-ind-impact__item-title {
+  margin: 0;
+  line-height: 1.15;
+}
+.aa-landing .aa-ind-impact__item-desc {
+  margin: var(--aa-gap-xs) 0 0;
+  color: var(--aa-fg-muted);
+}
+
+/* Bloque de stat + nota: card con fill sutil + radio grande (idioma del home). */
+.aa-landing .aa-ind-impact__stat-row {
+  display: flex;
+  align-items: center;
+  gap: var(--aa-gap-l);
+  margin-top: var(--aa-gap-xl);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--aa-bg-subtle);
+  border-radius: var(--aa-radius-xl);
+  width: 100%;
+}
+.aa-landing .aa-ind-impact__stat-box {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--aa-gap-xs);
+}
+/* Número grande en gradiente de marca (como el stat de features en el home). */
+.aa-landing .aa-ind-impact__stat-value {
+  margin: 0;
+  font-size: clamp(2.6rem, 4.5vw, 4rem);
+  font-weight: var(--aa-weight-bold);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.aa-landing .aa-ind-impact__stat-label {
+  font-size: var(--aa-text-xs);
+  color: var(--aa-fg-muted);
+  max-width: 16ch;
+}
+/* Divisoria vertical entre el stat y la nota. */
+.aa-landing .aa-ind-impact__stat-note {
+  margin: 0;
+  padding-left: var(--aa-gap-l);
+  border-left: 1px solid var(--aa-border);
+  color: var(--aa-fg-muted);
+}
+
+/* ── Columna derecha: media (llena el alto de la columna izquierda) ───────────── */
+.aa-landing .aa-ind-impact__media {
+  align-self: stretch;
+  min-height: 22rem;
+  border-radius: var(--aa-radius-xl);
+  overflow: hidden;
+}
+.aa-landing .aa-ind-impact__media.is--placeholder {
+  background: var(--aa-neutral-200);
+}
+.aa-landing .aa-ind-impact__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .aa-landing .aa-ind-impact__inner {
+    grid-template-columns: 1fr;
+  }
+  .aa-landing .aa-ind-impact__media {
+    order: -1;
+    min-height: 16rem;
+    aspect-ratio: 3 / 2;
+  }
+}
+@media (max-width: 575px) {
+  .aa-landing .aa-ind-impact__stat-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--aa-gap-m);
+  }
+  .aa-landing .aa-ind-impact__stat-note {
+    padding-left: 0;
+    border-left: 0;
+  }
+}

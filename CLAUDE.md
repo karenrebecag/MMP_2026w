@@ -117,6 +117,39 @@ Atributos disponibles:
 - `data-aa-theme` → `light` | `dark` (default `light`)
 - `data-aa-lang`  → `es` | `en` | `pt` (default `es`)
 
+### Páginas de industria (`/industrias`)
+
+Page-types registrados en `core/boot/registry.ts`. La ruta `/industrias/...` la crea el CMS
+(Webflow); el bundle solo lee el `data-page` del embed. Una página de industria = un embed con:
+
+```html
+<div data-aa-mount data-page="industria-automotriz" data-aa-theme="light" data-aa-lang="es"></div>
+```
+
+`data-page` disponibles: `industria-automotriz`, `industria-educativa`, `industria-financiera`.
+Cada uno es su propio chunk lazy con todas sus secciones (hero, logos, benefits, split,
+steps/impact, automations, connect, reseñas, CAC).
+
+### i18n de industria (`content/industrias/`)
+
+El copy de las secciones de industria vive en `content/industrias/{es,en,pt}.ts` (los 3 implementan
+`IndustriasContent` completo — TS lo exige). El composer lo lee con `getIndustria('<industria>')`
+(resuelve el idioma activo, sembrado por `setLang` en boot desde `data-aa-lang`). La **estructura**
+(íconos, tint/accent, video, orden) queda en el composer; solo el texto cambia por locale, y cada
+diccionario es independiente → **el contenido puede divergir por idioma**, no solo traducirse.
+
+**Estrategia de idioma = una URL/página por locale** (no un toggle client-side). Cada página de
+Webflow fija su `data-aa-lang` (`es|en|pt`) y su slug; el bundle renderiza ese idioma. Es la opción
+SEO-correcta (URLs indexables por idioma + `hreflang`). Mismo `data-page` en los 3 locales.
+
+### Slug traducido (Webflow Localization)
+
+El bundle **no reescribe la URL** — se monta después de que la URL ya se resolvió. Para tener el
+slug en el idioma del visitante (`/industrias` en ES → `/industries` en EN) se usa **Webflow
+Localization** (slug localizado por locale, feature de plan). El bundle solo necesita el locale
+activo: mapear el locale de Webflow al `data-aa-lang` del mount (o detectarlo). El `data-page`
+se mantiene igual entre locales; lo único que cambia es el slug de la URL y el `data-aa-lang`.
+
 ### Gotcha: plugins de "delay JS" de WordPress (WP Meteor, WP Rocket, Perfmatters…)
 
 La landing se renderiza 100% con JS: si el loader no corre al cargar, la página queda
@@ -245,24 +278,122 @@ npm run build         # genera dist/
 npm run dev           # build + watch + server en :8766 (sirve preview.html)
 ```
 
-`preview.html` monta dos instancias (light / dark) contra dist local.
+`preview.html` (raíz) monta dos instancias (light / dark) contra **dist local** — para dev.
 
-## Deploy
+**Preview local por page-type**: `previews/local.html` carga el dist local y elige el page-type por
+query param — útil para trabajar cualquier página (incl. industrias) sin tocar jsDelivr:
 
-`git push origin main` (SSH). El CI: typecheck + build + tag patch (vX.Y.(Z+1)) + regenera
-loader.js + commitea dist + purga `@latest`. Antes del siguiente push: `git pull --rebase origin main`.
+```
+http://localhost:8766/previews/local.html?page=industria-automotriz&lang=es&theme=light
+```
 
-## Añadir una sección
+`?page=` (default `home`) · `?lang=es|en|pt` · `?theme=light|dark`. NO carga CDN; el pin script lo
+ignora (no lleva tag). Los `previews/*.html` restantes son versionados (CDN pineado, ver abajo).
 
-1. Crear `src/sections/mi-seccion.ts` que exporte `renderMiSeccion(root: Element): void`
-2. Importar y llamar en `src/index.ts` dentro de `boot()`:
-   ```ts
-   import { renderMiSeccion } from './sections/mi-seccion';
-   // dentro de boot(), después de crear root:
-   renderMiSeccion(root);
+## Previews versionados (`previews/`)
+
+Distintos de `preview.html` (dev/local). Los de `previews/` cargan los assets desde **jsDelivr
+pineados a un tag inmutable** (`@vX.Y.Z`, **nunca `@latest`**), uno por page-type del site:
+`home.html`, `industria-automotriz.html`, `industria-educativa.html`, `industria-financiera.html`.
+Cada uno incluye GSAP global (como Webflow) + el loader pineado. Reflejan exactamente lo que sirve
+el CDN en ese release.
+
+El tag lo mantiene `scripts/previews-pin.mjs`, que **predice el próximo release igual que el CI**
+(último tag remoto `vX.Y.Z` → patch + 1) y reescribe la versión en los 4 previews.
+
+```bash
+node scripts/previews-pin.mjs --check   # imprime la versión predicha, no escribe
+node scripts/previews-pin.mjs           # pinea los previews al próximo tag
+```
+
+## Deploy — workflow de release (OBLIGATORIO seguir en este orden)
+
+El push detona el CI, que taggea el **próximo** patch. Los previews deben apuntar a ESE tag antes
+de pushear, para que tras publicar el CDN sirva los assets que el preview referencia.
+
+1. **Fetch + predecir**: `node scripts/previews-pin.mjs --check` → última versión disponible +
+   próximo release predicho (mismo cálculo que `release.yml`).
+2. **Actualizar previews**: `node scripts/previews-pin.mjs` → pinea `previews/*.html` a ese tag.
+   Commitear ese cambio junto con el resto.
+3. **Push**: `git push origin main` (SSH). El CI: typecheck + build + tag patch (vX.Y.(Z+1)) +
+   regenera `loader.js` + commitea dist + purga `@latest`.
+4. **Verificar el release**: confirmar que el CI publicó el tag predicho y que los previews cargan
+   el CDN de ese tag:
+   ```bash
+   git ls-remote --tags origin 'v*' | grep -o 'v[0-9]*\.[0-9]*\.[0-9]*$' | sort -V | tail -1
+   curl -sI "https://cdn.jsdelivr.net/gh/karenrebecag/MMP_2026w@vX.Y.Z/loader.js" | head -1
    ```
-3. Agregar clases del DS (`aa-section`, `aa-container`, `aa-h-xl`, etc.) en el HTML generado
-4. Para animaciones: añadir `data-aa-split` / `data-aa-fade` / `data-aa-stagger` a los elementos
+   Si el tag publicado ≠ el predicho (p. ej. otro push metió un release en medio), re-pinear y
+   re-pushear. Antes del siguiente ciclo: `git pull --rebase origin main`.
+
+## Crear una sección nueva (organism + i18n + wire)
+
+Regla base: **estructura vs. copy**. La *estructura* (layout, íconos por card, tint/accent del
+cluster, video/imagen, orden) vive en el **composer** del page-type. El *copy* vive en **i18n**
+(`content/industrias/` para páginas de industria; `core/i18n/` + `content/` para el home). Nunca
+hardcodees copy en el organism ni en el composer.
+
+### 1. Organism (bloque presentacional) — `design-system/organisms/mi-seccion.ts`
+Exporta `renderMiSeccion(root: Element, cfg: MiSeccionConfig): void` que crea DOM y lo cuelga de
+`root`. El `cfg` recibe **solo texto + flags de estructura** (no lee i18n directo; el composer se
+lo pasa). Ejemplo mínimo:
+```ts
+export interface MiSeccionConfig { heading: string; subheading: string; /* ... */ }
+export function renderMiSeccion(root: Element, cfg: MiSeccionConfig): void {
+  const section = document.createElement('section');
+  section.className = 'aa-section aa-mi-seccion';
+  section.setAttribute('data-aa-section-theme', 'light'); // o 'dark' (ver Temas)
+  // ... construir DOM con clases .aa-* y atributos de animación ...
+  root.appendChild(section);
+}
+```
+
+### 2. CSS co-locado — `design-system/organisms/mi-seccion.css`
+Todo scopeado bajo `.aa-landing` (nunca global). Regístralo con un `@import` en
+`src/styles/index.css`. Lenguaje visual del home: **fills sutiles** (`var(--aa-bg-subtle)`) +
+**radios grandes** (`var(--aa-radius-xl)`), sin bordes duros; placeholders `var(--aa-neutral-200)`;
+stats grandes con `.aa-text-gradient`.
+
+### 3. Copy a i18n
+- **Industria**: agrega el bloque de contenido a `content/industrias/types.ts` (tipo solo-texto) y
+  llénalo en `es.ts`, `en.ts`, `pt.ts` (los 3 son `IndustriasContent` completo; TS lo exige). El
+  composer lo lee con `getIndustria('<industria>')`.
+- **Home / compartido**: strings de organism → `core/i18n/` (`strings.ts` + es/en/pt); secciones
+  data-driven → `content/` (`types.ts` + es/en/pt, vía `getSections()`).
+
+### 4. Wire en el composer del page-type — `page-types/industria-*.ts`
+```ts
+const c = getIndustria('financiera');
+renderMiSeccion(main, {
+  heading: c.miSeccion.heading,
+  cards: c.miSeccion.cards.map((card, i) => ({ ...card, icon: MI_ICONS[i] })), // copy + estructura
+});
+```
+Los íconos/tint/orden son arrays/consts en el composer; el copy sale de `c`.
+
+### Tokens de cluster por industria (highlight)
+Cada composer setea en el root: `--aa-ind-tint` (bg sutil + highlights: card hover, badges,
+círculos numerados) y opcional `--aa-ind-accent` (glifos; automotriz = `#FF6600`). Los organisms
+los consumen con fallback: `var(--aa-ind-tint, var(--aa-bg-subtle))`.
+
+### Animaciones de entrada (GSAP, vía motion.ts)
+- `data-aa-split` — heading: SplitText words suben (word-rise). **Se revierte al terminar** para
+  re-fluir en resize; si el heading lleva una palabra en gradiente, añade la regla
+  `.mi-seccion__heading .aa-text-gradient *` (ver industria-hero) para sostener el clip sobre las words.
+- `data-aa-fade` — reveal simple (sube + fade) on-scroll.
+- `data-aa-reveal` (contenedor) + `data-aa-reveal-item` (hijos) — **stagger blur-rise** refinado
+  (preferido para grids de cards; no rota como el viejo `data-aa-stagger`).
+- Above-the-fold: envolver en `[data-aa-intro]` para que animen al montar (no en scroll).
+
+### Tipografía
+Capa semántica siempre: `.aa-h-{xxl..m}` (display) y `.aa-p-{l,m}` (cuerpo). NUNCA
+`font-size: var(--aa-text-*)` crudo en texto de contenido (rompe la jerarquía). Tokens crudos solo
+para fijar el `font-size` heredado de botones/pills o números de stat.
+
+### Temas de strip (light/dark)
+`data-aa-section-theme="light|dark"` remapea los tokens `--aa-*` (`section-theme.css`) y pinta el
+bg: las strips light van transparentes (dejan ver el bg-fixed), las dark pintan color sólido. Todo
+componente que lea tokens se adapta solo.
 
 ## Reglas de operación
 

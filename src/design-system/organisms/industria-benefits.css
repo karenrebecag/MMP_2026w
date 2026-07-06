@@ -1,0 +1,127 @@
+/* Industria benefits — header (izq) + grid de 4 cards + CTA abajo-derecha. Sección light
+   (transparente, deja ver el bg-fixed). Cards blancas; una resaltada con --aa-ind-tint.
+   Scoped a .aa-landing. */
+
+.aa-landing .aa-ind-benefits {
+  padding-block: var(--aa-padding-xl);
+}
+
+/* Eyebrow: pill suave gris (sentence-case) sobre el heading. */
+.aa-landing .aa-ind-benefits__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--aa-gap-s);
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-s);
+  color: var(--aa-fg-muted);
+}
+/* Dot con el highlight de la industria (accent → fallback electric). */
+.aa-landing .aa-ind-benefits__eyebrow::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--aa-ind-accent, var(--aa-color-electric));
+}
+
+.aa-landing .aa-ind-benefits__heading {
+  margin: 0;
+  max-width: 20ch;
+  letter-spacing: -0.02em;
+}
+.aa-landing .aa-ind-benefits__sub {
+  margin: var(--aa-gap-s) 0 0;
+  max-width: 60ch;
+  color: var(--aa-fg-muted);
+}
+
+/* Row de cards: 4 columnas → 2 (tablet) → 1 (mobile). */
+.aa-landing .aa-ind-benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--aa-gap-m);
+  margin-top: var(--aa-gap-xl);
+}
+
+.aa-landing .aa-ind-benefits__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--aa-padding-l) var(--aa-padding-m);
+  background: var(--aa-bg-subtle);
+  border-radius: var(--aa-radius-xl);
+  transition: background-color var(--aa-duration-s) var(--aa-ease);
+}
+/* Highlight de color solo en hover: en reposo todas las cards son grises (bg-subtle). */
+.aa-landing .aa-ind-benefits__card:hover {
+  background: var(--aa-ind-tint, var(--aa-bg-subtle));
+}
+
+/* Icono con reglas laterales (— icon —), como el mockup. Las reglas usan el fg;
+   el glifo usa el accent de la industria (--aa-ind-accent, default fg → naranja en automotriz). */
+.aa-landing .aa-ind-benefits__icon {
+  display: flex;
+  align-items: center;
+  gap: var(--aa-gap-xs);
+  color: var(--aa-fg);
+  margin-bottom: var(--aa-gap-m);
+}
+.aa-landing .aa-ind-benefits__icon::before,
+.aa-landing .aa-ind-benefits__icon::after {
+  content: '';
+  width: 1.75rem;
+  height: 3px;
+  border-radius: var(--aa-radius-pill);
+  background: currentColor;
+}
+.aa-landing .aa-ind-benefits__icon svg {
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  box-sizing: content-box;
+  padding: 0.5rem; /* espacio reservado: el badge circular aparece en hover sin mover el layout */
+  border-radius: 50%;
+  color: var(--aa-ind-accent, var(--aa-fg)); /* stroke=currentColor → toma el accent */
+  transition:
+    background-color var(--aa-duration-s) var(--aa-ease),
+    box-shadow var(--aa-duration-s) var(--aa-ease);
+}
+
+/* En hover el glifo va en un badge circular blanco (como el mockup). */
+.aa-landing .aa-ind-benefits__card:hover .aa-ind-benefits__icon svg {
+  background: var(--aa-bg);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.06);
+}
+
+.aa-landing .aa-ind-benefits__card-title {
+  margin: 0;
+  line-height: 1.15;
+}
+.aa-landing .aa-ind-benefits__card-desc {
+  margin: var(--aa-gap-xs) 0 0;
+  color: var(--aa-fg-muted);
+}
+
+/* CTA único, alineado a la derecha bajo el grid. */
+.aa-landing .aa-ind-benefits__cta {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--aa-gap-l);
+  font-size: var(--aa-text-s); /* fija el font-size del botón (inherit) a un token */
+}
+
+@media (max-width: 991px) {
+  .aa-landing .aa-ind-benefits__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 575px) {
+  .aa-landing .aa-ind-benefits__grid {
+    grid-template-columns: 1fr;
+  }
+  .aa-landing .aa-ind-benefits__cta {
+    justify-content: center;
+  }
+}

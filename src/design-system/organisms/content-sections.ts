@@ -471,6 +471,20 @@ function buildReviews(c: ReviewsContent): HTMLElement {
   return wrap;
 }
 
+// Render aislado de la strip de reseñas (misma que el home) para reusarla en otras páginas
+// sin arrastrar el resto de content-sections. Inicializar con initReviewsMarquee(scope).
+export function renderReviews(root: Element): void {
+  const c = getSections().find((s) => s.kind === 'reviews');
+  if (!c || c.kind !== 'reviews') return;
+  const section = renderSection({
+    theme: c.theme,
+    className: 'aa-section--reviews',
+    children: [buildReviews(c)],
+  });
+  if (c.id) section.id = c.id;
+  root.appendChild(section);
+}
+
 // Marca `*palabra*` → span con gradiente de marca; el resto cae a text nodes. Sin innerHTML.
 function appendWithGradient(el: HTMLElement, text: string): void {
   text.split(/\*(.+?)\*/g).forEach((part, i) => {

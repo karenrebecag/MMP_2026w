@@ -57,6 +57,9 @@ const prefersReduced = (): boolean =>
 
 // Loop activo por heading: se mata al re-iniciar (resize) para no acumular.
 const loops = new WeakMap<Element, ReturnType<typeof gsap.delayedCall>>();
+// Instancia de SplitText por heading inline: guardada para revert() + re-split en resize
+// (SplitText congela las dimensiones de línea; sin re-split el heading queda roto hasta recargar).
+const splits = new WeakMap<Element, { revert(): void }>();
 
 function parseWords(span: HTMLElement): string[] {
   return (span.getAttribute('data-aa-rotating-words') || '')
@@ -130,7 +133,10 @@ function initInline(
   // Split de líneas (máscara) una sola vez. SIN autoSplit/onSplit: con varias instancias
   // en la página, el revert asíncrono de autoSplit dejaba el rotatorio congelado en la
   // palabra más larga. El span se conserva tras el split; construimos el stack dentro.
-  new SplitText(heading, { type: 'lines', mask: 'lines', linesClass: 'aa-rotating-line' });
+  splits.set(
+    heading,
+    new SplitText(heading, { type: 'lines', mask: 'lines', linesClass: 'aa-rotating-line' }),
+  );
 
   const wrapper = document.createElement('span');
   wrapper.className = 'aa-rotating__inner';
@@ -180,18 +186,39 @@ function initInline(
   });
 }
 
+function setupHeading(heading: HTMLElement): void {
+  const stepDuration = parseFloat(heading.getAttribute('data-step-duration') || '1.75');
+  const span = heading.querySelector<HTMLElement>('[data-aa-rotating-words]');
+  if (!span) return;
+  const words = parseWords(span);
+  if (!words.length) return;
+
+  if (span.classList.contains('aa-rotating__block')) initBlock(heading, span, words, stepDuration);
+  else initInline(heading, span, words, stepDuration);
+}
+
+// Un solo listener global de resize (idempotente entre montajes).
+let resizeBound = false;
+
 export function initRotatingText(scope: Element): void {
   if (prefersReduced()) return; // sin animación: queda la palabra más larga estática
 
-  scope.querySelectorAll<HTMLElement>('[data-aa-rotating-title]').forEach((heading) => {
-    const stepDuration = parseFloat(heading.getAttribute('data-step-duration') || '1.75');
-    const span = heading.querySelector<HTMLElement>('[data-aa-rotating-words]');
-    if (!span) return;
-    const words = parseWords(span);
-    if (!words.length) return;
+  scope.querySelectorAll<HTMLElement>('[data-aa-rotating-title]').forEach(setupHeading);
 
-    if (span.classList.contains('aa-rotating__block'))
-      initBlock(heading, span, words, stepDuration);
-    else initInline(heading, span, words, stepDuration);
+  if (resizeBound) return;
+  resizeBound = true;
+  let t: ReturnType<typeof setTimeout>;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    // Debounce: re-splitea los headings inline al ancho nuevo (el modo block se auto-maneja).
+    t = setTimeout(() => {
+      scope.querySelectorAll<HTMLElement>('[data-aa-rotating-title]').forEach((heading) => {
+        const span = heading.querySelector<HTMLElement>('[data-aa-rotating-words]');
+        if (!span || span.classList.contains('aa-rotating__block')) return;
+        loops.get(heading)?.kill(); // corta el loop actual
+        splits.get(heading)?.revert(); // quita las máscaras de línea; el span vuelve a su estado base
+        setupHeading(heading); // re-split + reconstruye el stack al ancho nuevo
+      });
+    }, 200);
   });
 }

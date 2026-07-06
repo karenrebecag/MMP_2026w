@@ -1,0 +1,98 @@
+/* Industria automations — strip DARK: contenido (izq) + imagen (der). El tema dark lo pinta
+   section-theme.css (bg sólido + tokens remapeados). Scoped a .aa-landing. */
+
+.aa-landing .aa-ind-auto {
+  padding-block: var(--aa-padding-xl);
+}
+
+.aa-landing .aa-ind-auto__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+/* ── Columna izquierda: contenido ─────────────────────────────────────────────── */
+.aa-landing .aa-ind-auto__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Pill (chip translúcido mono) con dot del highlight de la industria. */
+.aa-landing .aa-ind-auto__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5em 0.95em;
+  border: 1px solid color-mix(in srgb, var(--aa-fg) 18%, transparent);
+  border-radius: var(--aa-radius-pill);
+  font-family: var(--aa-font-mono);
+  font-size: var(--aa-text-xs);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--aa-fg-muted);
+  background: color-mix(in srgb, var(--aa-fg) 6%, transparent);
+}
+.aa-landing .aa-ind-auto__pill::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--aa-ind-accent, var(--aa-color-electric));
+}
+
+.aa-landing .aa-ind-auto__heading {
+  margin: var(--aa-gap-s) 0 0;
+  max-width: 18ch;
+  letter-spacing: -0.02em;
+}
+.aa-landing .aa-ind-auto__sub {
+  margin: var(--aa-gap-s) 0 0;
+  max-width: 54ch;
+  color: var(--aa-fg-muted);
+}
+.aa-landing .aa-ind-auto__cta {
+  margin-top: var(--aa-gap-l);
+  font-size: var(--aa-text-s); /* fija el font-size del botón (inherit) a un token */
+}
+
+/* ── Columna derecha: media ───────────────────────────────────────────────────── */
+.aa-landing .aa-ind-auto__media {
+  align-self: stretch;
+  min-height: 22rem;
+  border-radius: var(--aa-radius-xl);
+  overflow: hidden;
+}
+/* Placeholder que se lee sobre dark (tinte claro translúcido, no un gris fijo). */
+.aa-landing .aa-ind-auto__media.is--placeholder {
+  background: color-mix(in srgb, var(--aa-fg) 8%, transparent);
+}
+.aa-landing .aa-ind-auto__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Steps (reusa aa-ind-steps__*, adaptado a dark) ───────────────────────────── */
+/* Card translúcida clara sobre el strip dark (bg-subtle quedaría casi invisible). */
+.aa-landing .aa-ind-auto .aa-ind-steps__step {
+  background: color-mix(in srgb, var(--aa-fg) 6%, transparent);
+}
+/* El círculo mantiene el tint de la industria; el número va oscuro para leer sobre el pastel. */
+.aa-landing .aa-ind-auto .aa-ind-steps__num {
+  color: var(--aa-neutral-950);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .aa-landing .aa-ind-auto__inner {
+    grid-template-columns: 1fr;
+  }
+  .aa-landing .aa-ind-auto__media {
+    order: -1;
+    min-height: 16rem;
+    aspect-ratio: 3 / 2;
+  }
+}

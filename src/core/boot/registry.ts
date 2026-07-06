@@ -15,4 +15,7 @@ export interface PageModule {
 
 export const PAGES: Record<string, () => Promise<PageModule>> = {
   home: () => import('../../page-types/home'),
+  'industria-automotriz': () => import('../../page-types/industria-automotriz'),
+  'industria-educativa': () => import('../../page-types/industria-educativa'),
+  'industria-financiera': () => import('../../page-types/industria-financiera'),
 };

@@ -1,0 +1,44 @@
+/* Industria logos — row: frase (izq, ancho acotado) + marquee horizontal de logos (der).
+   El marquee reusa .aa-logos__marquee/track/card/logo (logos.css). Scoped a .aa-landing. */
+
+/* Fondo blanco sólido (no transparente) para separar la strip del bg tinteado del hero. */
+.aa-landing .aa-ind-logos[data-aa-section-theme='light'] {
+  background: var(--aa-bg);
+}
+
+.aa-landing .aa-ind-logos__row {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+/* Frase descriptiva: columna izquierda de ancho fijo, tipografía de cuerpo (no mono). */
+.aa-landing .aa-ind-logos__label {
+  flex: none;
+  max-width: 22ch;
+  margin: 0;
+  font-size: var(--aa-text-s);
+  line-height: 1.35;
+  color: var(--aa-fg-muted);
+  text-wrap: balance;
+}
+
+/* La columna derecha (marquee) toma el resto y recorta con la máscara de logos.css. */
+.aa-landing .aa-ind-logos .aa-logos__marquee {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .aa-landing .aa-ind-logos__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--aa-gap-m);
+  }
+  .aa-landing .aa-ind-logos__label {
+    max-width: none;
+  }
+  .aa-landing .aa-ind-logos .aa-logos__marquee {
+    width: 100%;
+  }
+}

@@ -39,7 +39,14 @@ export function playIntro(scope: Element): void {
   if (headings.length) {
     const split = new SplitText(headings, SPLIT_CONFIG);
     gsap.set(split.words, { yPercent: 100, rotate: 10, transformOrigin: 'bottom left' });
-    tl.to(split.words, { yPercent: 0, autoAlpha: 1, rotate: 0, delay: 0.1 }, 0.1);
+    // revert() al terminar: SplitText congela las dimensiones de línea, así que sin esto el
+    // heading queda roto en resize (font-size clamp) hasta recargar. Revertido = texto plano
+    // que re-fluye nativo.
+    tl.to(
+      split.words,
+      { yPercent: 0, autoAlpha: 1, rotate: 0, delay: 0.1, onComplete: () => split.revert() },
+      0.1,
+    );
   }
   // OSMO sólo mueve y:2em (el fade lo da la cubierta de transición Barba). Aquí no hay
   // cubierta, así que añadimos autoAlpha para que el reveal se vea limpio.
@@ -64,6 +71,8 @@ export function initScrollReveals(scope: Element): void {
       duration: ENTER_DURATION,
       ease: ENTER_EASE,
       stagger: STAGGER,
+      // revert() al terminar → el heading re-fluye en resize (ver playIntro).
+      onComplete: () => split.revert(),
       scrollTrigger: { trigger: el, start: 'clamp(top 80%)', once: true },
     });
   });
@@ -77,6 +86,24 @@ export function initScrollReveals(scope: Element): void {
       duration: ENTER_DURATION,
       ease: ENTER_EASE,
       scrollTrigger: { trigger: el, start: 'clamp(top 85%)', once: true },
+    });
+  });
+
+  // Reveal en grupo: los hijos [data-aa-reveal-item] entran con blur-rise escalonado
+  // (estética transitions.dev "texts reveal": distance ~12px, blur, stagger corto), vía
+  // GSAP para no introducir un segundo sistema de animación en el sitio.
+  scope.querySelectorAll<HTMLElement>('[data-aa-reveal]').forEach((group) => {
+    if (group.closest('[data-aa-intro]')) return;
+    const items = group.querySelectorAll<HTMLElement>('[data-aa-reveal-item]');
+    if (!items.length) return;
+    gsap.from(items, {
+      y: 16,
+      autoAlpha: 0,
+      filter: 'blur(4px)',
+      duration: 0.7,
+      ease: ENTER_EASE,
+      stagger: 0.08,
+      scrollTrigger: { trigger: group, start: 'clamp(top 82%)', once: true },
     });
   });
 
