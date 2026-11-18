@@ -33,7 +33,7 @@ export const PARTNERS = {
 // dispara webhook de atribución y abre WhatsApp. El company-token es público (tipo
 // publishable key); el phone incluye código de país. wa.me como fallback si el SDK no carga.
 export const WHATSAPP = {
-  widget: 'https://api.atomchat.io/wci/widget.js',
+  widget: 'https://wci.atomchat.io/wci/widget.js',
   companyToken: '2461fbb8-911f-c77b-5ba1-aef91156d512',
   phone: '5215535150142',
   message: 'Hola, quiero más información sobre Atom',
